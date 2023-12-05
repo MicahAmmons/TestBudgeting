@@ -44,6 +44,10 @@
               "target": "Package",
               "version": "[2.1.24, )"
             },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[6.0.16, )"
+            },
             "MySql.Data": {
               "target": "Package",
               "version": "[8.2.0, )"

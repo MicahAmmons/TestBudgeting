@@ -11,16 +11,21 @@
     </style>
 </head>
 
-
+<!--Row includes: Insert Expense Button -->
 <div class="row">
-
-    <div class="col-md-offset-0 col-md-5" style="background-color: blue;">
+    <div class="col-md-offset-0 col-md-5">
         <div style="display: block">
-            <h1>Submit</h1>
-            <a href="/Expense/InsertExpense">Insert</a>
+            <a href="/Expense/InsertExpense" style="color: #3E1B24; font-size: 20px; background-color: #FFD5A7; border-radius: 5px; padding: 5px 10px; font-weight: bold; display: inline-block; text-align: right;">New Expense</a>
         </div>
-</div>
-        <div class="row">
+        <h1>   </h1>
+        <div style="display: block">
+            <a href="/Expense/CheckBudget" style="color: #3E1B24; font-size: 20px; background-color: #FFD5A7; border-radius: 5px; padding: 5px 10px; font-weight: bold; display: inline-block; text-align: right;">Check Budget</a>
+        </div>
+    </div> 
+</div>    
+
+<!--Row includeds: Hide Buttons and Script-->
+<div class="row">
             <style>
                 .toggle-buttons {
                     text-align: right;
@@ -87,41 +92,20 @@
             </div>
         </div>
 
+<!--Empty row to separate rows a bit-->
+<div class="row">
+    <div class="col-md-12">
+        <h1> </h1>
     </div>
-<!--This is the creation of the drop down boxes.  They tell the Controller to tell the models what set of info to get from repo-->
-@* <div>
-    <form method="get" action="/ExpenseController/Index">
-        <label for="budgetDropdown">Select a Budget:</label>
-        <select id="budgetDropdown" name="budget" onchange="this.form.submit()">
-            <option value="" selected></option>
-            <option value="All">All</option>
-            <option value="Food">Food</option>
-            <option value="Rent">Rent</option>
-            <option value="Utilities">Utilities</option>
-            <option value="Car">Car</option>
-        </select>
-        <label for="monthDropdown">Select a Month:</label>
-        <select id="monthDropdown" name="month" onchange="this.form.submit()">
-            <option value="" selected></option>
-            <option value="12">December</option>
-            <option value="1">January</option>
-            <option value="2">February</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
-            <option value="5">May</option>
-            <option value="6">June</option>
-            <option value="7">July</option>
-            <option value="8">August</option>
-            <option value="9">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-        </select>
-        <button type="submit">Submit</button>
-    </form>
-</div> *@
+</div>
 
+<!--Row includes: Table that displays the Repository and Script to Sort Columns-->
+<div class="row">
+    <div class="col-md-offset-0 col-md-5">
 
-<!--Table that displays the selected Repository-->
+        <h1> </h1>
+    </div>
+        
 <div class="col-md-offset-5 col-md-7">
     <div class="table-container">
         <!--Style for the body of table.  Did the header styling in line-->
@@ -142,6 +126,7 @@
         <table class="table table-condensed" id="expenseTable" style="border-collapse: collapse; border: none !important;">
             <thead style="position: sticky; top: 0;">
                 <tr>
+                    <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Number</th>
                     <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Amount</th>
                     <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Payee</th>
                     <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Budget</th>
@@ -154,6 +139,7 @@
                 @foreach (var expense in Model)
                 {
                     <tr>
+                        <td><a href=/Expense/GetExpense/@expense.Number>@expense.Number</a></td>
                         <td style="max-width: 25px;">@expense.Amount</td>
                         <td style="max-width: 75px;">@expense.Payee</td>
                         <td style="max-width: 35px;">@expense.Budget</td>
@@ -192,6 +178,16 @@
                 ascending = !ascending;
             }
         </script>
+        <script>
+            // Handle the click event for the "Create a New Product" link
+            $("#createExpenseLink").click(function () {
+            $.get("/Product/InsertProductView", function (data) {
+            // Replace the content of the container with the InsertProductView content
+            $("#insertProductContainer").html(data);
+            });
+            });
+            </script>
     </div>
-</div>  
+</div>
 
+</div>

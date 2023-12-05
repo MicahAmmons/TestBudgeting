@@ -1,0 +1,29 @@
+﻿@model Expense
+
+<h2>Update @Model.Budget</h2>
+
+@using (Html.BeginForm("UpdateExpenseToDatabase", "Expense", "Post"))
+{
+    <input asp-for="Number" type="hidden" value="@Model.Number" />
+
+    <label asp-for="Budget" class="control-label">Budget</label>
+    <input type="text" name="Budget" class="form-control" value="@Model.Budget" />
+
+    <label asp-for="Payee" class="control-label">Payee</label>
+    <input type="text" name="Payee" class="form-control" value="@Model.Payee" />
+
+    <label asp-for="Amount" class="control-label">Amount</label>
+    <input type="number" name="Amount" class="form-control" value="@Model.Amount" />
+
+    <label asp-for="Month" class="control-label">Month</label>
+    <input type="number" name="Month" class="form-control" value="@Model.Month" />
+
+    <label asp-for="Day" class="control-label">Day</label>
+    <input type="number" name="Day" class="form-control" value="@Model.Day" />
+
+    <label asp-for="Year" class="control-label">Year</label>
+    <input type="number" name="Year" class="form-control" value="@Model.Year" />
+
+
+    <input type="submit" value="Update Expense" class="btn btn-primary" />
+}

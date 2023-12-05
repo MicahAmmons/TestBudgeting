@@ -19,43 +19,95 @@ namespace BudgetAppProject.Controllers
         {
                 var exp = repo.GetAllExpenses();
                 return View(exp);
+
+        }
+        public IActionResult GetExpense(int number)
+        {
+            var expense = repo.GetExpense(number);
+            return View(expense);
+        }
+        public IActionResult UpdateExpense(int number)
+        {
+            Expense prod = repo.GetExpense(number);
+            if (prod == null)
+            {
+                return View("ProductNotFound");
+            }
+            return View(prod);
+        }
+        public IActionResult UpdateExpenseToDatabase(Expense expense)
+        {
+            repo.UpdateExpense(expense);
+
+            return RedirectToAction("ViewExpense", new { number = expense.Number });
+        }
+        public IActionResult InsertExpenseToDatabase(Expense expense)
+        {
+            repo.InsertExpense(expense);
+            return RedirectToAction("Index");
+        }
+        public IActionResult DeleteExpense(Expense expense)
+        {
+            repo.DeleteExpense(expense);
+            return RedirectToAction("Index");
         }
         public IActionResult InsertExpense()
         {
             Expense expense = new Expense();
             return View(expense);
         }
-        public IActionResult InsertExpenseToDatabase(Expense expense)
+        public IActionResult ViewBudget(string budget, int month)
         {
-            repo.InsertExpense(expense);
-            return RedirectToAction("Index");
-
+            Expense exp = new Expense() { Budget = budget, Month = month };
+            return View(exp);
+        }
+        public IActionResult CheckBudget()
+        {
+            var expense = repo.GetDistinctBudgets();
+            return View(expense);
         }
 
 
-        //public IActionResult Index()
-        //{
-        //    var expenses = repo.GetAllExpenses();
-        //    return View(expenses);
-        //}
-        //public IActionResult Index(string budget)
-        //{
-        //    var expenses = repo.GetAllExpenses(budget);
-        //    return View(expenses);
-        //}
-        //public IActionResult Index(string budget, int month)
-        //{
-        //    var expenses = repo.GetAllExpenses(budget, month);
-        //    return View(expenses);
-        //}
-        //public IActionResult Index(int month)
-        //{
-        //    var expenses = repo.GetAllExpenses(month);
-        //    return View(expenses);
-        //}
+    }
+}
 
-        //        {
-           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//public IActionResult Index()
+//{
+//    var expenses = repo.GetAllExpenses();
+//    return View(expenses);
+//}
+//public IActionResult Index(string budget)
+//{
+//    var expenses = repo.GetAllExpenses(budget);
+//    return View(expenses);
+//}
+//public IActionResult Index(string budget, int month)
+//{
+//    var expenses = repo.GetAllExpenses(budget, month);
+//    return View(expenses);
+//}
+//public IActionResult Index(int month)
+//{
+//    var expenses = repo.GetAllExpenses(month);
+//    return View(expenses);
+//}
+
+//        {
+
 
 //            if (string.IsNullOrEmpty(budget) && month.HasValue)
 //            {
@@ -73,7 +125,5 @@ namespace BudgetAppProject.Controllers
 //    return View(exp);
 //}
 //        }
-    }
-}
 
 

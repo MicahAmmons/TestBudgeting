@@ -1,0 +1,96 @@
+﻿@using TestBudgeting.Models;
+@model IEnumerable<Expense>
+
+<style>
+    body {
+        background-color: #3E1B24;
+    }
+
+    .container {
+        background-color: #3E1B24;
+        text-align: center;
+        color: #FFD5A7;
+        font-weight: bold;
+        font-size: 40px; /* Increased font size */
+        margin-bottom: 20px;
+    }
+
+    form {
+        background-color: #3E1B24;
+        padding: 20px;
+        width: 33%;
+        margin: 0 auto;
+    }
+
+    label {
+        color: #FFD5A7;
+        font-weight: bold;
+        font-size: 30px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        background-color: #FFD5A7;
+        color: #3E1B24;
+        font-weight: bold;
+        font-size: 20px;
+        width: 100%;
+        padding: 5px;
+    }
+
+    input[type="submit"] {
+        background-color: #3E1B24;
+        color: #FFD5A7;
+        font-weight: bold;
+        font-size: 20px;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .text-danger {
+        color: #FFD5A7;
+        font-weight: bold;
+        font-size: 20px;
+    }
+</style>
+
+<h2>Select Budget and Month To Check</h2>
+
+@using (Html.BeginForm("ViewBudget", "Expense", "Post"))
+{
+
+    <div class="form-group">
+        <label for="">Select a Budget</label>
+        <select class="form-control" name="Budget">
+            <option value=""></option>
+            @foreach (var exp in Model)
+            {
+                <option value="@exp.Budget">@exp.Budget </option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+           <select class="form-control" name="Month">
+            <option value=""></option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+
+        </select>
+    </div>
+
+    <input type="submit" value="View Total Spent" class="btn btn-primary" />
+
+
+}
+<div asp-validation-summary="All" class="text-danger"></div>

@@ -13,6 +13,8 @@ namespace TestBudgeting.Models
         public int Month { get; set; }
         public int Day { get; set; }
         public string Budget { get; set; } = string.Empty;
+        public int Number {  get; set; }
+        public IEnumerable<string> Distinctbudgets { get; set; }
 
     }
 }
