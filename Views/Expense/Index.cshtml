@@ -1,0 +1,197 @@
+﻿@using TestBudgeting.Models
+@model IEnumerable<Expense>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        body {
+            background-color: #3E1B24;
+        }
+    </style>
+</head>
+
+
+<div class="row">
+
+    <div class="col-md-offset-0 col-md-5" style="background-color: blue;">
+        <div style="display: block">
+            <h1>Submit</h1>
+            <a href="/Expense/InsertExpense">Insert</a>
+        </div>
+</div>
+        <div class="row">
+            <style>
+                .toggle-buttons {
+                    text-align: right;
+                    margin-right: 20px; /* Adjust the margin as needed */
+                }
+            </style>
+            <style>
+            .toggle {
+                font-size: 20px; /* Adjust the font size as needed */
+                background-color: #FFD5A7;
+                border-radius: 5px;
+                padding: 5px 10px; /* Adjust padding for top and right */
+                margin-right: 10px; /* Add margin to create spaces */
+                font-weight: bold; /* Make the text bold */
+                display: inline-block; /* Ensure they are displayed inline */
+            }
+            </style>
+            <div class="toggle-buttons">
+                <span class="toggle">Hide Buttons</span>
+                <span id="toggleAmount" class="toggle">Amount</span>
+                <span id="togglePayee" class="toggle">Payee</span>
+                <span id="toggleBudget" class="toggle">Budget</span>
+                <span id="toggleMonth" class="toggle">Month</span>
+                <span id="toggleDay" class="toggle">Day</span>
+                <span id="toggleYear" class="toggle">Year</span>
+                <script>
+                    /* script that hides specific columns */
+                    const expenseTable = document.getElementById('expenseTable');
+                    const columnToggleButtons = document.querySelectorAll('.toggle');
+                    const columnIndices = {
+                        'toggleAmount': 0,  // Index 0 for Amount
+                        'togglePayee': 1,   // Index 1 for Payee
+                        'toggleBudget': 2,  // Index 2 for Budget
+                        'toggleMonth': 3,   // Index 3 for Month
+                        'toggleDay': 4,     // Index 4 for Day
+                        'toggleYear': 5,    // Index 5 for Year
+                    };
+                    columnToggleButtons.forEach((button) => {
+                        button.addEventListener('click', () => {
+                            const columnId = button.id;
+                            const columnIndex = columnIndices[columnId];
+                            const columnCells = document.querySelectorAll(`td:nth-child(${columnIndex + 1})`);
+                            const columnHeader = document.querySelector(`th:nth-child(${columnIndex + 1})`);
+
+                            // Get the computed style
+                            const cellDisplayStyle = window.getComputedStyle(columnCells[0]).getPropertyValue('display');
+
+                            if (cellDisplayStyle === 'none') {
+                                // Column is currently hidden, show it
+                                columnCells.forEach((cell) => {
+                                    cell.style.display = 'table-cell';
+                                });
+                                columnHeader.style.display = 'table-cell';
+                            } else {
+                                // Column is currently visible, hide it
+                                columnCells.forEach((cell) => {
+                                    cell.style.display = 'none';
+                                });
+                                columnHeader.style.display = 'none';
+                            }
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+
+    </div>
+<!--This is the creation of the drop down boxes.  They tell the Controller to tell the models what set of info to get from repo-->
+@* <div>
+    <form method="get" action="/ExpenseController/Index">
+        <label for="budgetDropdown">Select a Budget:</label>
+        <select id="budgetDropdown" name="budget" onchange="this.form.submit()">
+            <option value="" selected></option>
+            <option value="All">All</option>
+            <option value="Food">Food</option>
+            <option value="Rent">Rent</option>
+            <option value="Utilities">Utilities</option>
+            <option value="Car">Car</option>
+        </select>
+        <label for="monthDropdown">Select a Month:</label>
+        <select id="monthDropdown" name="month" onchange="this.form.submit()">
+            <option value="" selected></option>
+            <option value="12">December</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+</div> *@
+
+
+<!--Table that displays the selected Repository-->
+<div class="col-md-offset-5 col-md-7">
+    <div class="table-container">
+        <!--Style for the body of table.  Did the header styling in line-->
+        <style>
+            td {
+                background-color: #3E1B24;
+                color: #FFD5A7;
+                font-weight: bold;
+                font-size: 20px;
+                text-align: center;
+            }
+
+                td:nth-child(3) {
+                    text-align: left;
+                }
+        </style>
+        <!--Table Start-->
+        <table class="table table-condensed" id="expenseTable" style="border-collapse: collapse; border: none !important;">
+            <thead style="position: sticky; top: 0;">
+                <tr>
+                    <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Amount</th>
+                    <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Payee</th>
+                    <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Budget</th>
+                    <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Month</th>
+                    <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Day</th>
+                    <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Year</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var expense in Model)
+                {
+                    <tr>
+                        <td style="max-width: 25px;">@expense.Amount</td>
+                        <td style="max-width: 75px;">@expense.Payee</td>
+                        <td style="max-width: 35px;">@expense.Budget</td>
+                        <td style="max-width: 10px;">@expense.Month</td>
+                        <td style="max-width: 10px;">@expense.Day</td>
+                        <td style="max-width: 15px;">@expense.Year</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <!--Script for sorted the columns.  Clicking the header sorts by that value-->
+        <script>
+            const table = document.querySelector('.table-condensed');
+            let ascending = true;
+            for (let i = 0; i < table.rows[0].cells.length; i++) {
+                table.rows[0].cells[i].addEventListener('click', function () {
+                    sortTable(i);
+                });
+            }
+            function sortTable(columnIndex) {
+                const tbody = table.querySelector('tbody');
+                const rows = Array.from(tbody.rows);
+                rows.sort((a, b) => {
+                    const aValue = a.cells[columnIndex].textContent;
+                    const bValue = b.cells[columnIndex].textContent;
+                    return ascending ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+                });
+                // Remove columns from the tbody
+                rows.forEach((row) => {
+                    tbody.removeChild(row);
+                });
+                // Add sorted columns back to the tbody
+                rows.forEach((row) => {
+                    tbody.appendChild(row);
+                });
+                ascending = !ascending;
+            }
+        </script>
+    </div>
+</div>  
+

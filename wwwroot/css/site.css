@@ -1,0 +1,28 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.toggle {
+    font-size: 20px; /* Adjust the font size as needed */
+    background-color: #FFD5A7;
+    border-radius: 5px;
+    padding: 5px 10px; /* Adjust padding for top and right */
+    margin-right: 10px; /* Add margin to create spaces */
+    font-weight: bold; /* Make the text bold */
+    display: inline-block; /* Ensure they are displayed inline */
+}
