@@ -15,6 +15,8 @@ namespace TestBudgeting.Models
         public string Budget { get; set; } = string.Empty;
         public int Number { get; set; }
         public IEnumerable<string> Distinct { get; set; }
+        public int CurrentMonth { get; set; } = DateTime.Now.Month;
+
 
     }
 }
