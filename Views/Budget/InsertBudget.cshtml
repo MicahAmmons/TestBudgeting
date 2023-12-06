@@ -1,0 +1,75 @@
+﻿@using TestBudgeting.Models;
+@model Budget
+
+<style>
+    body {
+        background-color: #3E1B24;
+    }
+
+    .container {
+        background-color: #3E1B24;
+        text-align: center;
+        color: #FFD5A7;
+        font-weight: bold;
+        font-size: 40px; /* Increased font size */
+        margin-bottom: 20px;
+    }
+
+    form {
+        background-color: #3E1B24;
+        padding: 20px;
+        width: 33%;
+        margin: 0 auto;
+    }
+
+    label {
+        color: #FFD5A7;
+        font-weight: bold;
+        font-size: 30px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        background-color: #FFD5A7;
+        color: #3E1B24;
+        font-weight: bold;
+        font-size: 20px;
+        width: 100%;
+        padding: 5px;
+    }
+
+    input[type="submit"] {
+        background-color: #3E1B24;
+        color: #FFD5A7;
+        font-weight: bold;
+        font-size: 20px;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .text-danger {
+        color: #FFD5A7;
+        font-weight: bold;
+        font-size: 20px;
+    }
+</style>
+
+<h2>Create a New Budget</h2>
+
+@using (Html.BeginForm("InsertBudgetToDatabase", "Budget", "Post"))
+{
+
+    <div class="form-group">
+        <label asp-for="DistinctBudgets" class="control-label">New Budget</label>
+        <input type="text" name="DistinctBudgets" class="form-control" value="@Model.DistinctBudgets" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="BudgetAmount" class="control-label">Set Amount</label>
+        <input type="number" name="BudgetAmount" class="form-control" value="@Model.BudgetAmount" />
+    </div>
+
+    <input type="submit" value="Create Budget" class="btn btn-primary" />
+}
+<div asp-validation-summary="All" class="text-danger"></div>

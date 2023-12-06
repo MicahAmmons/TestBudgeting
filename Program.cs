@@ -6,6 +6,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using BudgetAppProject;
 using TestBudgeting;
+using TestBudgeting.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddScoped<IDbConnection>((s) =>
 });
 
 builder.Services.AddTransient<IExpenseRepo, ExpenseRepo>();
+builder.Services.AddTransient<IBudgetRepo, BudgetRepo>();
 var app = builder.Build();
 
 

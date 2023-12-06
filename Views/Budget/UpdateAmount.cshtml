@@ -1,0 +1,14 @@
+﻿@model Budget
+
+<h2>Update </h2>
+
+@using (Html.BeginForm("UpdateBudgetAmountToDatabase", "Budget", "Post"))
+{
+        <input asp-for="DistinctBudgets" type="hidden" value="@Model.DistinctBudgets" />
+    
+        <label asp-for="BudgetAmount" class="control-label">Set Amount</label>
+        <input type="number" name="BudgetAmount" class="form-control" value="@Model.BudgetAmount" />
+
+
+    <input type="submit" value="Update Budget" class="btn btn-primary" />
+}

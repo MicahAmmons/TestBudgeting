@@ -1,7 +1,7 @@
-﻿
-// Table: expenses
+﻿// Table: expenses
 // Columns: Number - Budget    -    Payee   -   Year  Month  Day   -   Amount
 //         INT     VARCHAR(20)  VARCHAR(30)    DATE    DECIMAL(5,2)
+
 namespace TestBudgeting.Models
 {
     public class Expense
@@ -13,7 +13,7 @@ namespace TestBudgeting.Models
         public int Month { get; set; }
         public int Day { get; set; }
         public string Budget { get; set; } = string.Empty;
-        public int Number {  get; set; }
+        public int Number { get; set; }
         public IEnumerable<string> Distinctbudgets { get; set; }
 
     }

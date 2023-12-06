@@ -4,6 +4,7 @@
 
 @using (Html.BeginForm("UpdateExpenseToDatabase", "Expense", "Post"))
 {
+    <input asp-for="Number" type="hidden" value="@Model.Number" />
 
     <label asp-for="Budget" class="control-label">Budget</label>
     <input type="text" name="Budget" class="form-control" value="@Model.Budget" />
