@@ -21,30 +21,26 @@ namespace BudgetAppProject.Controllers
                 return View(exp);
 
         }
-        public IActionResult GetExpense(int number)
+        public IActionResult ViewExpense(int id)
         {
-            var expense = repo.GetExpense(number);
+            var expense = repo.GetExpense(id);
             return View(expense);
         }
-        public IActionResult UpdateExpense(int number)
+        public IActionResult UpdateExpense(int id)
         {
-            Expense prod = repo.GetExpense(number);
-            if (prod == null)
+            Expense exp = repo.GetExpense(id);
+            if (exp == null)
             {
-                return View("ProductNotFound");
+                return View("ExpenseNotFound");
             }
-            return View(prod);
+            return View(exp);
         }
+
         public IActionResult UpdateExpenseToDatabase(Expense expense)
         {
             repo.UpdateExpense(expense);
 
-            return RedirectToAction("ViewExpense", new { number = expense.Number });
-        }
-        public IActionResult InsertExpenseToDatabase(Expense expense)
-        {
-            repo.InsertExpense(expense);
-            return RedirectToAction("Index");
+            return RedirectToAction("ViewExpense", new { id = expense.Number });
         }
         public IActionResult DeleteExpense(Expense expense)
         {

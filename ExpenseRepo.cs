@@ -47,23 +47,10 @@ namespace BudgetAppProject
                       });
         }
 
-        public IEnumerable<Expense> UpdateExpense(Expense expenseToUpdate)
+        
+        public Expense GetExpense(int id)
         {
-            return _conn.Query<Expense>("UPDATE products SET Payee = @payee, Amount = @Amount, Month = @month, Day = @day, Year = @year, Budget = @budget WHERE Number = @number;",
-                                     new
-                                     {
-                                         Payee = expenseToUpdate.Payee,
-                                         Amount = expenseToUpdate.Amount,
-                                         Month = expenseToUpdate.Month,
-                                         Day = expenseToUpdate.Day,
-                                         Year = expenseToUpdate.Year,
-                                         Budget = expenseToUpdate.Budget
-                                     });
-
-        }
-        public Expense GetExpense(int number)
-        {
-            return _conn.QuerySingle<Expense>("SELECT * FROM expenses WHERE Number = @number" , new { number = number });
+            return _conn.QuerySingle<Expense>("SELECT * FROM expenses WHERE Number = @number" , new { number = id });
         }
         public void DeleteExpense(Expense expense)
         {
@@ -71,9 +58,9 @@ namespace BudgetAppProject
 
         }
 
-        public void UpdateProduct(Expense expense)
+        public void UpdateExpense(Expense expense)
         {
-            _conn.Execute("UPDATE expenses SET Payee = @payee, Amount = @Amount Budget = @budget, Month = @month, Day = @day, Year = @year WHERE Number = @number",
+            _conn.Execute("UPDATE expenses SET Payee = @payee, Amount = @Amount, Budget = @budget, Month = @month, Day = @day, Year = @year WHERE Number = @number",
                                       new
                                       {
                                           Payee = expense.Payee,
@@ -81,7 +68,8 @@ namespace BudgetAppProject
                                           Month = expense.Month,
                                           Day = expense.Day,
                                           Year = expense.Year,
-                                          Budget = expense.Budget
+                                          Budget = expense.Budget,
+                                          Number = expense.Number
                                       });
         }
 
