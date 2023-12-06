@@ -47,11 +47,17 @@ namespace TestBudgeting.Models
 
         public Expense GetExpense(int id)
         {
-            return _conn.QuerySingle<Expense>("SELECT * FROM expenses WHERE Number = @number", new { number = id });
+           Expense exp = _conn.QuerySingle<Expense>("SELECT * FROM expenses WHERE Number = @number", 
+            new 
+            { 
+                number = id 
+            });
+           exp.Distinct = _conn.Query<string>("SELECT DistinctBudgets FROM budgets;");
+            return exp;
         }
         public void DeleteExpense(Expense expense)
         {
-            _conn.Execute("DELETE FROM expenses WHERE Number = @number;", new { id = expense.Number });
+            _conn.Execute("DELETE FROM expenses WHERE Number = @id;", new { id = expense.Number });
 
         }
 

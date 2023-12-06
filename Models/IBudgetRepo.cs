@@ -7,5 +7,6 @@
         public IEnumerable<Budget> InsertBudget(Budget budgetToInsert);
         public void UpdateBudgetAmount(Budget budget);
         public Budget GetBudget(string id);
+        public void DeleteBudget(Budget budget);
     }
 }

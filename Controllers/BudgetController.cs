@@ -43,7 +43,12 @@ namespace BudgetAppProject.Controllers
             Budget bud = repo.GetBudget(id);
             return View(bud);
         }
-
+        public IActionResult DeleteBudget(Budget budget)
+        {
+            repo.DeleteBudget(budget);
+            var ex = repo.ViewBudgets();
+            return RedirectToAction("ViewBudgets", ex);
+        }
 
     }
 }

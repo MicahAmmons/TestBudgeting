@@ -14,7 +14,7 @@ namespace TestBudgeting.Models
         public int Day { get; set; }
         public string Budget { get; set; } = string.Empty;
         public int Number { get; set; }
-        public IEnumerable<string> Distinctbudgets { get; set; }
+        public IEnumerable<string> Distinct { get; set; }
 
     }
 }

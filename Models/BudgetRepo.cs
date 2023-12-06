@@ -55,6 +55,14 @@ namespace TestBudgeting.Models
             return _conn.QuerySingle<Budget>("SELECT * FROM budgets WHERE DistinctBudgets = @distinctBudgets", new { distinctBudgets = id });
         }
 
+        public void DeleteBudget(Budget budget)
+        {
+            _conn.Execute("DELETE FROM budgets WHERE DistinctBudgets = @id;", 
+                new 
+                { 
+                    id = budget.DistinctBudgets
+                });
+        }
     }
 
 

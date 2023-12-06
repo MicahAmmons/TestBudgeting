@@ -12,3 +12,9 @@
 
     <input type="submit" value="Update Budget" class="btn btn-primary" />
 }
+
+@using (Html.BeginForm("DeleteBudget", "Budget", "Post"))
+{
+    <input type="hidden" asp-for="DistinctBudgets" value="@Model.DistinctBudgets" />
+    <input type="submit" onclick="return confirm('Are you sure?')" value="Delete this product" />
+}
