@@ -10,6 +10,7 @@ namespace TestBudgeting.Models
         public void UpdateExpense(Expense expense);
         public void InsertExpense(Expense expenseToInsert);
         public void DeleteExpense(Expense product);
+        public Expense GetDistinctBudgets();
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Components.Web;
 using System.Collections.Generic;
 using System.Data;
 
@@ -26,7 +27,20 @@ namespace TestBudgeting.Models
 
         public IEnumerable<Budget> ViewBudgets()
         {
-            return _conn.Query<Budget>("SELECT * FROM budgets;");
+            // this gets a list of Budgets.DistinctBudgets and Budget.BudgetAmount
+            List<Budget> final = new List<Budget>();
+            IEnumerable<Budget> budgets = _conn.Query<Budget>("SELECT DistinctBudgets, BudgetAmount FROM budgets;");
+            foreach (var budget in budgets)
+            {
+                IEnumerable<int> allExp = _conn.Query<int>("SELECT Amount FROM expenses WHERE Month = @current AND Budget = @bud", new { current = budget.CurrentMonth, bud = budget.DistinctBudgets });
+                //Add all the Amounts together
+                int sum = allExp.Sum();
+                //Assign that amount to Budget.TotalSpent
+                budget.TotalSpent = sum;
+                final.Add(budget);
+            }
+            //End with an IEnumerable<Budget> with 3 properties, DistinctBudgets, BudgetAmount, TotalSpent
+            return budgets;
         }
 
         public IEnumerable<Budget> InsertBudget(Budget budgetToInsert)

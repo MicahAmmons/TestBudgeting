@@ -48,13 +48,14 @@ namespace BudgetAppProject.Controllers
         public IActionResult InsertExpense()
         {
             Expense expense = new Expense();
+            expense = repo.GetDistinctBudgets();
             return View(expense);
         }
 
         public IActionResult InsertExpenseToDatabase(Expense expenseToInsert)
         {
             repo.InsertExpense(expenseToInsert);
-            return RedirectToAction("ViewBudgets");
+            return RedirectToAction("Index");
         }
 
     }

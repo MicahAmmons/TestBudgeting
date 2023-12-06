@@ -75,6 +75,12 @@ namespace TestBudgeting.Models
                                           expense.Number
                                       });
         }
+        public Expense GetDistinctBudgets()
+        {
+            Expense newE = new Expense();
+            newE.Distinct = _conn.Query<string>("SELECT DistinctBudgets FROM budgets;");
+            return newE;
+        }
 
         //public double GetTotalBudgetAmount(string budget, int month)
         //{
