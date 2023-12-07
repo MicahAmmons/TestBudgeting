@@ -18,7 +18,7 @@ namespace Testing.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult HomePage()
         {
             return View();
         }
@@ -33,5 +33,7 @@ namespace Testing.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
     }
 }
