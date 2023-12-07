@@ -1,28 +1,24 @@
-html {
-    font-size: 14px;
-}
 
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
-html {
-    position: relative;
-    min-height: 100%;
+header {
+    background-color: #3E1B24;
+    font-size: 20px;
 }
 
 body {
-    margin-bottom: 60px;
+    background-color: #3E1B24;
+    color: #3E1B24;
+    font-size: 20px;
 }
 
-.toggle {
-    font-size: 20px; /* Adjust the font size as needed */
+a {
+    color: #3E1B24;
     background-color: #FFD5A7;
     border-radius: 5px;
-    padding: 5px 10px; /* Adjust padding for top and right */
-    margin-right: 10px; /* Add margin to create spaces */
-    font-weight: bold; /* Make the text bold */
-    display: inline-block; /* Ensure they are displayed inline */
+    padding: 5px 10px;
+    font-weight: bold;
+    text-decoration: none;
 }
+
+    a:hover {
+        background-color: #3E1B24;
+    }

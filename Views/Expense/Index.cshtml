@@ -2,45 +2,86 @@
 @model IEnumerable<Expense>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style>
+        header {
+            background-color: #3E1B24;
+            font-size: 20px;
+        }
+
         body {
             background-color: #3E1B24;
+            color: #3E1B24;
+            font-size: 20px;
         }
-    </style>
-</head>
+
+        a { /*Text color of hyperlinks*/
+            color: #3E1B24;
+            padding: 1px 10px;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 30px;
+        }
+
+            a:hover {
+                background-color: #FFD5A7;
+            }
+
+            a.body-link {
+                color: #3E1B24;
+                background-color: #FFD5A7;
+                border-radius: 5px;
+                padding: 5px, 5px;
+            }
+
+                a.body-link:hover {
+                    background-color: #3E1B24;
+                    color: #FFD5A7;
+                }
+        </style>
+        </head>
 
 <!--Row includes: Insert Expense Button -->
 <div class="row">
     <div class="col-md-offset-0 col-md-5">
         <div style="display: block">
-            <a href="/Expense/InsertExpense" style="color: #3E1B24; font-size: 20px; background-color: #FFD5A7; border-radius: 5px; padding: 5px 10px; font-weight: bold; display: inline-block; text-align: right;">New Expense</a>
+            <style>
+                .toggle {
+                    font-size: 20px; /* Adjust the font size as needed */
+                    background-color: #FFD5A7;
+                    border-radius: 5px;
+                    padding: 5px 10px; /* Adjust padding for top and right */
+                    margin-left: 10px; /* Add margin to create spaces */
+                    font-weight: bold; /* Make the text bold */
+                    display: inline-block; /* Ensure they are displayed inline */
+                }
+            </style>
+            <a href="/Expense/InsertExpense" class="toggle">New Expense</a>
         </div>
     </div> 
 </div>    
+<!--Empty row to separate rows a bit-->
+<div class="row">
+    <div class="col-md-12">
+        <h1> </h1>
+    </div>
+</div>
 
 <!--Row includeds: Hide Buttons and Script-->
 <div class="row">
-            <style>
-                .toggle-buttons {
-                    text-align: right;
-                    margin-right: 20px; /* Adjust the margin as needed */
-                }
-            </style>
+
             <style>
             .toggle {
                 font-size: 20px; /* Adjust the font size as needed */
                 background-color: #FFD5A7;
                 border-radius: 5px;
                 padding: 5px 10px; /* Adjust padding for top and right */
-                margin-right: 10px; /* Add margin to create spaces */
+                margin-left: 10px; /* Add margin to create spaces */
                 font-weight: bold; /* Make the text bold */
                 display: inline-block; /* Ensure they are displayed inline */
             }
             </style>
             <div class="toggle-buttons">
-                <span class="toggle">Hide Buttons</span>
+                <span id="toggleNumber" class="toggle">Number</span>
                 <span id="toggleAmount" class="toggle">Amount</span>
                 <span id="togglePayee" class="toggle">Payee</span>
                 <span id="toggleBudget" class="toggle">Budget</span>
@@ -52,12 +93,13 @@
                     const expenseTable = document.getElementById('expenseTable');
                     const columnToggleButtons = document.querySelectorAll('.toggle');
                     const columnIndices = {
-                        'toggleAmount': 0,  // Index 0 for Amount
-                        'togglePayee': 1,   // Index 1 for Payee
-                        'toggleBudget': 2,  // Index 2 for Budget
-                        'toggleMonth': 3,   // Index 3 for Month
-                        'toggleDay': 4,     // Index 4 for Day
-                        'toggleYear': 5,    // Index 5 for Year
+                        'toggleNumber': 0,
+                        'toggleAmount': 1,  // Index 0 for Amount
+                        'togglePayee': 2,   // Index 1 for Payee
+                        'toggleBudget': 3,  // Index 2 for Budget
+                        'toggleMonth': 4,   // Index 3 for Month
+                        'toggleDay': 5,     // Index 4 for Day
+                        'toggleYear': 6,    // Index 5 for Year
                     };
                     columnToggleButtons.forEach((button) => {
                         button.addEventListener('click', () => {
@@ -97,11 +139,7 @@
 
 <!--Row includes: Table that displays the Repository and Script to Sort Columns-->
 <div class="row">
-    <div class="col-md-offset-0 col-md-5">
-
-        <h1> </h1>
-    </div>
-        
+ 
 <div class="col-md-offset-5 col-md-7">
     <div class="table-container">
         <!--Style for the body of table.  Did the header styling in line-->
@@ -135,7 +173,7 @@
                 @foreach (var expense in Model)
                 {
                     <tr>
-                        <td><a href=/Expense/ViewExpense/@expense.Number>@expense.Number</a></td>
+                            <td><a href="/Expense/ViewExpense/@expense.Number" class="body-link">@expense.Number</a></td>
                         <td style="max-width: 25px;">@expense.Amount</td>
                         <td style="max-width: 75px;">@expense.Payee</td>
                         <td style="max-width: 35px;">@expense.Budget</td>
@@ -184,6 +222,6 @@
             });
             </script>
     </div>
-</div>
 
+    </div>
 </div>

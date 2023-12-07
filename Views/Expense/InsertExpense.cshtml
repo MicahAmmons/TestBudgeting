@@ -3,17 +3,20 @@
 
 
 <style>
-    body {
-        background-color: #3E1B24;
+    a { /*Text color of hyperlinks*/
+        color: #3E1B24;
+        padding: 1px 10px;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 30px;
     }
 
-    .container {
+        a:hover {
+            background-color: #FFD5A7;
+                }
+    body{
         background-color: #3E1B24;
-        text-align: center;
-        color: #FFD5A7;
-        font-weight: bold;
-        font-size: 40px; /* Increased font size */
-        margin-bottom: 20px;
+        text-align:center;
     }
 
     form {
@@ -49,12 +52,6 @@
         cursor: pointer;
     }
 
-    .text-danger {
-        color: #FFD5A7;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
     select {
         background-color: #FFD5A7;
         color: #3E1B24;
@@ -86,14 +83,16 @@
 </style>
 
 
-<h2>Create a New Expense</h2>
+<h1 style="text-align: center; color: #FFD5A7; font-weight: bold; font-size: 40px; margin-bottom: 20px; background-color: #3E1B24;">Create a New Expense</h1>
+
 
 @using (Html.BeginForm("InsertExpenseToDatabase", "Expense", "Post"))
 {
     <input asp-for="Number" type="hidden"/>
 
     <div class="form-group">
-        <label asp-for="Budget" class="control-label">Budget</label>
+        <div style=" color: #FFD5A7; font-weight: bold; font-size: 30px; margin-bottom: 10px; background-color: #3E1B24;">Budget</div>
+
         <select class="form-control" name="Budget">
             @foreach (var bud in Model.Distinct)
             {
@@ -105,26 +104,26 @@
 
     <div class="form-group">
         <label asp-for="Payee" class="control-label">Payee</label>
-        <input type="text" name="Payee" class="form-control" value="@Model.Payee" />
+        <input type="text" style="text-align: center" name="Payee" class="form-control" value="@Model.Payee" />
     </div>
 
     <div class="form-group">
         <label asp-for="Amount" class="control-label">Amount</label>
-        <input type="number" step="0.01" name="Amount" class="form-control" value="@Model.Amount" />
+        <input type="number" style="text-align: center" step="0.01" name="Amount" class="form-control" value="@Model.Amount" />
     </div>
 
     <div class="form-group">
         <label asp-for="Month" class="control-label">Month</label>
-        <input type="number" name="Month" class="form-control" value="@Model.Month" />
+        <input type="number" style="text-align: center" name="Month" class="form-control" value="@Model.Month" />
     </div>
     <div class="form-group">
         <label asp-for="Day" class="control-label">Day</label>
-        <input type="number" name="Day" class="form-control" value="@Model.Day" />
+        <input type="number" style="text-align: center" name="Day" class="form-control" value="@Model.Day" />
     </div>
 
     <div class="form-group">
         <label asp-for="Year" class="control-label">Year</label>
-        <input type="number" name="Year" class="form-control" value="@Model.Year" />
+        <input type="number" style="text-align: center" name="Year" class="form-control" value="@Model.Year" />
     </div>
 
     <input type="submit" value="Create Expense" class="btn btn-primary" />

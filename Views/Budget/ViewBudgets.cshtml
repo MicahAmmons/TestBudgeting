@@ -1,35 +1,94 @@
-﻿@using TestBudgeting.Models
-@model IEnumerable<Budget>
+﻿<!DOCTYPE html>
 
-<!--New Budget Button-->
-<div style="display: block">
-    <a href="/Budget/InsertBudget" style="color: #3E1B24; font-size: 20px; background-color: #FFD5A7; border-radius: 5px; padding: 5px 10px; font-weight: bold; display: inline-block; text-align: right;">New Budget</a>
-</div>
-
-
-<style>
-    td {
-        background-color: #3E1B24;
-        color: #FFD5A7;
+<head>
+    <style>
+    a { /*Text color of hyperlinks*/
+        color: #3E1B24;
+        padding: 1px 10px;
         font-weight: bold;
-        font-size: 20px;
-        text-align: center;
+        text-decoration: none;
+        font-size: 30px;
     }
 
-        td:nth-child(3) {
-            text-align: left;
+        a:hover {
+            background-color: #FFD5A7;
         }
-</style>
-<!--Each Budget/Amount as table-->
-        @foreach (var budget in Model)
- {
-    <table class="table table-condensed" id="expenseTable">
-        <tbody>
-            <tr>
-                <td>@budget.DistinctBudgets</td>
-                <td><a href="/Budget/UpdateAmount/@budget.DistinctBudgets">@budget.BudgetAmount</a></td>
-                <td>@budget.TotalSpent</td>
-            </tr>
-        </tbody>
-    </table>
-  }
+
+        a.body-link {
+            color: #3E1B24;
+            background-color: #FFD5A7;
+            border-radius: 5px;
+            padding: 5px, 5px;
+        }
+
+            a.body-link:hover {
+                background-color: #3E1B24;
+                color: #FFD5A7;
+            }
+        
+        body {
+            background-color: #3E1B24;
+
+        }
+
+
+        /* Set the table width to one-third of the page */
+        table {
+            width: 33%;
+            background-color: #FFD5A7;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            table-layout: fixed;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+            td:first-child {
+                text-align: left;
+                font-weight: bold;
+                font-size: 20px; /* Set the same size as other values */
+            }
+
+            td:nth-child(2),
+            td:last-child {
+                font-weight: bold;
+                font-size: 20px; /* Set the same size as other values */
+            }
+
+            td:nth-child(2) {
+                width: 150px;
+            }
+    </style>
+</head>
+<body>
+
+    <!-- New Budget Button -->
+    <div>
+        <a href="/Budget/InsertBudget" class="body-link">New Budget</a>
+    </div>
+    <!--Empty row-->
+    <row>
+        <h1>    </h1>
+    </row>
+
+    <!-- Each Budget/Amount as table -->
+    @foreach (var budget in Model)
+    {
+        <table>
+            <tbody>
+                <tr>
+                    <td style="font-size: 25px;">@budget.DistinctBudgets</td>
+                    <td style="font-size: 25px;">@budget.TotalSpent</td>
+                    <td ><a href="/Budget/UpdateAmount/@budget.DistinctBudgets">@budget.BudgetAmount</a> </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+</body>
+
