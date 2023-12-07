@@ -10211,7 +10211,8 @@
       "Google.Apis >= 1.64.0",
       "Google.Apis.Gmail.v1 >= 1.64.0.3231",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.16",
-      "MySql.Data >= 8.2.0"
+      "MySql.Data >= 8.2.0",
+      "Newtonsoft.Json >= 13.0.3"
     ]
   },
   "packageFolders": {
@@ -10272,6 +10273,10 @@
           "MySql.Data": {
             "target": "Package",
             "version": "[8.2.0, )"
+          },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[13.0.3, )"
           }
         },
         "imports": [

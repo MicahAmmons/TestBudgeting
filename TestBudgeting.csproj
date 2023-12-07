@@ -12,6 +12,11 @@
     <PackageReference Include="Google.Apis.Gmail.v1" Version="1.64.0.3231" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
     <PackageReference Include="MySql.Data" Version="8.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Gmail\" />
   </ItemGroup>
 
 </Project>
