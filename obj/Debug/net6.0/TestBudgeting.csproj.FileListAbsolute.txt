@@ -40,7 +40,6 @@ C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\obj\Debug\net6.0\TestBudgeti
 C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\obj\Debug\net6.0\TestBudgeting.dll
 C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\obj\Debug\net6.0\refint\TestBudgeting.dll
 C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\obj\Debug\net6.0\TestBudgeting.pdb
-C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\appsettings.json
 C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\TestBudgeting.staticwebassets.runtime.json
 C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\TestBudgeting.exe
@@ -272,3 +271,11 @@ C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\runtimes\un
 C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\Google.Apis.dll
+C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\Google.Apis.Auth.PlatformServices.dll
+C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\Google.Apis.Auth.dll
+C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\Google.Apis.Core.dll
+C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\Google.Apis.Gmail.v1.dll
+C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\System.CodeDom.dll
+C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\System.Management.dll
+C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Management.dll
