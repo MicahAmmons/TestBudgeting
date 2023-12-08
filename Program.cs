@@ -6,7 +6,8 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using BudgetAppProject;
 using TestBudgeting;
-using TestBudgeting.Models;
+using TestBudgeting.Models.Budget;
+using TestBudgeting.Models.Expense;
 
 var builder = WebApplication.CreateBuilder(args);
 

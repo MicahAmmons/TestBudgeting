@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using TestBudgeting.Models;
+using TestBudgeting.Models.Expense;
 
 namespace BudgetAppProject.Controllers
 {

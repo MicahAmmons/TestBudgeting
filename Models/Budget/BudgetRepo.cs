@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using System.Collections.Generic;
 using System.Data;
 
-namespace TestBudgeting.Models
+namespace TestBudgeting.Models.Budget
 {
     // Table: expenses
     // Columns: Number - Budget    -    Payee   -   Date   -   Amount

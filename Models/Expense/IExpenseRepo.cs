@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 using System.Collections.Generic;
 
-namespace TestBudgeting.Models
+namespace TestBudgeting.Models.Expense
 {
     public interface IExpenseRepo
     {

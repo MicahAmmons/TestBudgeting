@@ -1,4 +1,4 @@
-﻿namespace TestBudgeting.Models
+﻿namespace TestBudgeting.Models.Budget
 {
     public interface IBudgetRepo
     {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace TestBudgeting.Models
+namespace TestBudgeting.Models.Expense
 {
     // Table: expenses
     // Columns: Number - Budget    -    Payee   -   Date   -   Amount
@@ -47,12 +47,12 @@ namespace TestBudgeting.Models
 
         public Expense GetExpense(int id)
         {
-           Expense exp = _conn.QuerySingle<Expense>("SELECT * FROM expenses WHERE Number = @number", 
-            new 
-            { 
-                number = id 
-            });
-           exp.Distinct = _conn.Query<string>("SELECT DistinctBudgets FROM budgets;");
+            Expense exp = _conn.QuerySingle<Expense>("SELECT * FROM expenses WHERE Number = @number",
+             new
+             {
+                 number = id
+             });
+            exp.Distinct = _conn.Query<string>("SELECT DistinctBudgets FROM budgets;");
             return exp;
         }
 

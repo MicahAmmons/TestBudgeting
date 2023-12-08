@@ -2,7 +2,7 @@
 // Columns: Number - Budget    -    Payee   -   Year  Month  Day   -   Amount
 //         INT     VARCHAR(20)  VARCHAR(30)    DATE    DECIMAL(5,2)
 
-namespace TestBudgeting.Models
+namespace TestBudgeting.Models.Expense
 {
     public class Expense
     {

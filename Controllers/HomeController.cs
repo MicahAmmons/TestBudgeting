@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using APIsAndJSON;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using TestBudgeting.Models;
+using TestBudgeting.Models.Weather;
 
 namespace Testing.Controllers
 {
@@ -23,8 +23,8 @@ namespace Testing.Controllers
         public IActionResult HomePage()
         {
 
-            Weather weather = OpenWeatherMapAPI.GetWeather();
-            return View(weather);
+            Home home = WeatherMethods.GetWeather();
+            return View(home);
         }
 
         public IActionResult Privacy()
