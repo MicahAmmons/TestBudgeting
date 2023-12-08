@@ -2,60 +2,16 @@
 @model IEnumerable<Expense>
 
 <head>
-    <style>
-        header {
-            background-color: #3E1B24;
-            font-size: 20px;
-        }
+    <link rel="stylesheet" href="/css/site.css">
 
-        body {
-            background-color: #3E1B24;
-            color: #3E1B24;
-            font-size: 20px;
-        }
-
-        a { /*Text color of hyperlinks*/
-            color: #3E1B24;
-            padding: 1px 10px;
-            font-weight: bold;
-            text-decoration: none;
-            font-size: 30px;
-        }
-
-            a:hover {
-                background-color: #FFD5A7;
-            }
-
-            a.body-link {
-                color: #3E1B24;
-                background-color: #FFD5A7;
-                border-radius: 5px;
-                padding: 5px, 5px;
-            }
-
-                a.body-link:hover {
-                    background-color: #3E1B24;
-                    color: #FFD5A7;
-                }
-        </style>
-        </head>
+</head>
 
 <!--Row includes: Insert Expense Button -->
 <div class="row">
     <div class="col-md-offset-0 col-md-5">
         <div style="display: block">
-            <style>
-                .toggle {
-                    font-size: 20px; /* Adjust the font size as needed */
-                    background-color: #FFD5A7;
-                    border-radius: 5px;
-                    padding: 5px 10px; /* Adjust padding for top and right */
-                    margin-left: 10px; /* Add margin to create spaces */
-                    font-weight: bold; /* Make the text bold */
-                    display: inline-block; /* Ensure they are displayed inline */
-                }
-            </style>
-            <a href="/Expense/InsertExpense" class="toggle">New Expense</a>
+
+            <a href="/Expense/InsertExpense" class="hyper-link body-link">New Expense</a>
         </div>
     </div> 
 </div>    
@@ -68,18 +24,6 @@
 
 <!--Row includeds: Hide Buttons and Script-->
 <div class="row">
-
-            <style>
-            .toggle {
-                font-size: 20px; /* Adjust the font size as needed */
-                background-color: #FFD5A7;
-                border-radius: 5px;
-                padding: 5px 10px; /* Adjust padding for top and right */
-                margin-left: 10px; /* Add margin to create spaces */
-                font-weight: bold; /* Make the text bold */
-                display: inline-block; /* Ensure they are displayed inline */
-            }
-            </style>
             <div class="toggle-buttons">
                 <span id="toggleNumber" class="toggle">Number</span>
                 <span id="toggleAmount" class="toggle">Amount</span>
@@ -173,7 +117,7 @@
                 @foreach (var expense in Model)
                 {
                     <tr>
-                            <td><a href="/Expense/ViewExpense/@expense.Number" class="body-link">@expense.Number</a></td>
+                        <td><a href="/Expense/ViewExpense/@expense.Number" class="hyper-link body-link">@expense.Number</a></td>
                         <td style="max-width: 25px;">@expense.Amount</td>
                         <td style="max-width: 75px;">@expense.Payee</td>
                         <td style="max-width: 35px;">@expense.Budget</td>

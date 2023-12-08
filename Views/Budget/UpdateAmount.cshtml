@@ -1,103 +1,13 @@
 ﻿@using TestBudgeting.Models.Budget;
 @model Budget
-<style>
 
-    a { /*Text color of hyperlinks*/
-        color: #3E1B24;
-        padding: 1px 10px;
-        font-weight: bold;
-        text-decoration: none;
-        font-size: 30px;
-    }
+<head>
+    <link rel="stylesheet" href="/css/site.css">
+</head>
 
-        a:hover {
-            background-color: #FFD5A7;
-        }
-
-        a.body-link {
-            color: #3E1B24;
-            background-color: #FFD5A7;
-            border-radius: 5px;
-            padding: 5px, 5px;
-        }
-
-            a.body-link:hover {
-                background-color: #3E1B24;
-                color: #FFD5A7;
-            }
-
-    body {
-        background-color: #3E1B24;
-        text-align: center;
-    }
-
-    form {
-        background-color: #3E1B24;
-        padding: 20px;
-        width: 20%;
-        margin: 0 auto;
-    }
-
-    label {
-        color: #FFD5A7;
-        font-weight: bold;
-        font-size: 30px;
-    }
-
-    input[type="text"],
-    input[type="number"] {
-        background-color: #FFD5A7;
-        color: #3E1B24;
-        font-weight: bold;
-        font-size: 20px;
-        width: 100%;
-        padding: 5px;
-    }
-
-    input[type="submit"] {
-        background-color: #3E1B24;
-        color: #FFD5A7;
-        font-weight: bold;
-        font-size: 20px;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-    }
-
-    select {
-        background-color: #FFD5A7;
-        color: #3E1B24;
-        font-weight: bold;
-        font-size: 20px;
-        width: 100%;
-        padding: 5px;
-        border: none;
-    }
-
-        select option {
-            background-color: #FFD5A7;
-            color: #3E1B24;
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-    input[type="text"]:focus,
-    input[type="number"]:focus {
-        background-color: #FFD5A7;
-        color: #3E1B24;
-        font-weight: bold;
-        font-size: 20px;
-        width: 100%;
-        padding: 5px;
-        outline: none;
-    }
-
-</style>
 <body>
 
-    <h2 style="color: #FFD5A7; font-size: 55px; font-weight: bold;">Update Budget</h2>
-
-
+    <h1 style="text-align: center; color: #FFD5A7; font-weight: bold; font-size: 40px; margin-bottom: 20px; background-color: #3E1B24;">Update Budget</h1>
 
     @using (Html.BeginForm("UpdateBudgetAmountToDatabase", "Budget", "Post"))
     {
@@ -107,19 +17,13 @@
             <label asp-for="BudgetAmount" class="control-label" style="display: block;">New Amount</label>
             <input type="number" name="BudgetAmount" class="form-control" value="@Model.BudgetAmount" style="margin: 0 auto; text-align: center;" />
 
-            <button type="submit" class="btn btn-primary" style="background-color: #FFD5A7; font-size: 24px; font-weight: bold; color: #3E1B24; border-radius: 5px; margin-top: 10px;">Update Budget</button>
+            <button type="submit" class="hyperlink-top">Update Budget</button>
         </div>
     }
-
-
 <!-- This is the Delete Button -->
-
 @using (Html.BeginForm("DeleteBudget", "Budget", "Post"))
 {
     <input type="hidden" asp-for="DistinctBudgets" value="@Model.DistinctBudgets" />
-    <input style="background-color: #FFD5A7; font-size: 24px; font-weight: bold; color: #3E1B24; border-radius: 5px; padding: 5px;" type="submit" onclick="return confirm('Are you sure?')" value="Delete this Budget" />
-
+        <input class="hyperlink-top" onclick="return confirm('Are you sure?')" value="Delete this Budget" />
 }
-
-
 </body>

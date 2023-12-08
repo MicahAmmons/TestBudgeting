@@ -1,44 +1,10 @@
 ﻿@using TestBudgeting.Models.Expense
 @model Expense
 
+<head>
+    <link rel="stylesheet" href="/css/site.css">
+</head>
 
-    <style>
-    header {
-        background-color: #3E1B24;
-        font-size: 20px;
-    }
-
-    body {
-        background-color: #3E1B24;
-        color: #3E1B24;
-        font-size: 20px;
-    }
-
-    a { /*Text color of hyperlinks*/
-        color: #3E1B24;
-        padding: 1px 10px;
-        font-weight: bold;
-        text-decoration: none;
-        font-size: 30px;
-    }
-
-        a:hover {
-            background-color: #FFD5A7;
-        }
-
-        a.body-link {
-            color: #3E1B24;
-            background-color: #FFD5A7;
-            border-radius: 5px;
-            padding: 5px, 5px;
-        }
-
-            a.body-link:hover {
-                background-color: #3E1B24;
-                color: #FFD5A7;
-            }
-
-</style>
 
 
 <body>
@@ -83,7 +49,7 @@
     <div class="row">
         <!-- This is the Update Button -->
         <div class="col-md-5">
-            <a href="/Expense/UpdateExpense/@Model.Number" class="body-link">Update this Expense</a>
+            <a href="/Expense/UpdateExpense/@Model.Number" class="hyperlink-top">Update this Expense</a>
         </div>
 
         <!-- This is the Delete Button -->
@@ -91,7 +57,7 @@
             @using (Html.BeginForm("DeleteExpense", "Expense", "Post"))
             {
                 <input type="hidden" asp-for="Number" value="@Model.Number" />
-                <input style="background-color: #FFD5A7; font-size: 24px; font-weight: bold; color: #3E1B24; border-radius: 5px; padding: 5px;" type="submit" onclick="return confirm('Are you sure?')" value="Delete Expense" />
+                <input class="hyperlink-top" type="submit" onclick="return confirm('Are you sure?')" value="Delete Expense" />
 
             }
         </div>

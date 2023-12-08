@@ -1,24 +1,139 @@
-
-header {
-    background-color: #3E1B24;
-    font-size: 20px;
+.custom-bg-color {
+    background-color: #FFD5A7;
 }
 
-body {
+.hyper-link { /* dark background light text */
+    color: #FFD5A7;
+    padding: 1px 10px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 30px;
     background-color: #3E1B24;
-    color: #3E1B24;
-    font-size: 20px;
 }
 
-a {
+    .hyper-link:hover { /* light background dark color */
+        background-color: #FFD5A7;
+        color: #3E1B24;
+    }
+
+.body-link { /* light background with dark text */
     color: #3E1B24;
     background-color: #FFD5A7;
     border-radius: 5px;
-    padding: 5px 10px;
-    font-weight: bold;
-    text-decoration: none;
+    padding: 5px;
 }
 
-    a:hover {
+    .body-link:hover { /* dark background lgiht text */
         background-color: #3E1B24;
+        color: #FFD5A7;
     }
+
+.hyperlink-top {
+    color: #FFD5A7;
+    padding: 1px 10px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 30px;
+    background-color: #3E1B24;
+    margin-top: 10px; /* Adjust the margin value as needed */
+}
+
+    /* Selector 1 Hover - light background, dark text */
+    .hyperlink-top:hover {
+        background-color: #FFD5A7;
+        color: #3E1B24;
+    }
+
+body {
+    background-color: #3E1B24;
+    font-size: 20px;
+}
+
+.right-navbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 200px; /* Adjust the width as needed */
+    height: 100%;
+    background-color: #3E1B24;
+    overflow: auto;
+}
+
+    .right-navbar .navbar-nav .nav-item {
+        margin-top: 15px;
+    }
+.toggle {
+    font-size: 20px; /* Adjust the font size as needed */
+    background-color: #FFD5A7;
+    border-radius: 5px;
+    padding: 5px 10px; /* Adjust padding for top and right */
+    margin-left: 10px; /* Add margin to create spaces */
+    font-weight: bold; /* Make the text bold */
+    display: inline-block; /* Ensure they are displayed inline */
+}
+
+select {
+    background-color: #FFD5A7;
+    color: #3E1B24;
+    font-weight: bold;
+    font-size: 20px;
+    width: 100%;
+    padding: 5px;
+    border: none;
+}
+
+    select option { /*dropdown box styling*/
+        background-color: #FFD5A7;
+        color: #3E1B24;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+input[type="text"],
+input[type="number"] { /*transform inputs*/
+    background-color: #FFD5A7;
+    color: #3E1B24;
+    font-weight: bold;
+    font-size: 20px;
+    width: 100%;
+    padding: 5px;
+}
+
+    input[type="text"]:focus,
+    input[type="number"]:focus { /*form inputs when focused/clicked in*/
+        background-color: #FFD5A7;
+        color: #3E1B24;
+        font-weight: bold;
+        font-size: 20px;
+        width: 100%;
+        padding: 5px;
+        outline: none;
+
+    }
+
+form {
+    padding: 40px;
+    width: 33%;
+    margin: 0 auto;
+}
+
+label {
+    color: #FFD5A7;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+
+
+
+
+
+/*.toggle {
+    font-size: 20px;*/ /* Adjust the font size as needed */
+    /*background-color: #FFD5A7;
+    border-radius: 5px;
+    padding: 5px 10px;*/ /* Adjust padding for top and right */
+    /*margin-left: 10px;*/ /* Add margin to create spaces */
+    /*font-weight: bold;*/ /* Make the text bold */
+    /*display: inline-block;*/ /* Ensure they are displayed inline */
+/*}*/

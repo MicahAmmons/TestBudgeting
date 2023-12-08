@@ -1,34 +1,31 @@
 ﻿@using TestBudgeting.Models.Weather
 @model Home
-<style>
 
-    a { /*Text color of hyperlinks*/
-        color: #3E1B24;
-        padding: 1px 10px;
-        font-weight: bold;
-        text-decoration: none;
-        font-size: 30px;
-    }
-
-        a:hover {
-            background-color: #FFD5A7;
-        }
-
-        a.body-link {
-            color: #3E1B24;
-            background-color: #FFD5A7;
-            border-radius: 5px;
-            padding: 5px, 5px;
-        }
-
-            a.body-link:hover {
-                background-color: #3E1B24;
-                color: #FFD5A7;
-            }
-</style>
+<head>
+    <link rel="stylesheet" href="/css/site.css">
+</head>
 
 <div>
-    <h1>@Model.Weather1Var.Temp </h1>
+    <h1>@Model.Weather1Var.CityName</h1>
+    <p>
+        wind: @Model.Weather1Var.Wind 
+        low temp : @Model.Weather1Var.Low
+        high temp : @Model.Weather1Var.High
+        feels like : @Model.Weather1Var.FeelsLike
+        sun down : @Model.Weather1Var.SunDown
+        sun up: @Model.Weather1Var.SunUp
+        Temp : @Model.Weather1Var.Temp
+    </p>
+    <h1>@Model.Weather2Var.CityName</h1>
+    <p>
+        wind: @Model.Weather2Var.Wind
+        low temp : @Model.Weather2Var.Low
+        high temp : @Model.Weather2Var.High
+        feels like : @Model.Weather2Var.FeelsLike
+        sun down : @Model.Weather2Var.SunDown
+        sun up: @Model.Weather2Var.SunUp
+        Temp : @Model.Weather2Var.Temp
+    </p>
 
 </div>
 

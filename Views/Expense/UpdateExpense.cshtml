@@ -1,86 +1,18 @@
 ﻿@using TestBudgeting.Models.Expense
 @model Expense
 
-    <style >
-    a { /*Text color of hyperlinks*/
-        color: #3E1B24;
-        padding: 1px 10px;
-        font-weight: bold;
-        text-decoration: none;
-        font-size: 30px;
-    }
-
-        a:hover {
-            background-color: #FFD5A7;
+<head>
+    <link rel="stylesheet" href="/css/site.css">
+    <style>
+        body {
+            background-color: #3E1B24;
+            text-align: center;
         }
-    /*Styles the whole background of the main body and the footer*/
-    body {
-        background-color: #3E1B24;
-        color: #3E1B24;
-        font-size: 20px;
-    }
-
-    /*Styles the container that hold the form*/
-    .container {
-        text-align: center;
-        color: #FFD5A7;
-        font-weight: bold;
-        font-size: 40px; /* Increased font size of all titles*/
-        margin-bottom: 20px;
-    }
-
-    /*Styled the form itself*/
-    form {
-        padding: 20px;
-        width: 33%;
-        margin: 0 auto;
-    }
+    </style>
+</head>
 
 
-    /*Styles the default boxes before clicked*/
-    input[type="text"],
-    input[type="number"] {
-        background-color: #FFD5A7;
-        color: #3E1B24;
-        font-weight: bold;
-        font-size: 20px;
-        width: 100%;
-        padding: 5px;
-    }
-    /*styles the Submit button*/
-    input[type="submit"] {
-        background-color: #3E1B24;
-        color: #FFD5A7;
-        font-weight: bold;
-        font-size: 20px;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-    }
-
-
-    /*Styles the dorpdown box for Budget*/
-    select option {
-        background-color: #FFD5A7;
-        color: #3E1B24;
-        font-weight: bold;
-        font-size: 20px;
-    }
-    /*keep ths background color  of each box constant when selected*/
-    input[type="text"]:focus,
-    input[type="number"]:focus {
-        background-color: #FFD5A7; 
-        color: #3E1B24;
-        font-weight: bold;
-        font-size: 20px;
-        width: 100%;
-        padding: 5px;
-        outline: none;
-    }
-
-</style>
-
-<h2>Update Expense</h2>
+<h1 style="text-align: center; color: #FFD5A7; font-weight: bold; font-size: 40px; margin-bottom: 20px; background-color: #3E1B24;" >Update Expense</h1>
 
 @using (Html.BeginForm("UpdateExpenseToDatabase", "Expense", "Post"))
 {
@@ -96,22 +28,26 @@
             }
         </select>
     </div>
-
+        <div class="form-group">
     <label asp-for="Payee" class="control-label">Payee</label>
     <input type="text" name="Payee" class="form-control" value="@Model.Payee" />
-
+    </div>
+        <div class="form-group">
     <label asp-for="Amount" class="control-label">Amount</label>
     <input type="number" name="Amount" class="form-control" value="@Model.Amount" />
-
+    </div>
+            <div class="form-group">
     <label asp-for="Month" class="control-label">Month</label>
     <input type="number" name="Month" class="form-control" value="@Model.Month" />
-
+    </div>
+                <div class="form-group">
     <label asp-for="Day" class="control-label">Day</label>
     <input type="number" name="Day" class="form-control" value="@Model.Day" />
-
+    </div>
+                    <div class="form-group">
     <label asp-for="Year" class="control-label">Year</label>
     <input type="number" name="Year" class="form-control" value="@Model.Year" />
+    </div>
 
-
-    <input type="submit" value="Update Expense" class="btn btn-primary" />
+    <input type="submit" value="Update Expense" class="hyperlink-top" />
 }

@@ -6,30 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Micah's Budgeting App'</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/site.css">
+
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+
+        <nav class="right-navbar custom-bg-color">
+            <!-- Navbar content -->
+       
+
             <div class="container">
              
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
+                <div  class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul  class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a asp-area="" asp-controller="Home" asp-action="HomePage">Home</a>
+                            <a asp-area="" asp-controller="Home" asp-action="HomePage" class="hyper-link ">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a  asp-area="" asp-controller="Expense" asp-action="Index">Expenses</a>
+                            <a asp-area="" asp-controller="Expense" asp-action="Index" class="hyper-link ">Expenses</a>
                         </li>
                         <li class="nav-item">
-                            <a  asp-area="" asp-controller="Budget" asp-action="ViewBudgets">Budgets</a>
+                            <a asp-area="" asp-controller="Budget" asp-action="ViewBudgets" class="hyper-link ">Budgets</a>
                         </li>
                         <li class="nav-item">
-                            <a asp-area="" asp-controller="Gmail" asp-action="GmailPage">Gmail</a>
+                            <a asp-area="" asp-controller="Gmail" asp-action="GmailPage" class="hyper-link ">Gmail</a>
                         </li>
+
+                        <!--mx-5 and mx 1 to shift the bar left and right-->
+
                     </ul>
                 </div>
             </div>
@@ -41,7 +51,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class=" footer text-muted">
         <div class="container">
            
            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

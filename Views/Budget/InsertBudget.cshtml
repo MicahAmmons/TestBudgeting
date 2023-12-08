@@ -1,62 +1,14 @@
 ﻿@using TestBudgeting.Models.Budget;
 @model Budget
 
+<head>
+    <link rel="stylesheet" href="/css/site.css">
+</head>
 <style>
-    a { /*Text color of hyperlinks*/
-        color: #3E1B24;
-        padding: 1px 10px;
-        font-weight: bold;
-        text-decoration: none;
-        font-size: 30px;
-    }
-
-        a:hover {
-            background-color: #FFD5A7;
-        }
-
     body {
         background-color: #3E1B24;
         text-align: center;
     }
-
-    form {
-
-        padding: 40px;
-        width: 33%;
-        margin: 0 auto;
-    }
-
-    label {
-        color: #FFD5A7;
-        font-weight: bold;
-        font-size: 30px;
-    }
-
-    input[type="text"],
-    input[type="number"] {
-        background-color: #FFD5A7;
-        color: #3E1B24;
-        font-weight: bold;
-        font-size: 20px;
-        width: 100%;
-        padding: 5px;
-    }
-
-    input[type="submit"] {
-        background-color: #3E1B24;
-        color: #FFD5A7;
-        font-weight: bold;
-        font-size: 20px;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-    }
-
-  
-
-
-
-
 </style>
 
 <h2 style="color: #FFD5A7; font-weight: bold; font-size: 50px;">Create a New Budget</h2>
@@ -75,6 +27,5 @@
         <input type="number" style="text-align: center" name="BudgetAmount" class="form-control" value="@Model.BudgetAmount" />
     </div>
 
-    <input type="submit" value="Create Budget" class="btn btn-primary" />
+    <input type="submit" value="Create Budget" class="hyperlink-top" />
 }
-<div asp-validation-summary="All" class="text-danger"></div>
