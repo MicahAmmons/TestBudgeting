@@ -3,33 +3,105 @@
 
 <head>
     <link rel="stylesheet" href="/css/site.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            color: #FFD5A7;
+            background-color: #3E1B24;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #FFD5A7;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+            color: #3E1B24;
+        }
+    </style>
 </head>
 
-<div>
-    <h1>@Model.Weather1Var.CityName</h1>
-    <p>
-        wind: @Model.Weather1Var.Wind 
-        low temp : @Model.Weather1Var.Low
-        high temp : @Model.Weather1Var.High
-        feels like : @Model.Weather1Var.FeelsLike
-        sun down : @Model.Weather1Var.SunDown
-        sun up: @Model.Weather1Var.SunUp
-        Temp : @Model.Weather1Var.Temp
-    </p>
-    <h1>@Model.Weather2Var.CityName</h1>
-    <p>
-        wind: @Model.Weather2Var.Wind
-        low temp : @Model.Weather2Var.Low
-        high temp : @Model.Weather2Var.High
-        feels like : @Model.Weather2Var.FeelsLike
-        sun down : @Model.Weather2Var.SunDown
-        sun up: @Model.Weather2Var.SunUp
-        Temp : @Model.Weather2Var.Temp
-    </p>
+<body>
 
-</div>
+    <div>
+        <h1 style="font-size: 30px; margin-left: 10px;">@DateTime.Now.ToString("dddd, MMMM dd")</h1>
+    </div>
+    <div style="display: flex; justify-content: space-between; width: 600px;">
+        <div style="display: grid; grid-template-rows: repeat(4, 1fr); grid-template-columns: repeat(4, 1fr); width: 300px; height: 150px; border-right: 1px solid #FFD5A7;">
+        <!-- Name -->
+            <div style="grid-row: 1 / span 1; grid-column: 1 / span 2; display: flex; flex-direction: column; justify-content: left; text-align: center;">
+                <h1 style="font-weight: bold; font-size: 30px">@Model.Weather1Var.CityName</h1>
+            </div>
+        <!-- Sun Up -->
+        <div style="grid-row: 2 / span 1; grid-column: 1 / span 2; display: flex; flex-direction: column; justify-content: center; align-items: stretch; text-align: center;">
+            <span>🔅 ↑ @Model.Weather1Var.SunUp</span>
+        </div>
+        <!-- Sun Down -->
+        <div style="grid-row: 3 / span 1; grid-column: 1 / span 2; display: flex; flex-direction: column; justify-content: center; align-items: stretch; text-align: center;">
+            <span>🔅 ↓ @Model.Weather1Var.SunDown</span>
+        </div>
+        <!-- Wind -->
+        <div style="grid-row: 4 / span 1; grid-column: 1 / span 2; display: flex; flex-direction: column; justify-content: center; align-items: stretch; text-align: center;">
+            <span>༄ @Model.Weather1Var.Wind MPH</span>
+        </div>
+        <!-- Temp -->
+        <div style="grid-row: 2 / span 2; grid-column: 3 / span 1; display: flex; flex-direction: column; justify-content: center; align-items: stretch; text-align: center;">
+            <span style="font-size: 35px"> <span style="font-size: 20px">🌡</span>@Model.Weather1Var.Temp</span>
+        </div>
+        <!-- High Temp -->
+        <div style="grid-row: 2 / span 1; grid-column: 4 / span 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; text-align: left;">
+            <span>@Model.Weather1Var.High ↑</span>
+        </div>
+        <div style="grid-row: 3 / span 1; grid-column: 4 / span 1; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; text-align: left;">
+            <span>@Model.Weather1Var.Low ↓</span>
+        </div>
+        <!-- Feels Like -->
+        <div style="grid-row: 4 / span 1; grid-column: 3 / span 2; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; text-align: left;">
+            <span>Feels: @Model.Weather1Var.FeelsLike</span>
+        </div>
+    </div>
+
+            <div style="display: grid; grid-template-rows: repeat(4, 1fr); grid-template-columns: repeat(4, 1fr); width: 300px; height: 150px">
+                <!-- Name -->
+                <div style="grid-row: 1 / span 1; grid-column: 1 / span 2; display: flex; flex-direction: column; justify-content: left; align-items: stretch; text-align: center;">
+                    <h1 style="font-weight: bold; font-size: 30px">@Model.Weather2Var.CityName</h1>
+                </div>
+                <!-- Sun Up -->
+                <div style="grid-row: 2 / span 1; grid-column: 1 / span 2; display: flex; flex-direction: column; justify-content: center; align-items: stretch; text-align: center;">
+                    <span>🔅 ↑ @Model.Weather2Var.SunUp</span>
+                </div>
+                <!-- Sun Down -->
+                <div style="grid-row: 3 / span 1; grid-column: 1 / span 2; display: flex; flex-direction: column; justify-content: center; align-items: stretch; text-align: center;">
+                    <span>🔅 ↓ @Model.Weather2Var.SunDown</span>
+                </div>
+                <!-- Wind -->
+                <div style="grid-row: 4 / span 1; grid-column: 1 / span 2; display: flex; flex-direction: column; justify-content: center; align-items: stretch; text-align: center;">
+                    <span>༄ @Model.Weather2Var.Wind MPH</span>
+                </div>
+                <!-- Temp -->
+                <div style="grid-row: 2 / span 2; grid-column: 3 / span 1; display: flex; flex-direction: column; justify-content: center; align-items: stretch; text-align: center;">
+                    <span style="font-size: 35px"> <span style="font-size: 20px">🌡</span>@Model.Weather2Var.Temp</span>
+                </div>
+                <!-- High Temp -->
+                <div style="grid-row: 2 / span 1; grid-column: 4 / span 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; text-align: left;">
+                    <span>@Model.Weather2Var.High ↑</span>
+                </div>
+                <div style="grid-row: 3 / span 1; grid-column: 4 / span 1; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; text-align: left;">
+                    <span>@Model.Weather2Var.Low ↓</span>
+                </div>
+                <!-- Feels Like -->
+                <div style="grid-row: 4 / span 1; grid-column: 3 / span 2; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; text-align: left;">
+                    <span>Feels: @Model.Weather2Var.FeelsLike</span>
+                </div>
+            </div>
+    </div>
+
+</body>
 
 <div>
-    <a href="/Expense/InsertExpense" class="body-link">Add Expense</a>
+    <a href="/Expense/InsertExpense" class="hyper-link">Add Expense</a>
 </div>
 
