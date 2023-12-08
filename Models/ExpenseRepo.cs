@@ -55,6 +55,7 @@ namespace TestBudgeting.Models
            exp.Distinct = _conn.Query<string>("SELECT DistinctBudgets FROM budgets;");
             return exp;
         }
+
         public void DeleteExpense(Expense expense)
         {
             _conn.Execute("DELETE FROM expenses WHERE Number = @id;", new { id = expense.Number });

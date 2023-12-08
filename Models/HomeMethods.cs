@@ -5,7 +5,7 @@ namespace APIsAndJSON
 {
     public class OpenWeatherMapAPI
     {
-        public static Weather GetTemp()
+        public static Weather GetWeather()
         {
 
             HttpClient client = new HttpClient();

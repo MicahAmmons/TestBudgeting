@@ -23,7 +23,7 @@ namespace Testing.Controllers
         public IActionResult HomePage()
         {
 
-            Weather weather = OpenWeatherMapAPI.GetTemp();
+            Weather weather = OpenWeatherMapAPI.GetWeather();
             return View(weather);
         }
 
