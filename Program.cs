@@ -8,6 +8,7 @@ using BudgetAppProject;
 using TestBudgeting;
 using TestBudgeting.Models.Budget;
 using TestBudgeting.Models.Expense;
+using TestBudgeting.Models.Weather;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,7 @@ builder.Services.AddScoped<IDbConnection>((s) =>
 
 builder.Services.AddTransient<IExpenseRepo, ExpenseRepo>();
 builder.Services.AddTransient<IBudgetRepo, BudgetRepo>();
+builder.Services.AddTransient<ReminderMethods>();
 var app = builder.Build();
 
 

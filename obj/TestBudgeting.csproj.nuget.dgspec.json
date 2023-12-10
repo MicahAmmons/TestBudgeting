@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[1.64.0, )"
             },
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.64.0, )"
+            },
             "Google.Apis.Gmail.v1": {
               "target": "Package",
               "version": "[1.64.0.3231, )"

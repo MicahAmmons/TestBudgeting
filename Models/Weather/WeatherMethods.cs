@@ -69,6 +69,7 @@ namespace TestBudgeting.Models.Weather
             // grabbing value at that indiex - type JOBject. Conver to string, then parse to double
         }
 
+
     }
 }
 //endpoint https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}&units=imperial

@@ -1,56 +1,31 @@
-﻿<html>
-    <head>
-        <link rel="stylesheet" href="/css/site.css">
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/css/site.css">
     <style>
-
-        header {
-            background-color: #3E1B24;
-            font-size: 20px;
-        }
-
         body {
-            background-color: #3E1B24;
-            color: #3E1B24;
-            font-size: 20px;
             color: #FFD5A7;
         }
 
-        a { /*Text color of hyperlinks*/
-            color: #3E1B24;
-            padding: 1px 10px;
-            font-weight: bold;
-            text-decoration: none;
-            font-size: 30px;
+        .email-entry {
+            border-bottom: 1px solid #ccc; /* Add bottom border style */
+            padding-bottom: 10px; /* Add some spacing */
         }
 
-            a:hover {
-                background-color: #FFD5A7;
-            }
-
-            a.body-link {
-                color: #3E1B24;
-                background-color: #FFD5A7;
-                border-radius: 5px;
-                padding: 5px, 5px;
-            }
-
-                a.body-link:hover {
-                    background-color: #3E1B24;
-                    color: #FFD5A7;
-                }
-
+        .email-contents {
+            display: none; /* Initially hide email contents */
+            margin-top: 10px; /* Add some spacing */
+        }
     </style>
 </head>
 <body>
+    <p>Gmail API Quickstart</p>
+
     <!--Add buttons to initiate auth sequence and sign out-->
-    <div>
     <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
     <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
-        <pre id="content" style="white-space: pre-wrap;"></pre>
-    </div>
 
-
-
+    <div id="emailList"></div>
 
     <script type="text/javascript">
         /* exported gapiLoaded */
@@ -58,14 +33,16 @@
         /* exported handleAuthClick */
         /* exported handleSignoutClick */
 
+        // TODO(developer): Set to client ID and API key from the Developer Console
         const CLIENT_ID = '858508829491-fdvlfmrgsh4v14s779lrfi2m7e1tle30.apps.googleusercontent.com';
         const API_KEY = 'AIzaSyCqQUPyxqEK2Khr6inXFgOhQBEdUcAxpaA';
 
         // Discovery doc URL for APIs used by the quickstart
         const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest';
+
         // Authorization scopes required by the API; multiple scopes can be
         // included, separated by spaces.
-        const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly';
+        const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.modify';
 
         let tokenClient;
         let gapiInited = false;
@@ -74,37 +51,17 @@
         document.getElementById('authorize_button').style.visibility = 'hidden';
         document.getElementById('signout_button').style.visibility = 'hidden';
 
-        //Checking for existing Auth Tokens
-        const storedAccessToken = localStorage.getItem('access_token');
-        const storedRefreshToken = localStorage.getItem('refresh_token');
-
-        if (storedAccessToken) {
-            // Set the stored access token in the client
-            gapi.client.setToken({ access_token: storedAccessToken });
-            // You may also want to check if the access token is still valid here
-
-            // Show the authorized view
-            document.getElementById('authorize_button').style.visibility = 'hidden';
-            document.getElementById('signout_button').style.visibility = 'visible';
-            listLabels(); // Fetch and display labels
-
-        } else {
-            // User needs to authorize the application
-            document.getElementById('authorize_button').style.visibility = 'visible';
-            document.getElementById('signout_button').style.visibility = 'hidden';
-        }
-
-        
-         //Callback after api.js is loaded.
-         
+        /**
+         * Callback after api.js is loaded.
+         */
         function gapiLoaded() {
             gapi.load('client', initializeGapiClient);
         }
 
-        
-        // Callback after the API client is loaded. Loads the discovery doc to initialize the API.
-
-         
+        /**
+         * Callback after the API client is loaded. Loads the
+         * discovery doc to initialize the API.
+         */
         async function initializeGapiClient() {
             await gapi.client.init({
                 apiKey: API_KEY,
@@ -114,9 +71,9 @@
             maybeEnableButtons();
         }
 
-        
-         //Callback after Google Identity Services are loaded.
-         
+        /**
+         * Callback after Google Identity Services are loaded.
+         */
         function gisLoaded() {
             tokenClient = google.accounts.oauth2.initTokenClient({
                 client_id: CLIENT_ID,
@@ -127,22 +84,26 @@
             maybeEnableButtons();
         }
 
-        
-         //Enables user interaction after all libraries are loaded.
+        /**
+         * Enables user interaction after all libraries are loaded.
+         */
         function maybeEnableButtons() {
             if (gapiInited && gisInited) {
                 document.getElementById('authorize_button').style.visibility = 'visible';
             }
         }
-         // Sign in the user upon button click.
-         function handleAuthClick() {
+
+        /**
+         *  Sign in the user upon button click.
+         */
+        async function handleAuthClick() {
             tokenClient.callback = async (resp) => {
                 if (resp.error !== undefined) {
                     throw (resp);
                 }
                 document.getElementById('signout_button').style.visibility = 'visible';
                 document.getElementById('authorize_button').innerText = 'Refresh';
-                await listLabels();
+                await listRecentUnreadEmails();
             };
 
             if (gapi.client.getToken() === null) {
@@ -155,61 +116,157 @@
             }
         }
 
-        // Callback after successful authentication
-        tokenClient.callback = async (resp) => {
-            if (resp.error !== undefined) {
-                throw (resp);
-            }
-            // Store the access token and refresh token securely
-            localStorage.setItem('access_token', resp.access_token);
-            localStorage.setItem('refresh_token', resp.refresh_token);
-
-            document.getElementById('signout_button').style.visibility = 'visible';
-            document.getElementById('authorize_button').innerText = 'Refresh';
-            await listLabels();
-        };
-
-
-
-        // Sign out the user upon button click.
-
+        /**
+         *  Sign out the user upon button click.
+         */
         function handleSignoutClick() {
             const token = gapi.client.getToken();
             if (token !== null) {
                 google.accounts.oauth2.revoke(token.access_token);
                 gapi.client.setToken('');
-                document.getElementById('content').innerText = '';
+                document.getElementById('emailList').innerHTML = '';
                 document.getElementById('authorize_button').innerText = 'Authorize';
                 document.getElementById('signout_button').style.visibility = 'hidden';
             }
         }
-        //Print all Labels in the authorized user's inbox. If no labels are found an appropriate message is printed
-        async function listLabels() {
-            let response;
+
+        /**
+         * Lists the 10 most recent unread emails.
+         */
+        async function listRecentUnreadEmails() {
             try {
-                response = await gapi.client.gmail.users.labels.list({
-                    'userId': 'me',
+                const response = await gapi.client.gmail.users.messages.list({
+                    userId: 'me',
+                    q: 'is:unread',
+                    maxResults: 10,
                 });
-            } catch (err) {
-                document.getElementById('content').innerText = err.message;
-                return;
+
+                const messages = response.result.messages;
+
+                if (messages && messages.length > 0) {
+                    const emailList = document.getElementById('emailList');
+                    emailList.innerHTML = '';
+
+                    for (const message of messages) {
+                        const messageDetails = await getMessageDetails(message.id);
+                        displayMessageDetails(emailList, messageDetails);
+                    }
+                } else {
+                    document.getElementById('emailList').innerText = 'No unread messages found.';
+                }
+            } catch (error) {
+                console.error('Error listing messages:', error);
             }
-            const labels = response.result.labels;
-            if (!labels || labels.length == 0) {
-                document.getElementById('content').innerText = 'No labels found.';
-                return;
+        }
+
+        /**
+         * Fetches the details of a specific email message using its messageId, including the entire body.
+         */
+        async function getMessageDetails(messageId) {
+            try {
+                const response = await gapi.client.gmail.users.messages.get({
+                    userId: 'me',
+                    id: messageId,
+                    format: 'full' // Request the full message content
+                });
+
+                const message = response.result;
+
+                return {
+                    sender: message.payload.headers.find(header => header.name === 'From').value,
+                    subject: message.payload.headers.find(header => header.name === 'Subject').value,
+                    sentTimestamp: new Date(Number(message.internalDate)).toLocaleString(),
+                    body: message.snippet, // Get email snippet as body
+                    fullBody: getMessageBody(message.payload) // Get the entire email body
+                };
+            } catch (error) {
+                console.error('Error fetching message details:', error);
+                return null;
             }
-            // Flatten to string to display
-            const output = labels.reduce(
-                (str, label) => `${str}${label.name}\n`,
-                'Labels:\n');
-            document.getElementById('content').innerText = output;
+        }
+
+        /**
+         * Recursively extracts and concatenates the email body parts.
+         */
+        function getMessageBody(payload) {
+            if (!payload) {
+                return '';
+            }
+
+            if (payload.body && payload.body.data) {
+                return decodeBase64UrlSafe(payload.body.data);
+            }
+
+            if (payload.parts) {
+                let body = '';
+                for (const part of payload.parts) {
+                    body += getMessageBody(part);
+                }
+                return body;
+            }
+
+            return '';
+        }
+
+        /**
+         * Decodes a base64 URL-safe encoded string.
+         */
+        function decodeBase64UrlSafe(input) {
+            return atob(input.replace(/_/g, '/').replace(/-/g, '+'));
         }
 
 
 
+        /**
+        * Displays the details of an email message.
+        */
+        function displayMessageDetails(emailList, messageDetails) {
+            if (messageDetails) {
+                const emailEntry = document.createElement('div');
+                emailEntry.className = 'email-entry'; // Add the email-entry class
 
-   
+                const emailContent = document.createElement('div');
+                emailContent.className = 'email-contents'; // Add the email-contents class
+
+                const emailButton = document.createElement('button');
+                emailButton.innerText = 'Read';
+                emailButton.addEventListener('click', () => {
+                    if (emailContent.style.display === 'none') {
+                        emailContent.style.display = 'block';
+                        emailButton.innerText = 'Close';
+                    } else {
+                        emailContent.style.display = 'none';
+                        emailButton.innerText = 'Read';
+                    }
+                });
+
+                emailEntry.innerHTML = `
+                            <p>Sender: ${messageDetails.sender}</p>
+                            <p>Subject: ${messageDetails.subject}</p>
+                            <p>Sent: ${messageDetails.sentTimestamp}</p>
+                        `;
+
+                // Set the email content to the full email body
+                emailContent.innerHTML = messageDetails.fullBody;
+
+                emailContent.style.display = 'none'; // Hide email body by default
+
+                emailEntry.appendChild(emailButton);
+                emailEntry.appendChild(emailContent);
+                emailList.appendChild(emailEntry);
+            }
+        }
+        /**
+        * Removes HTML tags from a string.
+        */
+        function stripHtmlTags(html) {
+            const div = document.createElement("div");
+            div.innerHTML = html;
+            return div.textContent || div.innerText || "";
+        }
+
+
+
     </script>
     <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
     <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>

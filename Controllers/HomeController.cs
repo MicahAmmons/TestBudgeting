@@ -7,25 +7,49 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using TestBudgeting.Models;
+using TestBudgeting.Models.Expense;
 using TestBudgeting.Models.Weather;
 
 namespace Testing.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        //private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        //public HomeController(ILogger<HomeController> logger)
+        //{
+        //    _logger = logger;
+        //}
+
+        private readonly ReminderMethods repo;
+
+        public HomeController(ReminderMethods repo)
         {
-            _logger = logger;
+            this.repo = repo;
         }
 
         public IActionResult HomePage()
         {
-
+            repo.RefreshReminders();
             Home home = WeatherMethods.GetWeather();
+            home.Reminders = repo.GetReminders();
             return View(home);
         }
+        public IActionResult CompleteReminder(int id)
+        {
+            repo.UpdateRemind(id);
+            return new EmptyResult();
+        }
+
+        public IActionResult DeleteReminder(int id)
+        {
+            repo.DeleteReminder(id);
+            return new EmptyResult();
+        }
+
+
+
+
 
         public IActionResult Privacy()
         {
