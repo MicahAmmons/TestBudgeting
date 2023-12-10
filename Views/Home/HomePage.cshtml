@@ -140,6 +140,8 @@
             </div>
     </div>
 
+
+
     <div style="width: 50%; margin-top: 100px">
         <table>
             <thead>
@@ -172,15 +174,63 @@
         </table>
         </div>
 
+    <style>
+        input::placeholder {
+            font-size: 15px;
+            color: #3E1B24;
+        }
+    </style>
+
+    <form method="POST" action="/Home/AddReminder" id="reminderForm" style="width: 50%; text-align: left; margin: 0; padding: 0; display: flex; align-items: center;">
+        <button type="button" id="addReminderBtn" style="width: 3%; font-size: 25px; height: 100%; font-weight: bold; color: green; border: none; background: none; cursor: pointer; margin-right: 20px;">+</button>
+        <input type="text" name="Reminder.Details" placeholder="Details" style="width: 65%; height: 12px; padding: 10px; margin: 1px; margin-right: 10px">
+        <input type="date" name="Reminder.DateAsString" style="width: 16%; height: 12px; padding: 10px; margin: 1px; margin-right: 10px;">
+        <input type="text" name="Reminder.Weekly" placeholder="Weekly" style="width: 16%; height: 12px; padding: 10px; margin: 1px;">
+    </form>
+
+    <div id="successMessage" style="display: none; color: green; margin-top: 10px;">Reminder added successfully.</div>
+
+    <script>
+        document.getElementById('addReminderBtn').addEventListener('click', function () {
+            // Get form data
+            var formData = new FormData(document.getElementById('reminderForm'));
+
+            // Make an AJAX POST request to the server
+            $.ajax({
+                url: '/Home/AddReminder',  // Replace with the actual URL of your server-side endpoint
+                type: 'POST',
+                data: formData,
+                processData: false,  // Prevent jQuery from processing the data
+                contentType: false,  // Set content type to false, jQuery will set it automatically
+                success: function (response) {
+                    // Handle success, e.g., show a success message
+                    document.getElementById('successMessage').style.display = 'block';
+
+                    // Reset the form
+                    document.getElementById('reminderForm').reset();
+                },
+                error: function (error) {
+                    // Handle error, e.g., show an error message
+                    console.error(error);
+                }
+            });
+        });
+    </script>
+
+
+
+    <h1>   ...</h1>
+    <div>
+        <a href="/Expense/InsertExpense" class="hyper-link">Add Expense</a>
+    </div>
+
 </body>
 
 
 
 
 
-<div>
-    <a href="/Expense/InsertExpense" class="hyper-link">Add Expense</a>
-</div>
+
 
 
 

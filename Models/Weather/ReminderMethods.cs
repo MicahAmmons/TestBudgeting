@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using System.Data;
+using System.Globalization;
 using TestBudgeting.Models.Expense;
 
 namespace TestBudgeting.Models.Weather
@@ -19,7 +20,7 @@ namespace TestBudgeting.Models.Weather
         {
             string today = DateTime.Now.DayOfWeek.ToString();
 
-            return _conn.Query<Reminder>("SELECT * FROM reminders WHERE Complete = 1 OR Weekly = @day;", new { day = today });
+            return _conn.Query<Reminder>("SELECT * FROM reminders WHERE Complete = 1");
         }
 
         public void UpdateRemind(int id)
@@ -55,6 +56,35 @@ namespace TestBudgeting.Models.Weather
                     currentDay = currentDay,
                 });
         }
+        public void AddReminder(Reminder reminder)
+        {
+            string[] dateParts = reminder.DateAsString.Split('-');
+            int year = int.Parse(dateParts[0]);
+            int month = int.Parse(dateParts[1]);
+            int day = int.Parse(dateParts[2]);
+
+            string sqlQuery = "INSERT INTO reminders (Details, Month, Day, Year";
+            string parameters = "@details, @month, @day, @year";
+
+            if (reminder.Weekly != null)
+            {
+                sqlQuery += ", Weekly";
+                parameters += ", @weekly";
+            }
+
+            sqlQuery += ") VALUES (" + parameters + ");";
+
+            _conn.Execute(sqlQuery, new
+            {
+                details = reminder.Details,
+                month = month,
+                day = day,
+                year = year,
+                weekly = reminder.Weekly 
+            });
+        }
+
+
 
     }
 }

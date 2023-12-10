@@ -43,8 +43,23 @@ namespace Testing.Controllers
 
         public IActionResult DeleteReminder(int id)
         {
-            repo.DeleteReminder(id);
-            return new EmptyResult();
+            try
+            {
+                repo.DeleteReminder(id);
+                return new EmptyResult();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while deleting the reminder: {ex.Message}");
+            }
+        }
+
+        public IActionResult AddReminder(Reminder reminder)
+        {
+
+                repo.AddReminder(reminder);
+                return new EmptyResult(); 
+
         }
 
 
