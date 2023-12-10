@@ -176,17 +176,18 @@
 
     <style>
         input::placeholder {
-            font-size: 15px;
+            font-size: 14px;
             color: #3E1B24;
         }
     </style>
 
     <form method="POST" action="/Home/AddReminder" id="reminderForm" style="width: 50%; text-align: left; margin: 0; padding: 0; display: flex; align-items: center;">
         <button type="button" id="addReminderBtn" style="width: 3%; font-size: 25px; height: 100%; font-weight: bold; color: green; border: none; background: none; cursor: pointer; margin-right: 20px;">+</button>
-        <input type="text" name="Reminder.Details" placeholder="Details" style="width: 65%; height: 12px; padding: 10px; margin: 1px; margin-right: 10px">
-        <input type="date" name="Reminder.DateAsString" style="width: 16%; height: 12px; padding: 10px; margin: 1px; margin-right: 10px;">
-        <input type="text" name="Reminder.Weekly" placeholder="Weekly" style="width: 16%; height: 12px; padding: 10px; margin: 1px;">
+        <input type="text" name="Reminder.Details" placeholder="Details" style="width: 65%; height: 12px; padding: 10px; margin: 1px; margin-right: 10px; font-size: 14px;">
+        <input type="date" name="Reminder.DateAsString" style="width: 16%; height: 12px; padding: 10px; margin: 1px; margin-right: 10px; background-color: #FFD5A7; font-size: 14px;">
+        <input type="text" name="Reminder.Weekly" placeholder="Weekly" style="width: 16%; height: 12px; padding: 10px; margin: 1px; font-size: 14px;">
     </form>
+
 
     <div id="successMessage" style="display: none; color: green; margin-top: 10px;">Reminder added successfully.</div>
 
