@@ -1,31 +1,17 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="/css/site.css">
-    <style>
-        body {
-            color: #FFD5A7;
-        }
-
-        .email-entry {
-            border-bottom: 1px solid #ccc; /* Add bottom border style */
-            padding-bottom: 10px; /* Add some spacing */
-        }
-
-        .email-contents {
-            display: none; /* Initially hide email contents */
-            margin-top: 10px; /* Add some spacing */
-        }
-    </style>
+    <title>Gmail API Quickstart</title>
+    <meta charset="utf-8" />
 </head>
 <body>
     <p>Gmail API Quickstart</p>
 
-    <!--Add buttons to initiate auth sequence and sign out-->
+    <!-- Add buttons to initiate auth sequence and sign out -->
     <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
     <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
 
-    <div id="emailList"></div>
+    <div id="content"></div>
 
     <script type="text/javascript">
         /* exported gapiLoaded */
@@ -43,6 +29,7 @@
         // Authorization scopes required by the API; multiple scopes can be
         // included, separated by spaces.
         const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.modify';
+
 
         let tokenClient;
         let gapiInited = false;
@@ -94,16 +81,16 @@
         }
 
         /**
-         *  Sign in the user upon button click.
+         * Sign in the user upon button click.
          */
-        async function handleAuthClick() {
+        function handleAuthClick() {
             tokenClient.callback = async (resp) => {
                 if (resp.error !== undefined) {
                     throw (resp);
                 }
                 document.getElementById('signout_button').style.visibility = 'visible';
                 document.getElementById('authorize_button').innerText = 'Refresh';
-                await listRecentUnreadEmails();
+                await listEmails();
             };
 
             if (gapi.client.getToken() === null) {
@@ -117,153 +104,86 @@
         }
 
         /**
-         *  Sign out the user upon button click.
+         * Sign out the user upon button click.
          */
         function handleSignoutClick() {
             const token = gapi.client.getToken();
             if (token !== null) {
                 google.accounts.oauth2.revoke(token.access_token);
                 gapi.client.setToken('');
-                document.getElementById('emailList').innerHTML = '';
+                document.getElementById('content').innerText = '';
                 document.getElementById('authorize_button').innerText = 'Authorize';
                 document.getElementById('signout_button').style.visibility = 'hidden';
             }
         }
 
         /**
-         * Lists the 10 most recent unread emails.
-         */
-        async function listRecentUnreadEmails() {
-            try {
-                const response = await gapi.client.gmail.users.messages.list({
-                    userId: 'me',
-                    q: 'is:unread',
-                    maxResults: 10,
-                });
-
-                const messages = response.result.messages;
-
-                if (messages && messages.length > 0) {
-                    const emailList = document.getElementById('emailList');
-                    emailList.innerHTML = '';
-
-                    for (const message of messages) {
-                        const messageDetails = await getMessageDetails(message.id);
-                        displayMessageDetails(emailList, messageDetails);
-                    }
-                } else {
-                    document.getElementById('emailList').innerText = 'No unread messages found.';
-                }
-            } catch (error) {
-                console.error('Error listing messages:', error);
-            }
-        }
-
-        /**
-         * Fetches the details of a specific email message using its messageId, including the entire body.
-         */
-        async function getMessageDetails(messageId) {
-            try {
-                const response = await gapi.client.gmail.users.messages.get({
-                    userId: 'me',
-                    id: messageId,
-                    format: 'full' // Request the full message content
-                });
-
-                const message = response.result;
-
-                return {
-                    sender: message.payload.headers.find(header => header.name === 'From').value,
-                    subject: message.payload.headers.find(header => header.name === 'Subject').value,
-                    sentTimestamp: new Date(Number(message.internalDate)).toLocaleString(),
-                    body: message.snippet, // Get email snippet as body
-                    fullBody: getMessageBody(message.payload) // Get the entire email body
-                };
-            } catch (error) {
-                console.error('Error fetching message details:', error);
-                return null;
-            }
-        }
-
-        /**
-         * Recursively extracts and concatenates the email body parts.
-         */
-        function getMessageBody(payload) {
-            if (!payload) {
-                return '';
-            }
-
-            if (payload.body && payload.body.data) {
-                return decodeBase64UrlSafe(payload.body.data);
-            }
-
-            if (payload.parts) {
-                let body = '';
-                for (const part of payload.parts) {
-                    body += getMessageBody(part);
-                }
-                return body;
-            }
-
-            return '';
-        }
-
-        /**
-         * Decodes a base64 URL-safe encoded string.
-         */
-        function decodeBase64UrlSafe(input) {
-            return atob(input.replace(/_/g, '/').replace(/-/g, '+'));
-        }
-
-
-
-        /**
-        * Displays the details of an email message.
+        * List and display sender information, subject lines, and date/time
+        * of the most recent 10 emails in the authorized user's inbox.
         */
-        function displayMessageDetails(emailList, messageDetails) {
-            if (messageDetails) {
-                const emailEntry = document.createElement('div');
-                emailEntry.className = 'email-entry'; // Add the email-entry class
-
-                const emailContent = document.createElement('div');
-                emailContent.className = 'email-contents'; // Add the email-contents class
-
-                const emailButton = document.createElement('button');
-                emailButton.innerText = 'Read';
-                emailButton.addEventListener('click', () => {
-                    if (emailContent.style.display === 'none') {
-                        emailContent.style.display = 'block';
-                        emailButton.innerText = 'Close';
-                    } else {
-                        emailContent.style.display = 'none';
-                        emailButton.innerText = 'Read';
-                    }
+        async function listEmails() {
+            let response;
+            try {
+                response = await gapi.client.gmail.users.messages.list({
+                    'userId': 'me',
+                    'maxResults': 10, // Limit the number of results to 10
                 });
-
-                emailEntry.innerHTML = `
-                            <p>Sender: ${messageDetails.sender}</p>
-                            <p>Subject: ${messageDetails.subject}</p>
-                            <p>Sent: ${messageDetails.sentTimestamp}</p>
-                        `;
-
-                // Set the email content to the full email body
-                emailContent.innerHTML = messageDetails.fullBody;
-
-                emailContent.style.display = 'none'; // Hide email body by default
-
-                emailEntry.appendChild(emailButton);
-                emailEntry.appendChild(emailContent);
-                emailList.appendChild(emailEntry);
+            } catch (err) {
+                document.getElementById('content').innerText = err.message;
+                return;
             }
+            const emails = response.result.messages;
+            if (!emails || emails.length == 0) {
+                document.getElementById('content').innerText = 'No emails found.';
+                return;
+            }
+
+            // Create an HTML string to display the email details
+            let emailDetailsHTML = '<h2>Email Details:</h2>';
+            for (const email of emails) {
+                const emailId = email.id;
+                try {
+                    const emailInfo = await gapi.client.gmail.users.messages.get({
+                        'userId': 'me',
+                        'id': emailId,
+                        'format': 'metadata',
+                        'metadataHeaders': ['From', 'Subject', 'Date'],
+                    });
+                    const headers = emailInfo.result.payload.headers;
+                    let sender = '';
+                    let subject = '';
+                    let dateTime = '';
+                    for (const header of headers) {
+                        if (header.name === 'From') {
+                            sender = header.value;
+                        } else if (header.name === 'Subject') {
+                            subject = header.value;
+                        } else if (header.name === 'Date') {
+                            dateTime = header.value;
+                        }
+                    }
+                    // Format the email details as HTML with styles
+                    emailDetailsHTML += `<div class="email-details">
+                                        <p style="color: #FFD5A7; margin: 0; padding: 0; line-height: 1;">Sender: ${sender}</p>
+                                        <p style="color: #FFD5A7; margin: 0; padding: 0; line-height: 1;">Subject: ${subject}</p>
+                                        <p style="color: #FFD5A7; margin: 0; padding: 0; line-height: 1;">Date/Time: ${dateTime}</p>
+                                        <p><h1> </h1></p>
+                                      </div>`;
+                } catch (err) {
+                    emailDetailsHTML += `<div class="email-details">
+                                            <p>Error fetching email details for ID ${emailId}</p>
+                                          </div>`;
+                }
+            }
+
+            // Display the email details in the 'content' element
+            document.getElementById('content').innerHTML = emailDetailsHTML;
         }
-        /**
-        * Removes HTML tags from a string.
-        */
-        function stripHtmlTags(html) {
-            const div = document.createElement("div");
-            div.innerHTML = html;
-            return div.textContent || div.innerText || "";
-        }
+
+
+
+
+
 
 
 

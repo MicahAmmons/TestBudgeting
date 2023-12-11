@@ -58,31 +58,45 @@ namespace TestBudgeting.Models.Weather
         }
         public void AddReminder(Reminder reminder)
         {
-            string[] dateParts = reminder.DateAsString.Split('-');
-            int year = int.Parse(dateParts[0]);
-            int month = int.Parse(dateParts[1]);
-            int day = int.Parse(dateParts[2]);
-
-            string sqlQuery = "INSERT INTO reminders (Details, Month, Day, Year";
-            string parameters = "@details, @month, @day, @year";
-
-            if (reminder.Weekly != null)
+            if (string.IsNullOrWhiteSpace(reminder.DateAsString))
             {
-                sqlQuery += ", Weekly";
-                parameters += ", @weekly";
+                string sqlQuery = "INSERT INTO reminders (Details, Weekly) VALUES (@details, @weekly);";
+
+                _conn.Execute(sqlQuery, new
+                {
+                    details = reminder.Details,
+                    weekly = reminder.Weekly
+                });
             }
-
-            sqlQuery += ") VALUES (" + parameters + ");";
-
-            _conn.Execute(sqlQuery, new
+            else
             {
-                details = reminder.Details,
-                month = month,
-                day = day,
-                year = year,
-                weekly = reminder.Weekly 
-            });
+                string[] dateParts = reminder.DateAsString.Split('-');
+                int year = int.Parse(dateParts[0]);
+                int month = int.Parse(dateParts[1]);
+                int day = int.Parse(dateParts[2]);
+
+                string sqlQuery = "INSERT INTO reminders (Details, Month, Day, Year";
+                string parameters = "@details, @month, @day, @year";
+
+                if (reminder.Weekly != null)
+                {
+                    sqlQuery += ", Weekly";
+                    parameters += ", @weekly";
+                }
+
+                sqlQuery += ") VALUES (" + parameters + ");";
+
+                _conn.Execute(sqlQuery, new
+                {
+                    details = reminder.Details,
+                    month = month,
+                    day = day,
+                    year = year,
+                    weekly = reminder.Weekly
+                });
+            }
         }
+
 
 
 
