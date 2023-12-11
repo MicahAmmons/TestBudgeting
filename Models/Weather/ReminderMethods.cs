@@ -18,11 +18,15 @@ namespace TestBudgeting.Models.Weather
 
         public IEnumerable<Reminder> GetReminders()
         {
-            string today = DateTime.Now.DayOfWeek.ToString();
-
-            return _conn.Query<Reminder>("SELECT * FROM reminders WHERE Complete = 1");
+            IEnumerable<Reminder> reminders = _conn.Query<Reminder>("SELECT * FROM reminders WHERE Complete = 1");
+            foreach (Reminder reminder in reminders)
+            {
+                reminder.Date = new DateOnly(reminder.Year, reminder.Month, reminder.Day);
+            }
+            return reminders;
         }
 
+        // When checkmark is clicked, reminder set to 0 and hidden
         public void UpdateRemind(int id)
         {
             int complete = 0;
@@ -38,6 +42,7 @@ namespace TestBudgeting.Models.Weather
             _conn.Execute("DELETE FROM reminders WHERE ID = @id;", new { id = id });
         }
 
+        //Upon page load, all Reminders of today or where Weekly is today change to 1
         public void RefreshReminders()
         {
             DateTime currentDate = DateTime.Now;

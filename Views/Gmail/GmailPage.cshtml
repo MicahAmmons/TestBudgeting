@@ -1,11 +1,9 @@
-﻿<!DOCTYPE html>
+﻿﻿
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Gmail API Quickstart</title>
-    <meta charset="utf-8" />
 </head>
 <body>
-    <p>Gmail API Quickstart</p>
 
     <!-- Add buttons to initiate auth sequence and sign out -->
     <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
@@ -28,7 +26,7 @@
 
         // Authorization scopes required by the API; multiple scopes can be
         // included, separated by spaces.
-        const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.modify';
+        const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly ';
 
 
         let tokenClient;
@@ -164,29 +162,20 @@
                     }
                     // Format the email details as HTML with styles
                     emailDetailsHTML += `<div class="email-details">
-                                        <p style="color: #FFD5A7; margin: 0; padding: 0; line-height: 1;">Sender: ${sender}</p>
-                                        <p style="color: #FFD5A7; margin: 0; padding: 0; line-height: 1;">Subject: ${subject}</p>
-                                        <p style="color: #FFD5A7; margin: 0; padding: 0; line-height: 1;">Date/Time: ${dateTime}</p>
-                                        <p><h1> </h1></p>
-                                      </div>`;
+                                                <p style="color: #FFD5A7; margin: 0; padding: 0; line-height: 1;">Sender: ${sender}</p>
+                                                <p style="color: #FFD5A7; margin: 0; padding: 0; line-height: 1;">Subject: ${subject}</p>
+                                                <p style="color: #FFD5A7; margin: 0; padding: 0; line-height: 1;">Date/Time: ${dateTime}</p>
+                                                <p><h1> </h1></p>
+                                              </div>`;
                 } catch (err) {
                     emailDetailsHTML += `<div class="email-details">
-                                            <p>Error fetching email details for ID ${emailId}</p>
-                                          </div>`;
+                                                    <p>Error fetching email details for ID ${emailId}</p>
+                                                  </div>`;
                 }
             }
-
             // Display the email details in the 'content' element
             document.getElementById('content').innerHTML = emailDetailsHTML;
         }
-
-
-
-
-
-
-
-
     </script>
     <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
     <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>

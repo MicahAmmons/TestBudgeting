@@ -69,9 +69,9 @@
 
 
     <!--Weather Grid-->
-    <div style="display: flex; justify-content: space-between; width: 50%;">
+    <div style="display: flex; justify-content: space-between; width: 100%;">
     <!--Weather1-->
-        <div style="display: grid; grid-template-rows: repeat(4, 1fr); grid-template-columns: repeat(4, 1fr); width: 50%; height: 150px; border-right: 1px solid #FFD5A7;">
+        <div style="display: grid; grid-template-rows: repeat(4, 1fr); grid-template-columns: repeat(4, 1fr); width: 25%; height: 150px; border-right: 1px solid #FFD5A7;">
         <!-- Name -->
             <div style="grid-row: 1 / span 1; grid-column: 1 / span 2; display: flex; flex-direction: column; justify-content: left; text-align: center;">
                 <h1 style="font-weight: bold; font-size: 30px">@Model.Weather1Var.CityName</h1>
@@ -105,7 +105,7 @@
         </div>
     </div>
     <!--Weathe 2-->
-            <div style="display: grid; grid-template-rows: repeat(4, 1fr); grid-template-columns: repeat(4, 1fr); width: 50%; height: 150px">
+            <div style="display: grid; grid-template-rows: repeat(4, 1fr); grid-template-columns: repeat(4, 1fr); width: 25%; height: 150px">
                 <!-- Name -->
                 <div style="grid-row: 1 / span 1; grid-column: 1 / span 2; display: flex; flex-direction: column; justify-content: left; align-items: stretch; text-align: center;">
                     <h1 style="font-weight: bold; font-size: 30px">@Model.Weather2Var.CityName</h1>
@@ -138,6 +138,9 @@
                     <span>Feels: @Model.Weather2Var.FeelsLike</span>
                 </div>
             </div>
+        <div style="width: 45%">
+            <a href="/Expense/InsertExpense" class="hyper-link">Add Expense</a>
+        </div>
     </div>
 
 
@@ -220,11 +223,182 @@
 
 
 
-    <h1>   ...</h1>
-    <div>
-        <a href="/Expense/InsertExpense" class="hyper-link">Add Expense</a>
-    </div>
 
+    <!-- Add buttons to initiate auth sequence and sign out -->
+    <button id="authorize_button" onclick="handleAuthClick()" style="background-color: #FFD5A7; color: #3E1B24; font-size: 15px; font-weight: bold;">Check Email</button>
+    <button id="signout_button" onclick="handleSignoutClick()" style="background-color: #FFD5A7; color: #3E1B24; font-size: 15px; font-weight: bold;">Sign Out</button>
+
+
+    <div id="content"></div>
+
+    <script type="text/javascript">
+        /* exported gapiLoaded */
+        /* exported gisLoaded */
+        /* exported handleAuthClick */
+        /* exported handleSignoutClick */
+
+        // TODO(developer): Set to client ID and API key from the Developer Console
+        const CLIENT_ID = '858508829491-fdvlfmrgsh4v14s779lrfi2m7e1tle30.apps.googleusercontent.com';
+        const API_KEY = 'AIzaSyCqQUPyxqEK2Khr6inXFgOhQBEdUcAxpaA';
+
+        // Discovery doc URL for APIs used by the quickstart
+        const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest';
+
+        // Authorization scopes required by the API; multiple scopes can be
+        // included, separated by spaces.
+        const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly ';
+
+
+        let tokenClient;
+        let gapiInited = false;
+        let gisInited = false;
+
+        document.getElementById('authorize_button').style.visibility = 'hidden';
+        document.getElementById('signout_button').style.visibility = 'hidden';
+
+        /**
+         * Callback after api.js is loaded.
+         */
+        function gapiLoaded() {
+            gapi.load('client', initializeGapiClient);
+        }
+
+        /**
+         * Callback after the API client is loaded. Loads the
+         * discovery doc to initialize the API.
+         */
+        async function initializeGapiClient() {
+            await gapi.client.init({
+                apiKey: API_KEY,
+                discoveryDocs: [DISCOVERY_DOC],
+            });
+            gapiInited = true;
+            maybeEnableButtons();
+        }
+
+        /**
+         * Callback after Google Identity Services are loaded.
+         */
+        function gisLoaded() {
+            tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: CLIENT_ID,
+                scope: SCOPES,
+                callback: '', // defined later
+            });
+            gisInited = true;
+            maybeEnableButtons();
+        }
+
+        /**
+         * Enables user interaction after all libraries are loaded.
+         */
+        function maybeEnableButtons() {
+            if (gapiInited && gisInited) {
+                document.getElementById('authorize_button').style.visibility = 'visible';
+            }
+        }
+
+        /**
+         * Sign in the user upon button click.
+         */
+        function handleAuthClick() {
+            tokenClient.callback = async (resp) => {
+                if (resp.error !== undefined) {
+                    throw (resp);
+                }
+                document.getElementById('signout_button').style.visibility = 'visible';
+                document.getElementById('authorize_button').innerText = 'Refresh';
+                await listEmails();
+            };
+
+            if (gapi.client.getToken() === null) {
+                // Prompt the user to select a Google Account and ask for consent to share their data
+                // when establishing a new session.
+                tokenClient.requestAccessToken({ prompt: 'consent' });
+            } else {
+                // Skip display of account chooser and consent dialog for an existing session.
+                tokenClient.requestAccessToken({ prompt: '' });
+            }
+        }
+
+        /**
+         * Sign out the user upon button click.
+         */
+        function handleSignoutClick() {
+            const token = gapi.client.getToken();
+            if (token !== null) {
+                google.accounts.oauth2.revoke(token.access_token);
+                gapi.client.setToken('');
+                document.getElementById('content').innerText = '';
+                document.getElementById('authorize_button').innerText = 'Authorize';
+                document.getElementById('signout_button').style.visibility = 'hidden';
+            }
+        }
+
+        /**
+        * List and display sender information, subject lines, and date/time
+        * of the most recent 10 emails in the authorized user's inbox.
+        */
+        async function listEmails() {
+            let response;
+            try {
+                response = await gapi.client.gmail.users.messages.list({
+                    'userId': 'me',
+                    'maxResults': 10, // Limit the number of results to 10
+                });
+            } catch (err) {
+                document.getElementById('content').innerText = err.message;
+                return;
+            }
+            const emails = response.result.messages;
+            if (!emails || emails.length == 0) {
+                document.getElementById('content').innerText = 'No emails found.';
+                return;
+            }
+
+            // Create an HTML string to display the email details
+            let emailDetailsHTML = '<h2>Email Details:</h2>';
+            for (const email of emails) {
+                const emailId = email.id;
+                try {
+                    const emailInfo = await gapi.client.gmail.users.messages.get({
+                        'userId': 'me',
+                        'id': emailId,
+                        'format': 'metadata',
+                        'metadataHeaders': ['From', 'Subject', 'Date'],
+                    });
+                    const headers = emailInfo.result.payload.headers;
+                    let sender = '';
+                    let subject = '';
+                    let dateTime = '';
+                    for (const header of headers) {
+                        if (header.name === 'From') {
+                            sender = header.value;
+                        } else if (header.name === 'Subject') {
+                            subject = header.value;
+                        } else if (header.name === 'Date') {
+                            dateTime = header.value;
+                        }
+                    }
+                    // Format the email details as HTML with styles
+                    emailDetailsHTML += `<div class="email-details">
+                                                        <p style="color: #FFD5A7; margin: 0; padding: 0; line-height: 1;">Sender: ${sender}</p>
+                                                        <p style="color: #FFD5A7; margin: 0; padding: 0; line-height: 1;">Subject: ${subject}</p>
+                                                        <p style="color: #FFD5A7; margin: 0; padding: 0; line-height: 1;">Date/Time: ${dateTime}</p>
+                                                        <p><h1> </h1></p>
+                                                      </div>`;
+                } catch (err) {
+                    emailDetailsHTML += `<div class="email-details">
+                                                            <p>Error fetching email details for ID ${emailId}</p>
+                                                          </div>`;
+                }
+            }
+            // Display the email details in the 'content' element
+            document.getElementById('content').innerHTML = emailDetailsHTML;
+        }
+    </script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
 </body>
 
 

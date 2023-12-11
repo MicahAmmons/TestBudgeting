@@ -10,6 +10,10 @@ namespace TestBudgeting.Models.Weather
         public string Weekly {  get; set; }
         public int Complete { get; set; }
         public string DateAsString { get; set; }
+            public int Day { get; set; }
+        public int Month {  get; set; }
+        public int Year { get; set; }
+
 
 
     }
