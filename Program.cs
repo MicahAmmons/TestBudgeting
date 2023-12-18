@@ -9,9 +9,12 @@ using TestBudgeting;
 using TestBudgeting.Models.Budget;
 using TestBudgeting.Models.Expense;
 using TestBudgeting.Models.Weather;
+using Going.Plaid;
+using PlaidQuickstartBlazor.Shared;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Configuration.AddYamlFile("secrets.yaml", optional: true);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IDbConnection>((s) =>

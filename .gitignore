@@ -12,7 +12,7 @@
 *appsettings.json
 appsettings.json
 clientsecrets.json
-secrets.yml
+plaidsecrets.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
