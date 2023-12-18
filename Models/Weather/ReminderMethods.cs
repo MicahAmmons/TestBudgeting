@@ -19,9 +19,19 @@ namespace TestBudgeting.Models.Weather
         public IEnumerable<Reminder> GetReminders()
         {
             IEnumerable<Reminder> reminders = _conn.Query<Reminder>("SELECT * FROM reminders WHERE Complete = 1");
+            //Didn't realize that I was pulling in 3 Integers for the date while I made the property DateOnly.  So I created 3 new properties
+            // of INt for the day month year, then for each Reminder I am saving those into DateOnly format before passing on. 
+
             foreach (Reminder reminder in reminders)
             {
-                reminder.Date = new DateOnly(reminder.Year, reminder.Month, reminder.Day);
+                if (reminder.Year.HasValue && reminder.Month.HasValue && reminder.Day.HasValue)
+                {
+                    reminder.Date = new DateOnly(reminder.Year.Value, reminder.Month.Value, reminder.Day.Value);
+                }
+                else
+                {
+                    reminder.Date = DateOnly.FromDateTime(DateTime.Now);
+                }
             }
             return reminders;
         }
