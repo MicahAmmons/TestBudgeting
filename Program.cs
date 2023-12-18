@@ -9,12 +9,8 @@ using TestBudgeting;
 using TestBudgeting.Models.Budget;
 using TestBudgeting.Models.Expense;
 using TestBudgeting.Models.Weather;
-using Going.Plaid;
-using PlaidQuickstartBlazor.Shared;
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddYamlFile("secrets.yaml", optional: true);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IDbConnection>((s) =>
@@ -27,8 +23,8 @@ builder.Services.AddScoped<IDbConnection>((s) =>
 builder.Services.AddTransient<IExpenseRepo, ExpenseRepo>();
 builder.Services.AddTransient<IBudgetRepo, BudgetRepo>();
 builder.Services.AddTransient<ReminderMethods>();
-var app = builder.Build();
 
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

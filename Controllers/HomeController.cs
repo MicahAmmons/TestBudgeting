@@ -21,6 +21,10 @@ namespace Testing.Controllers
             this.repo = repo;
         }
 
+        public IActionResult Login(string user, string password)
+        {
+            return View();
+        }
         public IActionResult HomePage()
         {
             repo.RefreshReminders();
@@ -54,9 +58,6 @@ namespace Testing.Controllers
                 return new EmptyResult(); 
 
         }
-
-
-
 
 
         public IActionResult Privacy()
