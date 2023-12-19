@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IDbConnection>((s) =>
 {
-    IDbConnection conn = new MySqlConnection(builder.Configuration.GetConnectionString("budgetapp"));
+    IDbConnection conn = new MySqlConnection(builder.Configuration.GetConnectionString("azure"));
     conn.Open();
     return conn;
 });
@@ -43,6 +43,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=HomePage}/{id?}");
+    pattern: "{controller=Login}/{action=LoginPage}/{id?}");
 
 app.Run();

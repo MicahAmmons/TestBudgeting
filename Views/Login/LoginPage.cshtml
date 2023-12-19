@@ -1,0 +1,90 @@
+﻿@using TestBudgeting.Models.Login;
+@model Login;
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <title>Login Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Shift the form to 1/4th from the top */
+            height: 100vh;
+            margin: 0;
+            background-color: #3E1B24;
+        }
+
+        .login-container {
+            text-align: center;
+            margin-top: 25vh; /* Adjust the margin-top as needed */
+            padding: 20px; /* Add some padding for better visual appearance */
+        }
+
+        h2 {
+            color: #FFD5A7; /* Color for the "Login" title */
+        }
+
+        label {
+            color: #FFD5A7; /* Text color for labels */
+        }
+
+        input[type="text"], input[type="password"] {
+            background-color: #FFD5A7; /* Background color for input fields */
+            color: #3E1B24; /* Text color for input fields */
+            border: 1px solid #3E1B24; /* Add a border for input fields */
+            padding: 5px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .password-toggle {
+            margin-top: 10px;
+            color: #FFD5A7; /* Text color for the "Show Password" label */
+        }
+
+        .hidden-password {
+            background-color: #FFD5A7;
+            color: #3E1B24;
+            border: 1px solid #3E1B24;
+            padding: 5px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2 style="font-size: 45px">Hello, Master</h2>
+        @using (Html.BeginForm("LoginCall", "Login", FormMethod.Post))
+        {
+            <div>
+                <label asp-for="Username" class="control-label ">Username</label>
+                <input type="text" name="Username" class="form-control" value="@Model.Username" />
+            </div>
+            <div>
+                <label asp-for="Password" class="control-label ">Password</label>
+                <input type="password" name="Password" class="form-control hidden-password" value="@Model.Password" id="passwordField" />
+            </div>
+            <div class="password-toggle">
+                <input type="checkbox" id="showPassword"> Show Password
+            </div>
+            <div>
+                <input type="submit" value="Login">
+            </div>
+        }
+    </div>
+
+    <script>
+        document.getElementById("showPassword").addEventListener("change", function () {
+            var passwordField = document.getElementById("passwordField");
+            if (this.checked) {
+                passwordField.type = "text"; // Show password
+            } else {
+                passwordField.type = "password"; // Hide password
+            }
+        });
+    </script>
+</body>
+</html>
