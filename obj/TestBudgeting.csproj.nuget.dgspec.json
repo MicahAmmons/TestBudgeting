@@ -75,6 +75,10 @@
             "Node.js": {
               "target": "Package",
               "version": "[5.3.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[7.0.3, )"
             }
           },
           "imports": [

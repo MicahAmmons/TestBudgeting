@@ -1,14 +1,8 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using MySql.Data.MySqlClient;
 using System.Data;
-using BudgetAppProject;
-using TestBudgeting;
-using TestBudgeting.Models.Budget;
-using TestBudgeting.Models.Expense;
-using TestBudgeting.Models.Weather;
+using TestBudgeting.Models.Home.Budget;
+using TestBudgeting.Models.Home.Expense;
+using TestBudgeting.Models.Home.Reminder;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -43,6 +37,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Login}/{action=LoginPage}/{id?}");
+    pattern: "{controller=Home}/{action=HomePage}/{id?}");
 
 app.Run();

@@ -1,4 +1,10 @@
-﻿namespace TestBudgeting.Models.Login
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+
+namespace TestBudgeting.Models.Login
 {
     public static class LoginMethods
     {

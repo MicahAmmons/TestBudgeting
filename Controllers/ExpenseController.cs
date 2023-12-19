@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using TestBudgeting.Models.Expense;
+using TestBudgeting.Models.Home.Expense;
 
 namespace BudgetAppProject.Controllers
 {
@@ -27,7 +27,7 @@ namespace BudgetAppProject.Controllers
         }
         public IActionResult UpdateExpense(int id)
         {
-            Expense exp = repo.GetExpense(id);
+            ExpenseV exp = repo.GetExpense(id);
             if (exp == null)
             {
                 return View("ExpenseNotFound");
@@ -35,24 +35,24 @@ namespace BudgetAppProject.Controllers
             return View(exp);
         }
 
-        public IActionResult UpdateExpenseToDatabase(Expense expense)
+        public IActionResult UpdateExpenseToDatabase(ExpenseV expense)
         {
             repo.UpdateExpense(expense);
             return RedirectToAction("ViewExpense", new { id = expense.Number });
         }
-        public IActionResult DeleteExpense(Expense expense)
+        public IActionResult DeleteExpense(ExpenseV expense)
         {
             repo.DeleteExpense(expense);
             return RedirectToAction("Index");
         }
         public IActionResult InsertExpense()
         {
-            Expense expense = new Expense();
+            ExpenseV expense = new ExpenseV();
             expense = repo.GetDistinctBudgets();
             return View(expense);
         }
 
-        public IActionResult InsertExpenseToDatabase(Expense expenseToInsert)
+        public IActionResult InsertExpenseToDatabase(ExpenseV expenseToInsert)
         {
             repo.InsertExpense(expenseToInsert);
             return RedirectToAction("Index");

@@ -1,6 +1,5 @@
-﻿@using TestBudgeting.Models;
-@using TestBudgeting.Models.Expense;
-@model IEnumerable<Expense>
+﻿@* @using TestBudgeting.Models.Home;
+@model HomeVar
 
 <head>
     <link rel="stylesheet" href="/css/site.css">
@@ -15,9 +14,9 @@
         <label for="">Select a Budget</label>
         <select class="form-control" name="Budget">
             <option value=""></option>
-            @foreach (var exp in Model)
+            @foreach (var exp in Model.Expense.Budget)
             {
-                <option value="@exp.Budget">@exp.Budget </option>
+                <option value="@exp">@exp </option>
             }
         </select>
     </div>
@@ -45,3 +44,4 @@
 
 }
 <div asp-validation-summary="All" class="text-danger"></div>
+ *@

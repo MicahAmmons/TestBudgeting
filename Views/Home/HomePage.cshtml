@@ -1,5 +1,5 @@
-﻿@using TestBudgeting.Models.Weather
-@model Home
+﻿@using TestBudgeting.Models.Home
+@model HomeVar
 
 <head>
     <link rel="stylesheet" href="/css/site.css">
@@ -138,10 +138,69 @@
                     <span>Feels: @Model.Weather2Var.FeelsLike</span>
                 </div>
             </div>
-        <div style="width: 45%">
-            <a href="/Expense/InsertExpense" class="hyper-link">Add Expense</a>
-        </div>
+  <div style="width: 45%;">
+        <button id="toggleExpenseFormBtn" style="background-color: #FFD5A7; width: 20%; color: #3E1B24; font-size: 15px; font-weight: bold;">Add Expense</button>
+    
+    <div id="expenseFormContainer" style="display: none; width: 50%;">
+        @using (Html.BeginForm("AddExpense", "Home", FormMethod.Post, new { id = "expenseForm", style = "height: 200px; width: 100%;" }))
+        {
+        <div class="form-group" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+            <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Budget</label>
+            <select class="form-control" asp-for="Expense.Budget" style="font-size: 20px; background-color: #FFD5A7; font-weight: bold; text-align: center;" id="budgetDropdown">
+                @foreach (var bud in Model.DistinctBudgets)
+                {
+                    <option value="@bud">@bud</option>
+                }
+            </select>
+
+        <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Payee</label>
+        <input type="text" asp-for="Expense.Payee" class="form-control" style="font-size: 20px; text-align: center;" />
+
+        <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Amount</label>
+        <input type="number" style="text-align: center" step="0.01" asp-for="Expense.Amount" class="form-control" style="font-size: 20px;" />
+
+        <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Month</label>
+        <input type="number" style="text-align: center" asp-for="Expense.Month" class="form-control" style="font-size: 20px;" />
+
+        <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Day</label>
+        <input type="number" style="text-align: center" asp-for="Expense.Day" class="form-control" style="font-size: 20px;" />
+
+        <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Year</label>
+        <input type="number" style="text-align: center" asp-for="Expense.Year" class="form-control" style="font-size: 20px;" />
+
+        <input type="submit" value="Add" class="hyperlink-top" />
     </div>
+    
+}
+    </div>
+</div>
+
+
+
+<script>
+    var expenseFormContainer = document.getElementById('expenseFormContainer');
+    var toggleExpenseFormBtn = document.getElementById('toggleExpenseFormBtn');
+    
+    toggleExpenseFormBtn.addEventListener('click', function () {
+        if (expenseFormContainer.style.display === 'none' || expenseFormContainer.style.display === '') {
+            expenseFormContainer.style.display = 'block';
+        } else {
+            expenseFormContainer.style.display = 'none';
+        }
+    });
+</script>
+<script>
+    // JavaScript to change the background color of the Budget dropdown when clicked
+    document.getElementById('budgetDropdown').addEventListener('click', function () {
+        this.style.backgroundColor = '#FFD5A7';
+    });
+</script>
+
+
+
+
+
+    </div>  
 
 
 
@@ -163,8 +222,6 @@
                         <td>
                             <input type="checkbox" data-id="@reminder.ID" class="complete-checkbox" />
                             <i class="delete-icon" data-id="@reminder.ID">&#10006;</i>
-
-
                         </td>
                         <td style="display: none">@reminder.ID</td>
                         <td>@reminder.Details</td>
@@ -399,18 +456,36 @@
     </script>
     <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
     <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+
+    <script>
+    // Attach a submit event handler to the form
+    $('#expenseForm').on('submit', function (event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+        
+        // Serialize the form data into a format that can be sent via AJAX
+        var formData = $(this).serialize();
+
+        // Make an AJAX POST request to the AddExpense method
+        $.ajax({
+            url: '/Home/AddExpense',
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                // Handle success, e.g., show a success message
+                document.getElementById('successMessage').style.display = 'block';
+
+                // Reset the form
+                $('#expenseForm')[0].reset();
+            },
+            error: function (error) {
+                // Handle error, e.g., display an error message
+                console.error(error);
+            }
+        });
+    });
+</script>
+
 </body>
-
-
-
-
-
-
-
-
-
-
-
 
 <script> // Script to update reminders to completed
     // Attach a click event handler to the checkboxes with class "complete-checkbox"
@@ -468,3 +543,5 @@
         });
     });
 </script>
+
+

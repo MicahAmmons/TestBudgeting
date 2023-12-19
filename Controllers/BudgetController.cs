@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using TestBudgeting.Models;
-using TestBudgeting.Models.Budget;
+using TestBudgeting.Models.Home.Budget;
 
 namespace BudgetAppProject.Controllers
 {
@@ -26,25 +26,25 @@ namespace BudgetAppProject.Controllers
         }
         public IActionResult InsertBudget()
         {
-            Budget newBud = new Budget();
+            BudgetV newBud = new BudgetV();
             return View(newBud);
         }
-        public IActionResult InsertBudgetToDatabase(Budget budgetToInsert)
+        public IActionResult InsertBudgetToDatabase(BudgetV budgetToInsert)
         {
             repo.InsertBudget(budgetToInsert);
             return RedirectToAction("ViewBudgets");
         }
-        public IActionResult UpdateBudgetAmountToDatabase(Budget budgetToUpdate)
+        public IActionResult UpdateBudgetAmountToDatabase(BudgetV budgetToUpdate)
         {
             repo.UpdateBudgetAmount(budgetToUpdate);
             return RedirectToAction("ViewBudgets");
         }
         public IActionResult UpdateAmount(string id)
         {
-            Budget bud = repo.GetBudget(id);
+            BudgetV bud = repo.GetBudget(id);
             return View(bud);
         }
-        public IActionResult DeleteBudget(Budget budget)
+        public IActionResult DeleteBudget(BudgetV budget)
         {
             repo.DeleteBudget(budget);
             var ex = repo.ViewBudgets();
