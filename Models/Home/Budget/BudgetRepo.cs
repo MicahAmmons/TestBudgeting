@@ -95,7 +95,7 @@ namespace TestBudgeting.Models.Home.Budget
             return final;
         }
 
-        public IEnumerable<BudgetV> CheckIfSpendingMorethanBudget()
+        public IEnumerable<BudgetV> CheckIfSpendingMorethanBudget() //returns a list of Budgets ONLY if the spending is more than it should be
         {
             List<BudgetV> budgetList = new List<BudgetV>();
             List<BudgetV> returnList = new List<BudgetV>();
@@ -128,14 +128,15 @@ namespace TestBudgeting.Models.Home.Budget
                 }
             }
             return returnList;
-
-            //.TotalSpent
-            //.BudgetTotal
-            //.BudgetName
-
-
-
         }
+        public double MonthlyIncome()
+        {
+            int currentMonth = DateTime.Now.Month;
+            IEnumerable<int> allExp = _conn.Query<int>("SELECT Amount FROM expenses WHERE Month = @current AND Budget = 'Income';", new { current = currentMonth });
+            int sum = allExp.Sum();
+            return sum;
+        }
+
     }
 
 

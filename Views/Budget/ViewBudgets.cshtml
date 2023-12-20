@@ -1,74 +1,62 @@
-﻿<!DOCTYPE html>
+﻿@using TestBudgeting.Models.Home;
+@model HomeVar
 
 <head>
     <link rel="stylesheet" href="/css/site.css">
 </head>
-<head>
     <style>
-    a { /*Text color of hyperlinks*/
-        color: #3E1B24;
-        padding: 1px 10px;
-        font-weight: bold;
-        text-decoration: none;
-        font-size: 30px;
-    }
-
-        a:hover {
-            background-color: #FFD5A7;
-        }
-
-        a.body-link {
-            color: #3E1B24;
-            background-color: #FFD5A7;
-            border-radius: 5px;
-            padding: 5px, 5px;
-        }
-
-            a.body-link:hover {
-                background-color: #3E1B24;
-                color: #FFD5A7;
-            }
-        
+       
         body {
             background-color: #3E1B24;
 
         }
 
-
-        /* Set the table width to one-third of the page */
-        table {
-            width: 33%;
+        .progress-container {
+            width: 100%;
             background-color: #FFD5A7;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            table-layout: fixed;
-        }
-
-        td {
-            padding: 10px;
-            text-align: center;
-            white-space: nowrap;
+            position: relative;
             overflow: hidden;
-            text-overflow: ellipsis;
+            border-radius: 25px;
+            height: 35px;
+            color: #FFD5A7;
         }
 
-            td:first-child {
-                text-align: left;
-                font-weight: bold;
-                font-size: 20px; /* Set the same size as other values */
-            }
+        .progress-bar {
+            background-color: #3E1B24;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            color: #FFD5A7;
+            position: relative;
+            border-radius: 25px;
+            height: 30px;
+            top: 2.5px;
+            left: 2px;
+            width: calc(100% - 4px);
+        }
 
-            td:nth-child(2),
-            td:last-child {
-                font-weight: bold;
-                font-size: 20px; /* Set the same size as other values */
-            }
+    .total-spent {
+        position: absolute;
+        left: 10px;
+        top: 0;
+        height: 100%;
+        line-height: 30px; /* Adjust to match the progress bar height */
+        color: #FFD5A7;
+    }
 
-            td:nth-child(2) {
-                width: 150px;
-            }
+        .budget-total {
+            position: absolute;
+            right: 10px; /* Adjust the right positioning as needed */
+            top: 2px;
+            height: 100%;
+            line-height: 30px;
+            color: #3E1B24;
+        }
+        .td{
+        color: #3E1B24;
+        }
     </style>
-</head>
+
 <body>
 
     <!-- New Budget Button -->
@@ -79,19 +67,70 @@
     <row>
         <h1>    </h1>
     </row>
+    <div style="display: flex; width: 100%">
+        <div style="flex: 1; width: 25%">
 
-    <!-- Each Budget/Amount as table -->
-    @foreach (var budget in Model)
+    @foreach (var budget in Model.BudgetCollection)
     {
-        <table>
-            <tbody>
+        <div>
+            <h2 style="font-size: 25px; color:#FFD5A7;">@budget.DistinctBudgets</h2>
+            <div class="progress-container">
+                <div class="total-spent">@budget.TotalSpent</div>
+                @{
+                    var progressPercentage = (budget.TotalSpent / budget.BudgetAmount) * 100;
+                    if (progressPercentage > 100)
+                    {
+                        progressPercentage = 100;
+                    }
+
+                    // Set the text color for BudgetAmount based on the progress
+                    var budgetAmountTextColor = progressPercentage >= 95 ? "#FFD5A7" : "#3E1B24";
+                }
+                <div class="progress-bar" style="width: @(budget.TotalSpent / budget.BudgetAmount * 100)%;">
+                    <span>@budget.TotalSpent</span>
+                </div>
+                <a href="@Url.Action("UpdateAmount", "Budget", new { id = budget.DistinctBudgets })" class="budget-total" style="color: @budgetAmountTextColor;">@budget.BudgetAmount</a>
+            </div>
+
+        </div>
+        
+    }</div>
+
+        <div style="flex: .5; width: 12.5%">
+            <!-- Empty div for blank space (25%) -->
+        </div>
+
+        <div style="flex: 1; width: 25%; margin-top: 50px;">
+            <table class="table table-condensed" id="expenseTable" style="border-collapse: collapse; border: none !important; table-layout: auto;">
+        <thead style="position: sticky; top: 0;">
+            <tr>
+                <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Amount</th>
+                <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Payee</th>
+                <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Budget</th>
+                @* <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Month</th> *@
+                <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Day</th>
+               @*  <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Year</th> *@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var expense in Model.ExpenseCollection)
+            {
                 <tr>
-                    <td style="font-size: 25px;">@budget.DistinctBudgets</td>
-                    <td style="font-size: 25px;">@budget.TotalSpent</td>
-                    <td ><a href="/Budget/UpdateAmount/@budget.DistinctBudgets">@budget.BudgetAmount</a> </td>
+                    <!--<td><a href="/Expense/ViewExpense/@expense.Number" class="hyper-link body-link">@expense.Number</a></td>-->
+                    <td>@expense.Amount</td>
+                    <td>@expense.Payee</td>
+                    <td>@expense.Budget</td>
+                    @* <td style="max-width: 10px;">@expense.Month</td> *@
+                    <td>@expense.Day</td>
+                    @* <td style="max-width: 15px;">@expense.Year</td> *@
                 </tr>
-            </tbody>
-        </table>
-    }
+            }
+        </tbody>
+    </table>
+    </div>
+        <div style="flex: 1.5; width: 37.5%">
+            <!-- Empty div for blank space (25%) -->
+        </div>
+    </div>
 </body>
 

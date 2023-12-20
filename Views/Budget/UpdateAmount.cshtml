@@ -1,5 +1,5 @@
-﻿@using TestBudgeting.Models.Home;
-@model HomeVar
+﻿@using TestBudgeting.Models.Home.Budget
+@model BudgetV
 
 <head>
     <link rel="stylesheet" href="/css/site.css">
@@ -12,10 +12,10 @@
     @using (Html.BeginForm("UpdateBudgetAmountToDatabase", "Budget", "Post"))
     {
         <div style="text-align: center;">
-            <input asp-for="Budget.DistinctBudgets" type="hidden" value="@Model.Budget.DistinctBudgets" />
+            <input asp-for="DistinctBudgets" type="hidden" value="@Model.DistinctBudgets" />
 
-            <label asp-for="Budget.BudgetAmount" class="control-label" style="display: block;">New Amount</label>
-            <input type="number" name="BudgetAmount" class="form-control" value="@Model.Budget.BudgetAmount" style="margin: 0 auto; text-align: center;" />
+            <label asp-for="BudgetAmount" class="control-label" style="display: block;">New Amount</label>
+            <input type="number" name="BudgetAmount" class="form-control" value="@Model.BudgetAmount" style="margin: 0 auto; text-align: center;" />
 
             <button type="submit" class="hyperlink-top">Update Budget</button>
         </div>
@@ -23,7 +23,7 @@
 <!-- This is the Delete Button -->
 @using (Html.BeginForm("DeleteBudget", "Budget", "Post"))
 {
-    <input type="hidden" asp-for="Budget.DistinctBudgets" value="@Model.Budget.DistinctBudgets" />
+    <input type="hidden" asp-for="DistinctBudgets" value="@Model.DistinctBudgets" />
         <input class="hyperlink-top" onclick="return confirm('Are you sure?')" value="Delete this Budget" />
 }
 </body>

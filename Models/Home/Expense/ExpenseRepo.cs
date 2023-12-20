@@ -27,6 +27,10 @@ namespace TestBudgeting.Models.Home.Expense
         {
             return _conn.Query<ExpenseV>("SELECT * FROM expenses;");
         }
+        public IEnumerable<ExpenseV> GetAllExpensesOfSpecificType(string budget)
+        {
+            return _conn.Query<ExpenseV>("SELECT * FROM expenses WHERE Budget = @budget;", new {budget = budget});
+        }
 
         public void InsertExpense(ExpenseV expenseToInsert)
         {
@@ -83,16 +87,5 @@ namespace TestBudgeting.Models.Home.Expense
             return newE;
         }
 
-        //public double GetTotalBudgetAmount(string budget, int month)
-        //{
-        //    double totalSpent = 0;
-        //    var listOfAmount = _conn.Query<Expense>("SELECT Amount FROM expense WHERE Budget = @budget AND Month = @month", new { Budget = budget, Month = month });
-
-        //    foreach (var item in listOfAmount)
-        //    {
-        //        totalSpent += item.Amount;
-        //    }
-        //    return totalSpent;
-        //}
     }
 }

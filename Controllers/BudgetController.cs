@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using TestBudgeting.Models;
+using TestBudgeting.Models.Home;
+using TestBudgeting.Models.Home.Expense;
+using TestBudgeting.Models.Home.Reminder;
 using TestBudgeting.Models.Home.Budget;
+using System.Collections.Generic;
 
 namespace BudgetAppProject.Controllers
 {
@@ -9,20 +13,21 @@ namespace BudgetAppProject.Controllers
     {
 
         private readonly IBudgetRepo repo;
+        private readonly IExpenseRepo expenseRepo;
 
-        public BudgetController(IBudgetRepo repo)
+        public BudgetController(IBudgetRepo repo, IExpenseRepo expenseRepo)
         {
             this.repo = repo;
+            this.expenseRepo = expenseRepo;
         }
 
         public IActionResult ViewBudgets()
         {
-            var bud = repo.ViewBudgets();
-            return View(bud);
-        }
-        public IActionResult CheckBudget()
-        {
-            throw new NotImplementedException();    
+            HomeVar home = new HomeVar();
+            home.BudgetCollection = repo.ViewBudgets();
+            home.MonthlyIncome = repo.MonthlyIncome();
+            home.ExpenseCollection = expenseRepo.GetAllExpenses();
+            return View(home);
         }
         public IActionResult InsertBudget()
         {
@@ -49,6 +54,10 @@ namespace BudgetAppProject.Controllers
             repo.DeleteBudget(budget);
             var ex = repo.ViewBudgets();
             return RedirectToAction("ViewBudgets", ex);
+        }
+        public IActionResult UpdateExpensesPerBudget(string budget)
+        {
+            throw new NotImplementedException();
         }
 
     }

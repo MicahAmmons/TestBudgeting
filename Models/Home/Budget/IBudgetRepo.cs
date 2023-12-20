@@ -11,6 +11,7 @@
         public double GetTotalSpent();
         public double GetMonthlyBudgetTotal();
         public IEnumerable<BudgetV> CheckIfSpendingMorethanBudget();
+        public double MonthlyIncome();
 
 
     }

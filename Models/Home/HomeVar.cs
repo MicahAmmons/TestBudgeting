@@ -26,6 +26,8 @@ public class HomeVar
     public IEnumerable<string> DistinctBudgets { get; set; }
     public double TotalMonthlySpent { get; set; }
     public double TotalMonthlyBudget { get; set; }
+    public double MonthlyIncome { get; set; }
+
 
 
 
