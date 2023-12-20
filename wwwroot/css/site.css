@@ -125,7 +125,13 @@ label {
 .hidden {
     display: none;
 }
-
+.color-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 10px solid transparent;
+    background-image: conic-gradient( green 0% 50%, black 50% 100% );
+}
 
 
 

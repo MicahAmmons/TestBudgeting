@@ -21,7 +21,17 @@ public class HomeVar
     public IEnumerable<ExpenseV> ExpenseCollection { get ; set;}
 
     public BudgetV Budget {  get; set; }
+    public IEnumerable<BudgetV> BudgetCollection { get; set; }
+
     public IEnumerable<string> DistinctBudgets { get; set; }
+    public double TotalMonthlySpent { get; set; }
+    public double TotalMonthlyBudget { get; set; }
+
+
+
+
+
+
 
 
     public void SetTimeV(TimeV time)

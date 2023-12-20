@@ -19,12 +19,6 @@ namespace TestBudgeting.Models.Home.Budget
             _conn = conn;
         }
 
-
-        public double GetTotalBudgetAmount(string budget, int month)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<BudgetV> ViewBudgets()
         {
             // this gets a list of Budgets.DistinctBudgets and Budget.BudgetAmount
@@ -82,6 +76,65 @@ namespace TestBudgeting.Models.Home.Budget
         {
             IEnumerable<string> budgets = _conn.Query<string>("SELECT DistinctBudgets FROM budgets;");
             return budgets;
+        }
+        public double GetTotalSpent()
+        {
+            int currentMonth = DateTime.Now.Month;
+            IEnumerable<int> allExp = _conn.Query<int>("SELECT Amount FROM expenses WHERE Month = @month AND Budget != 'Internet' AND Budget != 'Income' AND Budget != 'Rent' AND Budget != 'Electric/Gas';", new
+            {
+                month = currentMonth
+            });
+            double final = allExp.Sum();
+            return final;
+        }
+        public double GetMonthlyBudgetTotal()
+        {
+            int currentMonth = DateTime.Now.Month;
+            IEnumerable<int> allExp = _conn.Query<int>("SELECT BudgetAmount FROM budgets WHERE DistinctBudgets != 'Internet' AND DistinctBudgets != 'Income' AND DistinctBudgets != 'Rent' AND DistinctBudgets != 'Electric/Gas';");
+            double final = allExp.Sum();
+            return final;
+        }
+
+        public IEnumerable<BudgetV> CheckIfSpendingMorethanBudget()
+        {
+            List<BudgetV> budgetList = new List<BudgetV>();
+            List<BudgetV> returnList = new List<BudgetV>();
+            IEnumerable<BudgetV> budgets = _conn.Query<BudgetV>("  SELECT DistinctBudgets, BudgetAmount FROM budgets WHERE BudgetAmount != 0;");
+            foreach (var budget in budgets)
+            {
+                IEnumerable<int> allExp = _conn.Query<int>("SELECT Amount FROM expenses WHERE Month = @current AND Budget = @bud", new { current = budget.CurrentMonth, bud = budget.DistinctBudgets });
+                //Add all the Amounts together
+                int sum = allExp.Sum();
+                //Assign that amount to Budget.TotalSpent
+                budget.TotalSpent = sum;
+                budgetList.Add(budget);
+            }
+            DateTime currentDate = DateTime.Now;
+            // Get the number of days in the current month
+            int daysInMonth = DateTime.DaysInMonth(currentDate.Year, currentDate.Month);
+            // Calculate the percentage
+            double percentage = (double)currentDate.Day / daysInMonth;
+
+            foreach (var budget in budgetList)
+            {
+                double totalMonthlyAmount;
+                double totalSpent;
+                totalMonthlyAmount = budget.BudgetAmount * percentage;
+                totalSpent = budget.TotalSpent * percentage;
+                if (totalMonthlyAmount < totalSpent) 
+                {
+                    budget.IdealSpendage = Math.Round(totalMonthlyAmount, 2);
+                    returnList.Add(budget);
+                }
+            }
+            return returnList;
+
+            //.TotalSpent
+            //.BudgetTotal
+            //.BudgetName
+
+
+
         }
     }
 

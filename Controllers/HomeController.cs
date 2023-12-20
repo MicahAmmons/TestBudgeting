@@ -28,6 +28,9 @@ namespace Testing.Controllers
             HomeVar home = WeatherMethods.GetWeather();
             home.Reminders = repo.GetReminders();
             home.DistinctBudgets = budgetRepo.GetDistinctBudget();
+            home.TotalMonthlySpent = budgetRepo.GetTotalSpent();
+            home.TotalMonthlyBudget = budgetRepo.GetMonthlyBudgetTotal();
+            home.BudgetCollection = budgetRepo.CheckIfSpendingMorethanBudget();
             return View(home);
         }
         public IActionResult CompleteReminder(int id)

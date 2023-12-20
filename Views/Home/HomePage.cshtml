@@ -55,7 +55,44 @@
             .delete-icon:hover {
                
             }
+                .hover-container {
+        position: relative;
+        cursor: pointer;
+    }
 
+.hover-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.hover-info {
+    display: none;
+    position: absolute;
+    background-color: #3E1B24; /* Background color when hovered */
+    border: 5px solid #FFD5A7; /* Border color when hovered */
+    padding: 5px;
+    z-index: 1;
+    width: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.hover-container:hover .hover-info {
+    display: block;
+}
+
+.distinct-budget:hover + .hover-info {
+    display: block;
+}
+    .exclamation-mark {
+        color: red;
+        font-size: 30px;
+        position: absolute;
+        left: -20px; /* Adjust the positioning as needed */
+        top: -14px;
+        text-shadow: 0 0 10px red; /* Add a red glow effect */
+          transform: rotate(335deg);
+    }
 
 
     </style>
@@ -64,10 +101,10 @@
 <body>
     
     <div>
-        <h1 style="font-size: 30px; margin-left: 10px;">@DateTime.Now.ToString("dddd, MMMM dd")</h1>
+        <h1 style="font-size: 60px; margin-left: 10px;">@DateTime.Now.ToString("dddd, MMMM dd")</h1>
     </div>
-
-
+        <div style="height: 30px; width: 50%;"></div>
+    <div style="height: 10px; width: 50%; border-top: 1px solid #FFD5A7;"></div>
     <!--Weather Grid-->
     <div style="display: flex; justify-content: space-between; width: 100%;">
     <!--Weather1-->
@@ -105,7 +142,7 @@
         </div>
     </div>
     <!--Weathe 2-->
-            <div style="display: grid; grid-template-rows: repeat(4, 1fr); grid-template-columns: repeat(4, 1fr); width: 25%; height: 150px">
+           <div style="display: grid; grid-template-rows: repeat(4, 1fr); grid-template-columns: repeat(4, 1fr); width: 25%; height: 150px">
                 <!-- Name -->
                 <div style="grid-row: 1 / span 1; grid-column: 1 / span 2; display: flex; flex-direction: column; justify-content: left; align-items: stretch; text-align: center;">
                     <h1 style="font-weight: bold; font-size: 30px">@Model.Weather2Var.CityName</h1>
@@ -137,11 +174,15 @@
                 <div style="grid-row: 4 / span 1; grid-column: 3 / span 2; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; text-align: left;">
                     <span>Feels: @Model.Weather2Var.FeelsLike</span>
                 </div>
-            </div>
-  <div style="width: 45%;">
-        <button id="toggleExpenseFormBtn" style="background-color: #FFD5A7; width: 20%; color: #3E1B24; font-size: 15px; font-weight: bold;">Add Expense</button>
+
+           </div>
+
+                        <!--This is where the total spent will go-->
+
+      <div style="width: 30%; text-align: center;">
+         <button id="toggleExpenseFormBtn" style="background-color: #FFD5A7; width: 40%; color: #3E1B24; font-size: 20px; font-weight: bold;">Add Expense</button>
     
-    <div id="expenseFormContainer" style="display: none; width: 50%;">
+    <div id="expenseFormContainer" style="display: none; width: 25%; position: absolute;">
         @using (Html.BeginForm("AddExpense", "Home", FormMethod.Post, new { id = "expenseForm", style = "height: 200px; width: 100%;" }))
         {
         <div class="form-group" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
@@ -169,42 +210,36 @@
         <input type="number" style="text-align: center" asp-for="Expense.Year" class="form-control" style="font-size: 20px;" />
 
         <input type="submit" value="Add" class="hyperlink-top" />
-    </div>
-    
-}
-    </div>
-</div>
-
-
-
-<script>
-    var expenseFormContainer = document.getElementById('expenseFormContainer');
-    var toggleExpenseFormBtn = document.getElementById('toggleExpenseFormBtn');
-    
-    toggleExpenseFormBtn.addEventListener('click', function () {
-        if (expenseFormContainer.style.display === 'none' || expenseFormContainer.style.display === '') {
-            expenseFormContainer.style.display = 'block';
-        } else {
-            expenseFormContainer.style.display = 'none';
+        </div>}
+    </div> 
+  </div><div style="width: 20%">
+<table>
+    <tbody>
+        @foreach (var budget in Model.BudgetCollection)
+        {
+            <tr>
+                <td>
+                    <div class="hover-container">
+                        <span class="distinct-budget" style="font-weight: bold; font-size: 20px; position: relative;">
+                            <span class="exclamation-mark">!</span>@budget.DistinctBudgets
+                        </span>
+                        <div class="hover-info">
+                            <p>Spent: @budget.TotalSpent</p>
+                            <p>Budget: @budget.BudgetAmount</p>
+                            <p>Ideal: @budget.IdealSpendage</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
         }
-    });
-</script>
-<script>
-    // JavaScript to change the background color of the Budget dropdown when clicked
-    document.getElementById('budgetDropdown').addEventListener('click', function () {
-        this.style.backgroundColor = '#FFD5A7';
-    });
-</script>
+    </tbody>
+</table>
 
+</div>
+</div>
+<div style="height: 10px; width: 50%; border-bottom: 1px solid #FFD5A7;"></div>
 
-
-
-
-    </div>  
-
-
-
-    <div style="width: 50%; margin-top: 100px">
+    <div style="width: 50%; margin-top: 50px">
         <table>
             <thead>
                 <tr>
@@ -280,6 +315,24 @@
 
 
 
+<script>
+    var expenseFormContainer = document.getElementById('expenseFormContainer');
+    var toggleExpenseFormBtn = document.getElementById('toggleExpenseFormBtn');
+    
+    toggleExpenseFormBtn.addEventListener('click', function () {
+        if (expenseFormContainer.style.display === 'none' || expenseFormContainer.style.display === '') {
+            expenseFormContainer.style.display = 'block';
+        } else {
+            expenseFormContainer.style.display = 'none';
+        }
+    });
+</script>
+<script>
+    // JavaScript to change the background color of the Budget dropdown when clicked
+    document.getElementById('budgetDropdown').addEventListener('click', function () {
+        this.style.backgroundColor = '#FFD5A7';
+    });
+</script>
 
     <!-- Add buttons to initiate auth sequence and sign out -->
     <button id="authorize_button" onclick="handleAuthClick()" style="background-color: #FFD5A7; color: #3E1B24; font-size: 15px; font-weight: bold;">Check Email</button>
