@@ -22,7 +22,7 @@ namespace BudgetAppProject.Controllers
         }
         public IActionResult ViewExpense(int id)
         {
-            var expense = repo.GetExpense(id);
+            ExpenseV expense = repo.GetExpense(id);
             return View(expense);
         }
         public IActionResult UpdateExpense(int id)
@@ -38,12 +38,12 @@ namespace BudgetAppProject.Controllers
         public IActionResult UpdateExpenseToDatabase(ExpenseV expense)
         {
             repo.UpdateExpense(expense);
-            return RedirectToAction("ViewExpense", new { id = expense.Number });
+            return RedirectToAction("ViewBudgets", "Budget");
         }
         public IActionResult DeleteExpense(ExpenseV expense)
         {
             repo.DeleteExpense(expense);
-            return RedirectToAction("Index");
+            return RedirectToAction("ViewBudgets", "Budget");
         }
         public IActionResult InsertExpense()
         {

@@ -1,5 +1,5 @@
-﻿@using TestBudgeting.Models.Home;
-@model HomeVar
+﻿@using TestBudgeting.Models.Home.Expense;
+@model ExpenseV
 
 <head>
     <link rel="stylesheet" href="/css/site.css">
@@ -35,12 +35,12 @@
 
     </tr>
     <tr>
-        <td >@Model.Expense.Amount</td>
-        <td >@Model.Expense.Payee</td>
-        <td >@Model.Expense.Budget</td>
-        <td >@Model.Expense.Month</td>
-        <td >@Model.Expense.Day</td>
-        <td >@Model.Expense.Year</td>
+        <td>@Model.Amount</td>
+        <td>@Model.Payee</td>
+        <td>@Model.Budget</td>
+        <td>@Model.Month</td>
+        <td>@Model.Day</td>
+        <td>@Model.Year</td>
     </tr>
 </table>
 </div></div>
@@ -49,14 +49,14 @@
     <div class="row">
         <!-- This is the Update Button -->
         <div class="col-md-5">
-            <a href="/Expense/UpdateExpense/@Model.Expense.Number" class="hyperlink-top">Update this Expense</a>
+            <a href="/Expense/UpdateExpense/@Model.Number" class="hyperlink-top">Update</a>
         </div>
 
         <!-- This is the Delete Button -->
         <div class="col-md-7">
             @using (Html.BeginForm("DeleteExpense", "Expense", "Post"))
             {
-                <input type="hidden" asp-for="Expense.Number" value="@Model.Expense.Number" />
+                <input type="hidden" asp-for="Number" value="@Model" />
                 <input class="hyperlink-top" type="submit" onclick="return confirm('Are you sure?')" value="Delete Expense" />
 
             }

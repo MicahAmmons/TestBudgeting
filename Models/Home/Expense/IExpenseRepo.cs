@@ -9,7 +9,7 @@ namespace TestBudgeting.Models.Home.Expense
         public ExpenseV GetExpense(int id);
         public void UpdateExpense(ExpenseV expense);
         public void InsertExpense(ExpenseV expenseToInsert);
-        public void DeleteExpense(ExpenseV product);
+        public void DeleteExpense(ExpenseV expense);
         public ExpenseV GetDistinctBudgets();
 
         public ExpenseV MostRecentExpense();

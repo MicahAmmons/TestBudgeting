@@ -1,5 +1,5 @@
-﻿@using TestBudgeting.Models.Home;
-@model HomeVar
+﻿@using TestBudgeting.Models.Home.Expense;
+@model ExpenseV
 
 <head>
     <link rel="stylesheet" href="/css/site.css">
@@ -16,38 +16,47 @@
 
 @using (Html.BeginForm("UpdateExpenseToDatabase", "Expense", "Post"))
 {
-    <input asp-for="Expense.Number" type="hidden" value="@Model.Expense.Number" />
+    <input asp-for="Number" type="hidden" value="@Model.Number" />
 
 
     <div class="form-group">
         <label asp-for="Budget" class="control-label">Budget</label>
         <select class="form-control" name="Budget">
-            @foreach (var bud in Model.Expense.Distinct)
+            @foreach (var bud in Model.Distinct)
             {
                 <option value="@bud">@bud</option>
             }
         </select>
     </div>
         <div class="form-group">
-    <label asp-for="Expense.Payee" class="control-label">Payee</label>
-    <input type="text" name="Payee" class="form-control" value="@Model.Expense.Payee" />
+    <label asp-for="Payee" class="control-label">Payee</label>
+    <input type="text" name="Payee" class="form-control" value="@Model.Payee" />
     </div>
         <div class="form-group">
-    <label asp-for="Expense.Amount" class="control-label">Amount</label>
-    <input type="number" name="Expense.Amount" class="form-control" value="@Model.Expense.Amount" />
+    <label asp-for="Amount" class="control-label">Amount</label>
+    <input type="number" name="Amount" class="form-control" value="@Model.Amount" />
     </div>
             <div class="form-group">
-    <label asp-for="Expense.Month" class="control-label">Month</label>
-    <input type="number" name="Month" class="form-control" value="@Model.Expense.Month" />
+    <label asp-for="Month" class="control-label">Month</label>
+    <input type="number" name="Month" class="form-control" value="@Model.Month" />
     </div>
                 <div class="form-group">
-    <label asp-for="Expense.Day" class="control-label">Day</label>
-    <input type="number" name="Day" class="form-control" value="@Model.Expense.Day" />
+    <label asp-for="Day" class="control-label">Day</label>
+    <input type="number" name="Day" class="form-control" value="@Model.Day" />
     </div>
                     <div class="form-group">
-    <label asp-for="Expense.Year" class="control-label">Year</label>
-    <input type="number" name="Year" class="form-control" value="@Model.Expense.Year" />
+    <label asp-for="Year" class="control-label">Year</label>
+    <input type="number" name="Year" class="form-control" value="@Model.Year" />
     </div>
 
     <input type="submit" value="Update Expense" class="hyperlink-top" />
 }
+<!-- This is the Delete Button -->
+<div class="col-md-7">
+    @using (Html.BeginForm("DeleteExpense", "Expense", FormMethod.Post))
+    {
+        <input type="hidden" asp-for="Number" value="@Model.Number" />
+        <input class="hyperlink-top" type="submit" onclick="return confirm('Are you sure?')" value="Delete Expense" />
+
+    }
+</div>

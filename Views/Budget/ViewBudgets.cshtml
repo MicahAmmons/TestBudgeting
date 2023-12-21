@@ -70,14 +70,21 @@
             color: #FFD5A7;
             border-bottom: 1px solid #FFD5A7;
         }
+
+    .hideZeroButton{
+
+    }
     </style>
 
 <body>
-    <button id="hideZeroButton">Hide 0</button>
-    <!-- New Budget Button -->
-    <div>
-        <a href="/Budget/InsertBudget" class="body-link">New Budget</a>
+    <div style="display: flex; justify-content: flex-start; width: 50%; margin-left: auto;">
+        <button id="hideZeroButton" style="background-color: #FFD5A7; width: 20%; color: #3E1B24; font-size: 20px; font-weight: bold;">Hide 0</button>
+        <div style="width: 10%;"></div> <!-- Empty space -->
+        <a href="/Budget/InsertBudget" style="background-color: #FFD5A7; width: 20%; color: #3E1B24; font-size: 20px; font-weight: bold; text-align: center; text-decoration: none;">New Budget</a>
     </div>
+
+
+
 
     <div class="right-container">
         <h1>Income @Model.MonthlyIncome </h1>
@@ -145,7 +152,7 @@
                                 <tr class="expense-row" data-expense-budget="@expense.Budget">
                                     <!-- Add the class and data attribute -->
                                 <td>@expense.Amount</td>
-                                <td>@expense.Payee</td>
+                                    <td><a href="/Expense/UpdateExpense/@expense.Number" style="text-decoration: none; color: inherit;">@expense.Payee</a></td>
                                 <td>@expense.Budget</td>
                                 <td>@expense.Day</td>
                             </tr>
@@ -153,8 +160,8 @@
                     </tbody>
                 </table>
             </div>
-            </div>
         </div>
+    </div>
          <div style="flex: 1; width: 33%">
             <!-- Empty div for blank space (25%) -->
          </div>
@@ -205,5 +212,50 @@
             });
         });
     </script>
+    <script>
+        const table = document.querySelector('.table.table-condensed');
+        let ascending = true;
+        let lastClickedColumnIndex = null;
+        for (let i = 0; i < table.rows[0].cells.length; i++) {
+            table.rows[0].cells[i].addEventListener('click', function () {
+                const columnIndex = i;
+                if (columnIndex !== lastClickedColumnIndex) {
+                    ascending = true;
+                }
+                sortTable(columnIndex);
+                lastClickedColumnIndex = columnIndex;
+            });
+        }
+        function sortTable(columnIndex) {
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.rows);
+            const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' }); // Initialize a collator
+            rows.sort((a, b) => {
+                const aValue = a.cells[columnIndex].textContent;
+                const bValue = b.cells[columnIndex].textContent;
+
+                if (columnIndex === 0) { // Check if it's the "Amount" column
+                    const aAmount = parseFloat(aValue);
+                    const bAmount = parseFloat(bValue);
+                    return ascending ? aAmount - bAmount : bAmount - aAmount;
+                } else {
+                    // For text columns, use the collator for proper sorting
+                    return ascending ? collator.compare(aValue, bValue) : collator.compare(bValue, aValue);
+                }
+            });
+            rows.forEach((row) => {
+                tbody.removeChild(row);
+            });
+            rows.forEach((row) => {
+                tbody.appendChild(row);
+            });
+            ascending = !ascending;
+        }
+    </script>
+
+
+
+
+
 </body>
 
