@@ -23,7 +23,7 @@ namespace TestBudgeting.Models.Home.Budget
         {
             // this gets a list of Budgets.DistinctBudgets and Budget.BudgetAmount
             List<BudgetV> final = new List<BudgetV>();
-            IEnumerable<BudgetV> budgets = _conn.Query<BudgetV>("SELECT DistinctBudgets, BudgetAmount FROM budgets;");
+            IEnumerable<BudgetV> budgets = _conn.Query<BudgetV>("SELECT DistinctBudgets, BudgetAmount FROM budgets WHERE DistinctBudgets != 'Income';");
             foreach (var budget in budgets)
             {
                 IEnumerable<int> allExp = _conn.Query<int>("SELECT Amount FROM expenses WHERE Month = @current AND Budget = @bud", new { current = budget.CurrentMonth, bud = budget.DistinctBudgets });
@@ -77,7 +77,7 @@ namespace TestBudgeting.Models.Home.Budget
             IEnumerable<string> budgets = _conn.Query<string>("SELECT DistinctBudgets FROM budgets;");
             return budgets;
         }
-        public double GetTotalSpent()
+        public double GetTotalSpent() //specific budget
         {
             int currentMonth = DateTime.Now.Month;
             IEnumerable<int> allExp = _conn.Query<int>("SELECT Amount FROM expenses WHERE Month = @month AND Budget != 'Internet' AND Budget != 'Income' AND Budget != 'Rent' AND Budget != 'Electric/Gas';", new
@@ -87,7 +87,7 @@ namespace TestBudgeting.Models.Home.Budget
             double final = allExp.Sum();
             return final;
         }
-        public double GetMonthlyBudgetTotal()
+        public double GetMonthlyBudgetTotal() //excludes rent, internet, utitlites
         {
             int currentMonth = DateTime.Now.Month;
             IEnumerable<int> allExp = _conn.Query<int>("SELECT BudgetAmount FROM budgets WHERE DistinctBudgets != 'Internet' AND DistinctBudgets != 'Income' AND DistinctBudgets != 'Rent' AND DistinctBudgets != 'Electric/Gas';");
@@ -97,16 +97,17 @@ namespace TestBudgeting.Models.Home.Budget
 
         public IEnumerable<BudgetV> CheckIfSpendingMorethanBudget() //returns a list of Budgets ONLY if the spending is more than it should be
         {
+            int currentMonth = DateTime.Now.Month;
             List<BudgetV> budgetList = new List<BudgetV>();
             List<BudgetV> returnList = new List<BudgetV>();
-            IEnumerable<BudgetV> budgets = _conn.Query<BudgetV>("  SELECT DistinctBudgets, BudgetAmount FROM budgets WHERE BudgetAmount != 0;");
+            IEnumerable<BudgetV> budgets = _conn.Query<BudgetV>("SELECT DistinctBudgets, BudgetAmount FROM budgets WHERE BudgetAmount != 0 AND DistinctBudgets IN ('Food', 'Date Night', 'Groceries', 'Misc.', 'Pet');");
             foreach (var budget in budgets)
             {
-                IEnumerable<int> allExp = _conn.Query<int>("SELECT Amount FROM expenses WHERE Month = @current AND Budget = @bud", new { current = budget.CurrentMonth, bud = budget.DistinctBudgets });
+                IEnumerable<double> allExp = _conn.Query<double>("SELECT Amount FROM expenses WHERE Month = @current AND Budget = @bud", new { current = currentMonth, bud = budget.DistinctBudgets });
                 //Add all the Amounts together
-                int sum = allExp.Sum();
+                double sum = allExp.Sum();
                 //Assign that amount to Budget.TotalSpent
-                budget.TotalSpent = sum;
+                budget.TotalSpent = Math.Round(sum, 2);
                 budgetList.Add(budget);
             }
             DateTime currentDate = DateTime.Now;
@@ -118,10 +119,8 @@ namespace TestBudgeting.Models.Home.Budget
             foreach (var budget in budgetList)
             {
                 double totalMonthlyAmount;
-                double totalSpent;
                 totalMonthlyAmount = budget.BudgetAmount * percentage;
-                totalSpent = budget.TotalSpent * percentage;
-                if (totalMonthlyAmount < totalSpent) 
+                if (totalMonthlyAmount < budget.TotalSpent) 
                 {
                     budget.IdealSpendage = Math.Round(totalMonthlyAmount, 2);
                     returnList.Add(budget);
@@ -129,12 +128,19 @@ namespace TestBudgeting.Models.Home.Budget
             }
             return returnList;
         }
-        public double MonthlyIncome()
+        public HomeVar MonthlyIncomeBudgetSpending(HomeVar home)
         {
             int currentMonth = DateTime.Now.Month;
             IEnumerable<int> allExp = _conn.Query<int>("SELECT Amount FROM expenses WHERE Month = @current AND Budget = 'Income';", new { current = currentMonth });
             int sum = allExp.Sum();
-            return sum;
+            home.MonthlyIncome = sum;
+            //total monthly budget
+            IEnumerable<int> allBud = _conn.Query<int>("SELECT SUM(BudgetAmount) AS TotalBudgetAmount FROM budgets WHERE DistinctBudgets != 'Income';");
+            home.TotalMonthlyBudget = allBud.Sum(); ;
+            //total monthly spent
+            IEnumerable<int> allSpent = _conn.Query<int>("SELECT Amount FROM expenses WHERE Month = @month AND Budget != 'Income';", new {month = currentMonth});
+            home.TotalMonthlySpent = allSpent.Sum();
+            return home;
         }
 
     }

@@ -12,5 +12,7 @@ namespace TestBudgeting.Models.Home.Expense
         public void DeleteExpense(ExpenseV product);
         public ExpenseV GetDistinctBudgets();
 
+        public ExpenseV MostRecentExpense();
+
     }
 }

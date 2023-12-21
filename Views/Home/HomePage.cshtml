@@ -181,37 +181,40 @@
 
       <div style="width: 30%; text-align: center;">
          <button id="toggleExpenseFormBtn" style="background-color: #FFD5A7; width: 40%; color: #3E1B24; font-size: 20px; font-weight: bold;">Add Expense</button>
-    
-    <div id="expenseFormContainer" style="display: none; width: 25%; position: absolute;">
-        @using (Html.BeginForm("AddExpense", "Home", FormMethod.Post, new { id = "expenseForm", style = "height: 200px; width: 100%;" }))
-        {
-        <div class="form-group" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-            <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Budget</label>
-            <select class="form-control" asp-for="Expense.Budget" style="font-size: 20px; background-color: #FFD5A7; font-weight: bold; text-align: center;" id="budgetDropdown">
-                @foreach (var bud in Model.DistinctBudgets)
+
+            <div id="expenseFormContainer" style="display: none; width: 25%; position: absolute;">
+                @using (Html.BeginForm("AddExpense", "Home", FormMethod.Post, new { id = "expenseForm", style = "height: 200px; width: 100%;" }))
                 {
-                    <option value="@bud">@bud</option>
+                    <div class="form-group" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                        <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Budget</label>
+                        <select class="form-control" asp-for="Expense.Budget" style="font-size: 20px; background-color: #FFD5A7;" font-weight: bold; text-align: center;" id="budgetDropdown">
+                            <option value=""> </option>
+                            @foreach (var bud in Model.DistinctBudgets)
+                            {
+                                <option value="@bud">@bud</option>
+                            }
+                        </select>
+
+                        <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Payee</label>
+                        <input type="text" asp-for="Expense.Payee" class="form-control" style="font-size: 20px; text-align: center;" placeholder="@Model.MostRecent.Payee" />
+
+                        <label style="color: #FFD5A7; font-weight= bold; font-size: 20px;">Amount</label>
+                        <input type="number" style="text-align: center" step="0.01" asp-for="Expense.Amount" class="form-control" style="font-size: 20px;" placeholder="@Model.MostRecent.Amount" />
+
+                        <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Month</label>
+                        <input type="number" style="text-align: center" asp-for="Expense.Month" class="form-control" style="font-size: 20px;" placeholder="@Model.MostRecent.Month" />
+
+                        <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Day</label>
+                        <input type="number" style="text-align: center" asp-for="Expense.Day" class="form-control" style="font-size: 20px;" placeholder="@Model.MostRecent.Day" />
+
+                        <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Year</label>
+                        <input type="number" style="text-align: center" asp-for="Expense.Year" class="form-control" style="font-size: 20px;" placeholder="@Model.MostRecent.Year" />
+
+                        <input type="submit" value="Add" class="hyperlink-top" />
+                    </div>
                 }
-            </select>
+            </div>
 
-        <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Payee</label>
-        <input type="text" asp-for="Expense.Payee" class="form-control" style="font-size: 20px; text-align: center;" />
-
-        <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Amount</label>
-        <input type="number" style="text-align: center" step="0.01" asp-for="Expense.Amount" class="form-control" style="font-size: 20px;" />
-
-        <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Month</label>
-        <input type="number" style="text-align: center" asp-for="Expense.Month" class="form-control" style="font-size: 20px;" />
-
-        <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Day</label>
-        <input type="number" style="text-align: center" asp-for="Expense.Day" class="form-control" style="font-size: 20px;" />
-
-        <label style="color: #FFD5A7; font-weight: bold; font-size: 20px;">Year</label>
-        <input type="number" style="text-align: center" asp-for="Expense.Year" class="form-control" style="font-size: 20px;" />
-
-        <input type="submit" value="Add" class="hyperlink-top" />
-        </div>}
-    </div> 
   </div><div style="width: 20%">
 <table>
     <tbody>

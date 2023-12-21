@@ -25,8 +25,9 @@ namespace BudgetAppProject.Controllers
         {
             HomeVar home = new HomeVar();
             home.BudgetCollection = repo.ViewBudgets();
-            home.MonthlyIncome = repo.MonthlyIncome();
+            home = repo.MonthlyIncomeBudgetSpending(home);
             home.ExpenseCollection = expenseRepo.GetAllExpenses();
+
             return View(home);
         }
         public IActionResult InsertBudget()

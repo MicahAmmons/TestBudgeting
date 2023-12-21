@@ -14,11 +14,13 @@ namespace Testing.Controllers
     {
         private readonly ReminderMethods repo;
         private readonly IBudgetRepo budgetRepo;
+        private readonly IExpenseRepo expenseRepo;
 
-        public HomeController(ReminderMethods repo, IBudgetRepo budgetRepo)
+        public HomeController(ReminderMethods repo, IBudgetRepo budgetRepo, IExpenseRepo expenseRepo)
         {
             this.repo = repo;
             this.budgetRepo = budgetRepo;
+            this.expenseRepo = expenseRepo;
         }
 
 
@@ -31,6 +33,7 @@ namespace Testing.Controllers
             home.TotalMonthlySpent = budgetRepo.GetTotalSpent();
             home.TotalMonthlyBudget = budgetRepo.GetMonthlyBudgetTotal();
             home.BudgetCollection = budgetRepo.CheckIfSpendingMorethanBudget();
+            home.MostRecent = expenseRepo.MostRecentExpense();
             return View(home);
         }
         public IActionResult CompleteReminder(int id)

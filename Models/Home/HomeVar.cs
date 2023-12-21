@@ -27,6 +27,8 @@ public class HomeVar
     public double TotalMonthlySpent { get; set; }
     public double TotalMonthlyBudget { get; set; }
     public double MonthlyIncome { get; set; }
+    public ExpenseV MostRecent {  get; set; }
+
 
 
 

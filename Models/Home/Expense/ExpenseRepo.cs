@@ -87,5 +87,11 @@ namespace TestBudgeting.Models.Home.Expense
             return newE;
         }
 
+        public ExpenseV MostRecentExpense()
+        {
+            ExpenseV expense = new ExpenseV();
+            expense = _conn.Query<ExpenseV>("SELECT * FROM expenses ORDER BY Year DESC, Month DESC, Day DESC, Number DESC LIMIT 1; ").FirstOrDefault();
+            return expense;
+        }
     }
 }

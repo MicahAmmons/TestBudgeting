@@ -53,27 +53,53 @@
             color: #3E1B24;
         }
         .td{
-        color: #3E1B24;
+        color: #FFD5A7;
+        font-size: 10px;
+        }
+
+    .right-container {
+        position: absolute;
+        top: 0;
+        left: 35%; /* Set left to 25% */
+        text-align: left;
+        padding: 10px; /* Optional padding for better readability */
+    }
+
+        .right-container h1 {
+            font-size: 20px;
+            color: #FFD5A7;
+            border-bottom: 1px solid #FFD5A7;
         }
     </style>
 
 <body>
-
+    <button id="hideZeroButton">Hide 0</button>
     <!-- New Budget Button -->
     <div>
         <a href="/Budget/InsertBudget" class="body-link">New Budget</a>
     </div>
-    <!--Empty row-->
+
+    <div class="right-container">
+        <h1>Income @Model.MonthlyIncome </h1>
+        <h1>Budget @Model.TotalMonthlyBudget</h1>
+        <h1>Spent @Model.TotalMonthlySpent</h1>
+    </div>
     <row>
-        <h1>    </h1>
+        <h1>     </h1>
     </row>
-    <div style="display: flex; width: 100%">
-        <div style="flex: 1; width: 25%">
+
+
+
+
+ <div style="display: flex; width: 100%">
+     <div style="flex: 1; width: 25%">
 
     @foreach (var budget in Model.BudgetCollection)
     {
         <div>
-            <h2 style="font-size: 25px; color:#FFD5A7;">@budget.DistinctBudgets</h2>
+                    <h2 style="font-size: 25px; color:#FFD5A7;">
+                        <span class="budget-name" data-budget-id="@budget.DistinctBudgets">@budget.DistinctBudgets</span>
+                    </h2>
             <div class="progress-container">
                 <div class="total-spent">@budget.TotalSpent</div>
                 @{
@@ -94,43 +120,90 @@
 
         </div>
         
-    }</div>
+    }
+     </div>
 
-        <div style="flex: .5; width: 12.5%">
+        <div style="flex: 1; width: 2%">
             <!-- Empty div for blank space (25%) -->
         </div>
 
-        <div style="flex: 1; width: 25%; margin-top: 50px;">
-            <table class="table table-condensed" id="expenseTable" style="border-collapse: collapse; border: none !important; table-layout: auto;">
-        <thead style="position: sticky; top: 0;">
-            <tr>
-                <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Amount</th>
-                <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Payee</th>
-                <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Budget</th>
-                @* <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Month</th> *@
-                <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Day</th>
-               @*  <th style="background-color: #FFD5A7; color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">Year</th> *@
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var expense in Model.ExpenseCollection)
-            {
-                <tr>
-                    <!--<td><a href="/Expense/ViewExpense/@expense.Number" class="hyper-link body-link">@expense.Number</a></td>-->
-                    <td>@expense.Amount</td>
-                    <td>@expense.Payee</td>
-                    <td>@expense.Budget</td>
-                    @* <td style="max-width: 10px;">@expense.Month</td> *@
-                    <td>@expense.Day</td>
-                    @* <td style="max-width: 15px;">@expense.Year</td> *@
-                </tr>
+        <div style="flex: 1; width: 40%">
+            <div style="display: flex; justify-content: center;">
+                <div style="max-width: 100%; margin-top: 50px; background-color: #3E1B24; border: 3px solid #FFD5A7; border-radius: 25px; padding: 3px; overflow: auto;">
+                    <table class="table table-condensed" style="border-collapse: collapse; border: none !important; table-layout: auto; border-radius: 25px;  border-radius: 25px;">
+                    <thead style=" color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">
+                        <tr>
+                                <th style="color: #FFD5A7;">Amount</th>
+                                <th style="color: #FFD5A7;">Payee</th>
+                                <th style="color: #FFD5A7;">Budget</th>
+                            <th style="color: #FFD5A7;">Day</th>
+                        </tr>
+                    </thead>
+                    <tbody style="color:#FFD5A7; border: #FFD5A7; font-size: 12px; ">
+                        @foreach (var expense in Model.ExpenseCollection)
+                        {
+                                <tr class="expense-row" data-expense-budget="@expense.Budget">
+                                    <!-- Add the class and data attribute -->
+                                <td>@expense.Amount</td>
+                                <td>@expense.Payee</td>
+                                <td>@expense.Budget</td>
+                                <td>@expense.Day</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+         <div style="flex: 1; width: 33%">
+            <!-- Empty div for blank space (25%) -->
+         </div>
+</div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Event handler for clicking on budget namesa
+            $(".budget-name").on("click", function () {
+                var budgetId = $(this).data("budget-id");
+
+                // Toggle visibility of related expenses
+                $(".expense-row").each(function () {
+                    var expenseBudget = $(this).data("expense-budget");
+                    if (expenseBudget !== budgetId) {
+                        $(this).toggle(); // Toggle visibility
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Function to hide zero budgets and their names
+            function hideZeroBudgets() {
+                $(".progress-container").each(function () {
+                    var budgetAmount = parseFloat($(this).find(".budget-total").text());
+                    if (budgetAmount === 0) {
+                        $(this).closest("div").hide();
+                        $(this).closest("div").prev("h2").hide(); // Hide the budget name
+                    }
+                });
             }
-        </tbody>
-    </table>
-    </div>
-        <div style="flex: 1.5; width: 37.5%">
-            <!-- Empty div for blank space (25%) -->
-        </div>
-    </div>
+
+            // Initially hide zero budgets and their names when the page loads
+            hideZeroBudgets();
+
+            // Event handler for clicking on the "Hide 0" button
+            $("#hideZeroButton").on("click", function () {
+                // Toggle the visibility of zero budgets and their names when the button is clicked
+                $(".progress-container").each(function () {
+                    var budgetAmount = parseFloat($(this).find(".budget-total").text());
+                    if (budgetAmount === 0) {
+                        $(this).closest("div").toggle();
+                        $(this).closest("div").prev("h2").toggle(); // Toggle the visibility of the budget name
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 

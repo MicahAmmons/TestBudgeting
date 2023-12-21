@@ -10,7 +10,7 @@ namespace TestBudgeting.Models.Home.Budget
         public double BudgetAmount { get; set; }
         public string DistinctBudgets { get; set; }
         public int CurrentMonth { get; set; } = DateTime.Now.Month;
-        public int TotalSpent { get; set; }
+        public double TotalSpent { get; set; }
         public double IdealSpendage { get; set; }
 
 
