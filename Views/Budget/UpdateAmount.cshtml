@@ -21,9 +21,9 @@
         </div>
     }
 <!-- This is the Delete Button -->
-@using (Html.BeginForm("DeleteBudget", "Budget", "Post"))
-{
-    <input type="hidden" asp-for="DistinctBudgets" value="@Model.DistinctBudgets" />
-        <input class="hyperlink-top" onclick="return confirm('Are you sure?')" value="Delete this Budget" />
-}
+    @using (Html.BeginForm("DeleteBudget", "Budget", FormMethod.Post))
+    {
+        @Html.HiddenFor(model => model.DistinctBudgets)
+        <input type="submit" class="hyperlink-top" onclick="return confirm('Are you sure?')" value="Delete Budget" />
+    }
 </body>

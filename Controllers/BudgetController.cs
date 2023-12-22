@@ -53,8 +53,7 @@ namespace BudgetAppProject.Controllers
         public IActionResult DeleteBudget(BudgetV budget)
         {
             repo.DeleteBudget(budget);
-            var ex = repo.ViewBudgets();
-            return RedirectToAction("ViewBudgets", ex);
+            return RedirectToAction("ViewBudgets");
         }
         public IActionResult UpdateExpensesPerBudget(string budget)
         {

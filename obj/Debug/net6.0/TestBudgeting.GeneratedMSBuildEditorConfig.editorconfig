@@ -58,6 +58,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVkZ2V0XFZpZXdCdWRnZXRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/micah/OneDrive/Desktop/Repos/TestBudgeting/Views/Expense/Gmail/asdasdasd.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhwZW5zZVxHbWFpbFxhc2Rhc2Rhc2QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micah/OneDrive/Desktop/Repos/TestBudgeting/Views/Expense/Gmail/GmailPage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhwZW5zZVxHbWFpbFxHbWFpbFBhZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/micah/OneDrive/Desktop/Repos/TestBudgeting/Views/Expense/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhwZW5zZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -66,20 +74,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhwZW5zZVxJbnNlcnRFeHBlbnNlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/micah/OneDrive/Desktop/Repos/TestBudgeting/Views/Expense/OLDUnusedViewExpense.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhwZW5zZVxPTERVbnVzZWRWaWV3RXhwZW5zZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/micah/OneDrive/Desktop/Repos/TestBudgeting/Views/Expense/UpdateExpense.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhwZW5zZVxVcGRhdGVFeHBlbnNlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/micah/OneDrive/Desktop/Repos/TestBudgeting/Views/Expense/ViewExpense.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhwZW5zZVxWaWV3RXhwZW5zZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/micah/OneDrive/Desktop/Repos/TestBudgeting/Views/Gmail/asdasdasd.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR21haWxcYXNkYXNkYXNkLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/micah/OneDrive/Desktop/Repos/TestBudgeting/Views/Gmail/GmailPage.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR21haWxcR21haWxQYWdlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/micah/OneDrive/Desktop/Repos/TestBudgeting/Views/Home/HomePage.cshtml]
@@ -90,8 +90,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/micah/OneDrive/Desktop/Repos/TestBudgeting/Views/Plaid/Plaid.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhaWRcUGxhaWQuY3NodG1s
+[C:/Users/micah/OneDrive/Desktop/Repos/TestBudgeting/Views/Login/LoginPage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cTG9naW5QYWdlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/micah/OneDrive/Desktop/Repos/TestBudgeting/Views/Shared/Error.cshtml]

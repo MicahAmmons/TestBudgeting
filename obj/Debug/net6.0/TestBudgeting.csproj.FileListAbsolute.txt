@@ -282,3 +282,8 @@ C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\runtimes\wi
 C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\clientsecrets.json
 C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\obj\Debug\net6.0\TestBudgeting.sourcelink.json
 C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\Going.Plaid.dll
+C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\micah\OneDrive\Desktop\Repos\TestBudgeting\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll

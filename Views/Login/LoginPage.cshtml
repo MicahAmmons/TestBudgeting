@@ -55,8 +55,20 @@
     </style>
 </head>
 <body>
+    <div class="login-container" >
+    <h2 style="font-size: 25px">Welcome to Micah's Daily Snapshot Application</h2>
+    <h2 style="font-size: 25px">You can login using:</h2>
+    <h2 style="font-size: 25px">Username: Name </h2>
+        <h2 style="font-size: 25px">Password: Pass (case sensitive)</h2>
+    <h2 style="font-size: 25px">Want to see the code itself?  Check out my <a href="https://github.com/MicahAmmons/TestBudgeting">GitHub</a></h2>
+    <h2 style="font-size:20px">MicahAmmons@gmail.com for all inquires</h2>
+        <h2 style="font-size:20px">  </h2>
+        <h2 style="font-size:17px"> Note: All expenses, budgets, and reminders are created for demo purposes.</h2>
+        <h2 style="font-size:17px"> The GMail API will only authenticate developer emails.  To view it, contact Micah at the email above for permissions.</h2>
+    </div>
     <div class="login-container">
-        <h2 style="font-size: 45px">Hello, Master</h2>
+
+
         @using (Html.BeginForm("LoginCall", "Login", FormMethod.Post))
         {
             <div>
