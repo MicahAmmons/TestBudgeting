@@ -13,6 +13,9 @@ namespace TestBudgeting.Models.Home.Expense
         public ExpenseV GetDistinctBudgets();
 
         public ExpenseV MostRecentExpense();
+        public IEnumerable<ExpenseV> UpdateToSearchedExpensesTable(string keyword1, string keyword2, string keyword3, int? month);
+        public void DeleteSearchedExpenses();
+        public IEnumerable<ExpenseV> ListOfSearchedExpenses();
 
     }
 }

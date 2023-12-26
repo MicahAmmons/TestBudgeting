@@ -90,8 +90,89 @@ namespace TestBudgeting.Models.Home.Expense
         public ExpenseV MostRecentExpense()
         {
             ExpenseV expense = new ExpenseV();
-            expense = _conn.Query<ExpenseV>("SELECT * FROM expenses ORDER BY Year DESC, Month DESC, Day DESC, Number DESC LIMIT 1; ").FirstOrDefault();
+            expense = _conn.Query<ExpenseV>("SELECT * FROM expenses WHERE Budget <> 'Income' ORDER BY Year DESC, Month DESC, Day DESC, Number DESC LIMIT 1;").FirstOrDefault();
             return expense;
         }
+
+        public IEnumerable<ExpenseV> UpdateToSearchedExpensesTable(string keyword1, string keyword2, string keyword3, int? month)
+        {
+            IEnumerable<ExpenseV> finalList = new List<ExpenseV>();
+            if (month == null && keyword1 != null && keyword2 == null && keyword3 == null)
+            {
+                finalList = _conn.Query<ExpenseV>("SELECT * FROM expenses WHERE Payee LIKE '%'  @keyword1  '%';",
+            new { keyword1 = keyword1 });
+
+            }
+            else if (month != null && keyword1 != null && keyword2 == null && keyword3 == null)
+            {
+                finalList = _conn.Query<ExpenseV>("SELECT * FROM expenses WHERE Month = @month AND Payee LIKE '%' @keyword1 '%';",
+           new
+           {
+               keyword1 = keyword1,
+               month = month
+           });
+            }
+            else if (month == null && keyword1 != null && keyword2 != null && keyword3 == null)
+            {
+                finalList = _conn.Query<ExpenseV>("SELECT * FROM expenses WHERE Payee LIKE '%'  @keyword1  '%' OR Payee LIKE '%'  @keyword2  '%';",
+            new
+            {
+                keyword1 = keyword1,
+                keyword2 = keyword2
+            });
+            }
+            else if (month != null && keyword1 != null && keyword2 != null && keyword3 == null)
+            {
+                finalList = _conn.Query<ExpenseV>("SELECT * FROM expenses WHERE Month = @month AND (Payee LIKE '%'  @keyword1  '%' OR Payee LIKE '%'  @keyword2  '%');",
+            new
+            {
+                keyword1 = keyword1,
+                keyword2 = keyword2,
+                month = month
+            });
+            }
+            else if (month == null && keyword1 != null && keyword2 != null && keyword3 != null)
+            {
+                finalList = _conn.Query<ExpenseV>("SELECT * FROM expenses WHERE Payee LIKE '%'  @keyword1  '%' OR Payee LIKE '%'  @keyword2  '%' OR Payee LIKE '%'  @keyword3  '%';",
+            new
+            {
+                keyword1 = keyword1,
+                keyword2 = keyword2,
+                keyword3 = keyword3
+            });
+            }
+            else if (month != null && keyword1 != null && keyword2 != null && keyword3 != null)
+            {
+                finalList = _conn.Query<ExpenseV>("SELECT * FROM expenses WHERE Month = @month AND (Payee LIKE '%'  @keyword1  '%' OR Payee LIKE '%'  @keyword2  '%' OR Payee LIKE '%'  @keyword3  '%');",
+           new
+           {
+               keyword1 = keyword1,
+               keyword2 = keyword2,
+               keyword3 = keyword3,
+               month = month
+           });
+            }
+            double totalSpent = 0;
+            foreach (ExpenseV expense in finalList)
+            {
+                totalSpent += expense.Amount;
+            }
+            totalSpent = Math.Round(totalSpent, 2);
+            finalList.First().TotalSpentByPayeeAndMonth = totalSpent;
+            return finalList;
+        }
+
+        public void DeleteSearchedExpenses()
+        {
+            _conn.Query<ExpenseV>("DELETE FROM budgets.searchedexpenses;");
+        }
+        public IEnumerable<ExpenseV> ListOfSearchedExpenses()
+        {
+            return _conn.Query<ExpenseV>("SELECT * FROM searchedexpenses");
+        }
+
+
+
+
     }
 }

@@ -1,0 +1,75 @@
+﻿@using TestBudgeting.Models.Home;
+@model HomeVar
+
+@{
+    var myModel = Model.ExpensesByPayeeandMonth.First();
+}
+
+<div style="display: flex; width: 100%">
+<div style="width: 25%">
+<form method="POST" action="/Search/Search" id="fetchExpensesForm" style="display: inline-block; text-align: left; padding: 0px; width: 100%; margin: 0;">
+            <div class="form-group" style="display: inline-block; width: 100%">
+                <label for="keyword1" style="display: inline-block; width: 100px; font-size: 20px;">Payee 1:</label>
+        <input type="text" id="keyword1" name="keyword1" class="form-control" maxlength="15" style="width: 100%;" />
+    </div>
+    <div class="form-group" style="display: inline-block; width: 100%">
+        <label for="keyword2" style="display: inline-block; width: 100px; font-size: 20px">Payee 2:</label>
+        <input type="text" id="keyword2" name="keyword2" class="form-control" maxlength="15" style="width: 100%;" />
+    </div>
+            <div class="form-group" style="display: inline-block; width: 100%">
+                <label for="keyword3" style="display: inline-block; width: 100px; font-size: 20px">Payee 3:</label>
+        <input type="text" id="keyword3" name="keyword3" class="form-control" maxlength="15" style="width: 100%;" />
+    </div>
+            <div class="form-group" style="display: inline-block; width: 100%">
+                <label for="month" style="display: inline-block; width: 100px; font-size: 20px">Month:</label>
+        <select id="month" name="month" class="form-control" style="width: 100%;">
+            <option value="">Select Month</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+        </select>
+    </div>
+            <button type="submit" id="fetchSpecificExpensesBtn" class="btn btn-primary" style="background-color: #FFD5A7; color:#3E1B24; ">Search</button>
+</form>
+</div>
+
+<div style=" width: 15%"></div>
+
+    <div style="max-width: 100%; margin-top: 50px; background-color: #3E1B24; border: 3px solid #FFD5A7; border-radius: 25px; padding: 3px; overflow: auto;">
+        <table class="table table-condensed" style="border-collapse: collapse; border: none !important; table-layout: auto; border-radius: 25px;  border-radius: 25px;">
+            <thead style=" color: #3E1B24; font-weight: bold; font-size: 20px; text-align: center; padding: 5px;">
+                <tr>
+                    <th style="color: #FFD5A7;">Amount</th>
+                    <th style="color: #FFD5A7;">Payee</th>
+                    <th style="color: #FFD5A7;">Budget</th>
+                    <th style="color: #FFD5A7;">Day</th>
+                    <th style="color: #FFD5A7;">Total Spent: @myModel.TotalSpentByPayeeAndMonth</th>
+                </tr>
+            </thead>
+            <tbody style="color:#FFD5A7; border: #FFD5A7; font-size: 12px; ">
+                @foreach (var expense in Model.ExpensesByPayeeandMonth)
+                {
+                    <tr class="expense-row" data-expense-budget="@expense.Budget">
+                        <!-- Add the class and data attribute -->
+                        <td>@expense.Amount</td>
+                        <td><a href="/Expense/UpdateExpense/@expense.Number" style="text-decoration: none; color: inherit;">@expense.Payee</a></td>
+                        <td>@expense.Budget</td>
+                        <td>@expense.Day</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div style=" width: 10%"></div>
+    </div>
+
+

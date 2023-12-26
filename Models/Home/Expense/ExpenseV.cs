@@ -16,6 +16,8 @@ namespace TestBudgeting.Models.Home.Expense
         public int Number { get; set; }
         public IEnumerable<string> Distinct { get; set; }
         public int CurrentMonth { get; set; } = DateTime.Now.Month;
+        public double TotalSpentByPayeeAndMonth { get; set; }
+
 
 
 

@@ -6,6 +6,7 @@ using TestBudgeting.Models.Home.Expense;
 using TestBudgeting.Models.Home.Reminder;
 using TestBudgeting.Models.Home.Budget;
 using System.Collections.Generic;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace BudgetAppProject.Controllers
 {
@@ -27,6 +28,7 @@ namespace BudgetAppProject.Controllers
             home.BudgetCollection = repo.ViewBudgets();
             home = repo.MonthlyIncomeBudgetSpending(home);
             home.ExpenseCollection = expenseRepo.GetAllExpenses();
+            home.ExpensesByPayeeandMonth = expenseRepo.ListOfSearchedExpenses();
 
             return View(home);
         }
@@ -55,10 +57,8 @@ namespace BudgetAppProject.Controllers
             repo.DeleteBudget(budget);
             return RedirectToAction("ViewBudgets");
         }
-        public IActionResult UpdateExpensesPerBudget(string budget)
-        {
-            throw new NotImplementedException();
-        }
+
+
 
     }
 }

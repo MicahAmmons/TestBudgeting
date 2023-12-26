@@ -28,6 +28,8 @@ public class HomeVar
     public double TotalMonthlyBudget { get; set; }
     public double MonthlyIncome { get; set; }
     public ExpenseV MostRecent {  get; set; }
+    public IEnumerable<ExpenseV> ExpensesByPayeeandMonth { get; set; }
+
 
 
 

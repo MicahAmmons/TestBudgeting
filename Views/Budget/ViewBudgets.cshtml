@@ -166,6 +166,47 @@
             <!-- Empty div for blank space (25%) -->
          </div>
 </div>
+
+    <form method="POST" action="/Search/Search" id="fetchExpensesForm">
+        <div class="form-group">
+            <label for="keyword1">Payee 1:</label>
+            <input type="text" id="keyword1" name="keyword1" class="form-control" maxlength="15" />
+        </div>
+        <div class="form-group">
+            <label for="keyword2">Payee 2:</label>
+            <input type="text" id="keyword2" name="keyword2" class="form-control" maxlength="15" />
+        </div>
+        <div class="form-group">
+            <label for="keyword3">Payee 3:</label>
+            <input type="text" id="keyword3" name="keyword3" class="form-control" maxlength="15" />
+        </div>
+        <div class="form-group">
+            <label for="month">Month:</label>
+            <select id="month" name="month" class="form-control">
+                <option value="">Select Month</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+        </div>
+        <button type="submit" id="fetchSpecificExpensesBtn" class="btn btn-primary" style="background-color: #FFD5A7; color:#3E1B24; ">Search</button>
+    </form>
+ 
+
+
+
+
+
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {

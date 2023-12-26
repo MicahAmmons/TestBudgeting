@@ -71,7 +71,7 @@ namespace Testing.Controllers
                              Day = newExpense.Expense.Day,
             };
         repo.InsertExpense(expense);
-            return new EmptyResult();
+            return new EmptyResult(); 
         }
 
         public IActionResult Privacy()
