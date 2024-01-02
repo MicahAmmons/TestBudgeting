@@ -5,7 +5,7 @@ namespace TestBudgeting.Models.Home.Expense
 {
     public interface IExpenseRepo
     {
-        IEnumerable<ExpenseV> GetAllExpenses();
+        IEnumerable<ExpenseV> GetAllExpenses(int month);
         public ExpenseV GetExpense(int id);
         public void UpdateExpense(ExpenseV expense);
         public void InsertExpense(ExpenseV expenseToInsert);

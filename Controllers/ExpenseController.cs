@@ -14,9 +14,9 @@ namespace BudgetAppProject.Controllers
             this.repo = repo;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int month)
         {
-                var exp = repo.GetAllExpenses();
+                var exp = repo.GetAllExpenses(month);
                 return View(exp);
 
         }

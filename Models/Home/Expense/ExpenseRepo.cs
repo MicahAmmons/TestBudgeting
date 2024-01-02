@@ -15,6 +15,7 @@ namespace TestBudgeting.Models.Home.Expense
 
         private readonly IDbConnection _conn;
 
+
         //Constructor below is to guantee that any instance passes in the connection string 
         public ExpenseRepo(IDbConnection conn)
         {
@@ -22,10 +23,11 @@ namespace TestBudgeting.Models.Home.Expense
         }
 
         //Methods for Queries
-        public IEnumerable<ExpenseV> GetAllExpenses()
+        public IEnumerable<ExpenseV> GetAllExpenses(int month)
 
         {
-            return _conn.Query<ExpenseV>("SELECT * FROM expenses;");
+            int currentMonth = GetMonth(month);
+            return _conn.Query<ExpenseV>("SELECT * FROM expenses WHERE Month = @month;", new {month = currentMonth});
         }
         public IEnumerable<ExpenseV> GetAllExpensesOfSpecificType(string budget)
         {
@@ -170,7 +172,19 @@ namespace TestBudgeting.Models.Home.Expense
         {
             return _conn.Query<ExpenseV>("SELECT * FROM searchedexpenses");
         }
+        public int GetMonth(int month)
+        {
+            if (month == 0)
+            {
+                return DateTime.Now.Month;
+            }
+            return month;
+        }
 
+        public int GetMonth()
+        {
+            return DateTime.Now.Month;
+        }
 
 
 

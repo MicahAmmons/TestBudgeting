@@ -83,9 +83,6 @@
         <a href="/Budget/InsertBudget" style="background-color: #FFD5A7; width: 20%; color: #3E1B24; font-size: 20px; font-weight: bold; text-align: center; text-decoration: none;">New Budget</a>
     </div>
 
-
-
-
     <div class="right-container">
         <h1>Income @Model.MonthlyIncome </h1>
         <h1>Budget @Model.TotalMonthlyBudget</h1>
@@ -122,12 +119,62 @@
                 <div class="progress-bar" style="width: @(budget.TotalSpent / budget.BudgetAmount * 100)%;">
                     <span>@budget.TotalSpent</span>
                 </div>
-                <a href="@Url.Action("UpdateAmount", "Budget", new { id = budget.DistinctBudgets })" class="budget-total" style="color: @budgetAmountTextColor;">@budget.BudgetAmount</a>
+                <a href="@Url.Action("UpdateAmount", "Budget", new { id = budget.Number })" class="budget-total" style="color: @budgetAmountTextColor;">@budget.BudgetAmount</a>
             </div>
 
         </div>
-        
-    }
+            }    
+            <form method="post" action="/Budget/ViewBudgets" style="width: 100%;">
+                <label for="month" style="margin-right: 10px;">Select a Month:</label>
+                <select name="month" id="month">
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+                <input type="submit" value="Submit">
+            </form>
+            <form method="POST" action="/Search/Search" id="fetchExpensesForm" style="width: 100%">
+                <div class="form-group">
+                    <label for="keyword1">Payee 1:</label>
+                    <input type="text" id="keyword1" name="keyword1" class="form-control" maxlength="15" />
+                </div>
+                <div class="form-group">
+                    <label for="keyword2">Payee 2:</label>
+                    <input type="text" id="keyword2" name="keyword2" class="form-control" maxlength="15" />
+                </div>
+                <div class="form-group">
+                    <label for="keyword3">Payee 3:</label>
+                    <input type="text" id="keyword3" name="keyword3" class="form-control" maxlength="15" />
+                </div>
+                <div class="form-group">
+                    <label for="month">Month:</label>
+                    <select id="month" name="month" class="form-control">
+                        <option value="">Select Month</option>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+                <button type="submit" id="fetchSpecificExpensesBtn" class="btn btn-primary" style="background-color: #FFD5A7; color:#3E1B24; ">Search</button>
+            </form>
      </div>
 
         <div style="flex: 1; width: 2%">
@@ -167,40 +214,8 @@
          </div>
 </div>
 
-    <form method="POST" action="/Search/Search" id="fetchExpensesForm">
-        <div class="form-group">
-            <label for="keyword1">Payee 1:</label>
-            <input type="text" id="keyword1" name="keyword1" class="form-control" maxlength="15" />
-        </div>
-        <div class="form-group">
-            <label for="keyword2">Payee 2:</label>
-            <input type="text" id="keyword2" name="keyword2" class="form-control" maxlength="15" />
-        </div>
-        <div class="form-group">
-            <label for="keyword3">Payee 3:</label>
-            <input type="text" id="keyword3" name="keyword3" class="form-control" maxlength="15" />
-        </div>
-        <div class="form-group">
-            <label for="month">Month:</label>
-            <select id="month" name="month" class="form-control">
-                <option value="">Select Month</option>
-                <option value="1">January</option>
-                <option value="2">February</option>
-                <option value="3">March</option>
-                <option value="4">April</option>
-                <option value="5">May</option>
-                <option value="6">June</option>
-                <option value="7">July</option>
-                <option value="8">August</option>
-                <option value="9">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
-            </select>
-        </div>
-        <button type="submit" id="fetchSpecificExpensesBtn" class="btn btn-primary" style="background-color: #FFD5A7; color:#3E1B24; ">Search</button>
-    </form>
- 
+
+
 
 
 

@@ -24,15 +24,15 @@ namespace Testing.Controllers
         }
 
 
-        public IActionResult HomePage()
+        public IActionResult HomePage(int month)
         {
             repo.RefreshReminders();
             HomeVar home = WeatherMethods.GetWeather();
             home.Reminders = repo.GetReminders();
             home.DistinctBudgets = budgetRepo.GetDistinctBudget();
-            home.TotalMonthlySpent = budgetRepo.GetTotalSpent();
-            home.TotalMonthlyBudget = budgetRepo.GetMonthlyBudgetTotal();
-            home.BudgetCollection = budgetRepo.CheckIfSpendingMorethanBudget();
+            home.TotalMonthlySpent = budgetRepo.GetTotalSpent(month);
+            home.TotalMonthlyBudget = budgetRepo.GetMonthlyBudgetTotal(month);
+            home.BudgetCollection = budgetRepo.CheckIfSpendingMorethanBudget(month);
             home.MostRecent = expenseRepo.MostRecentExpense();
             return View(home);
         }

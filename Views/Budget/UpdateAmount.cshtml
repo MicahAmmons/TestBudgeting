@@ -12,7 +12,7 @@
     @using (Html.BeginForm("UpdateBudgetAmountToDatabase", "Budget", "Post"))
     {
         <div style="text-align: center;">
-            <input asp-for="DistinctBudgets" type="hidden" value="@Model.DistinctBudgets" />
+            <input asp-for="Number" type="hidden" value="@Model.Number" />
 
             <label asp-for="BudgetAmount" class="control-label" style="display: block;">New Amount</label>
             <input type="number" name="BudgetAmount" class="form-control" value="@Model.BudgetAmount" style="margin: 0 auto; text-align: center;" />
@@ -23,7 +23,7 @@
 <!-- This is the Delete Button -->
     @using (Html.BeginForm("DeleteBudget", "Budget", FormMethod.Post))
     {
-        @Html.HiddenFor(model => model.DistinctBudgets)
-        <input type="submit" class="hyperlink-top" onclick="return confirm('Are you sure?')" value="Delete Budget" />
+        @Html.HiddenFor(model => model.Number)
+        <input type="submit" class="hyperlink-top" onclick="return confirm('Are you sure?')" value="Delete" />
     }
 </body>

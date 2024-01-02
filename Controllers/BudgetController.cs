@@ -22,13 +22,12 @@ namespace BudgetAppProject.Controllers
             this.expenseRepo = expenseRepo;
         }
 
-        public IActionResult ViewBudgets()
+        public IActionResult ViewBudgets(int month)
         {
             HomeVar home = new HomeVar();
-            home.BudgetCollection = repo.ViewBudgets();
-            home = repo.MonthlyIncomeBudgetSpending(home);
-            home.ExpenseCollection = expenseRepo.GetAllExpenses();
-            home.ExpensesByPayeeandMonth = expenseRepo.ListOfSearchedExpenses();
+            home.BudgetCollection = repo.ViewBudgets(month);
+            home = repo.MonthlyIncomeBudgetSpending(home, month);
+            home.ExpenseCollection = expenseRepo.GetAllExpenses(month);
 
             return View(home);
         }
@@ -42,19 +41,19 @@ namespace BudgetAppProject.Controllers
             repo.InsertBudget(budgetToInsert);
             return RedirectToAction("ViewBudgets");
         }
-        public IActionResult UpdateBudgetAmountToDatabase(BudgetV budgetToUpdate)
+        public IActionResult UpdateBudgetAmountToDatabase(BudgetV budget)
         {
-            repo.UpdateBudgetAmount(budgetToUpdate);
+            repo.UpdateBudgetAmount(budget);
             return RedirectToAction("ViewBudgets");
         }
-        public IActionResult UpdateAmount(string id)
+        public IActionResult UpdateAmount(double id)
         {
             BudgetV bud = repo.GetBudget(id);
             return View(bud);
         }
-        public IActionResult DeleteBudget(BudgetV budget)
+        public IActionResult DeleteBudget(BudgetV bud)
         {
-            repo.DeleteBudget(budget);
+            repo.DeleteBudget(bud);
             return RedirectToAction("ViewBudgets");
         }
 
