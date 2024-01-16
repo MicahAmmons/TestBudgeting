@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 using System.Collections.Generic;
+using TestBudgeting.Models.My100;
 
 namespace TestBudgeting.Models.Home.Expense
 {
@@ -16,6 +17,5 @@ namespace TestBudgeting.Models.Home.Expense
         public IEnumerable<ExpenseV> UpdateToSearchedExpensesTable(string keyword1, string keyword2, string keyword3, int? month);
         public void DeleteSearchedExpenses();
         public IEnumerable<ExpenseV> ListOfSearchedExpenses();
-
     }
 }

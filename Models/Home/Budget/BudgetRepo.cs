@@ -76,7 +76,7 @@ namespace TestBudgeting.Models.Home.Budget
 
         public IEnumerable<string> GetDistinctBudget()
         {
-            IEnumerable<string> budgets = _conn.Query<string>("SELECT DistinctBudgets FROM budgets;");
+            IEnumerable<string> budgets = _conn.Query<string>("SELECT DISTINCT DistinctBudgets FROM budgets ORDER BY DistinctBudgets;");
             return budgets;
         }
         public double GetTotalSpent(int month) //specific budget

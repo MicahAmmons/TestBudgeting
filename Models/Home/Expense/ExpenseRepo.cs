@@ -1,9 +1,6 @@
 ﻿
 using Dapper;
 using System.Data;
-using System.Collections.Generic;
-using System.Xml.Linq;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace TestBudgeting.Models.Home.Expense
 {

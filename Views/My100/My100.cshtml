@@ -1,0 +1,21 @@
+﻿@using TestBudgeting.Models.My100
+@model My100Enum
+
+<head>
+
+</head>
+
+<body>  
+    @foreach (My100 my in Model.My100s)
+    {
+        <table>
+            <tbody>
+                <tr>@my.Number</tr>
+                <tr>@my.ThingToDo</tr>
+            </tbody>
+        </table>
+    }
+
+
+
+</body>
