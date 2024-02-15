@@ -4,6 +4,7 @@ using TestBudgeting.Models.Home.Budget;
 using TestBudgeting.Models.Home.Expense;
 using TestBudgeting.Models.Home.Reminder;
 using TestBudgeting.Models.My100;
+using TestBudgeting.Models.NTSE;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -19,6 +20,7 @@ builder.Services.AddTransient<IExpenseRepo, ExpenseRepo>();
 builder.Services.AddTransient<IBudgetRepo, BudgetRepo>();
 builder.Services.AddTransient<ReminderMethods>();
 builder.Services.AddTransient<My100Methods>();
+builder.Services.AddTransient<NTSEMethods>();
 
 var app = builder.Build();
 

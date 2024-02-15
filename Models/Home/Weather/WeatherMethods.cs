@@ -50,12 +50,12 @@ namespace TestBudgeting.Models.Home
             weather2.CityName = weather2Object["name"].ToString();
             //weather2.Description = weather2Object["weather"]["description"].ToString();
             //
-            long epochTime = long.Parse(weather2Object["sys"]["sunset"].ToString());
-            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(epochTime);
-            int hour = dateTimeOffset.Hour - 5;
-            int minute = dateTimeOffset.Minute;
-            TimeOnly sunDownW2 = new TimeOnly(hour, minute, 0);
-            weather2.SunDown = sunDownW2;
+            //long epochTime = long.Parse(weather2Object["sys"]["sunset"].ToString());
+            //DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(epochTime);
+            //int hour = dateTimeOffset.Hour - 5;
+            //int minute = dateTimeOffset.Minute;
+            //TimeOnly sunDownW2 = new TimeOnly(hour, minute, 0);
+            //weather2.SunDown = sunDownW2;
             //
             long epochTime2 = long.Parse(weather2Object["sys"]["sunrise"].ToString());
             DateTimeOffset dateTimeOffset2 = DateTimeOffset.FromUnixTimeSeconds(epochTime2);

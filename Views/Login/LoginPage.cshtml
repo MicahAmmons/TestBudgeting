@@ -55,6 +55,13 @@
     </style>
 </head>
 <body>
+    <row>
+        @using (Html.BeginForm("Inventory", "NTSE", FormMethod.Post))
+        {
+            <input type="submit" value="Inventory" />
+        }
+    </row>
+
     <div class="login-container" >
     <h2 style="font-size: 25px">Welcome to Micah's Daily Snapshot Application</h2>
     <h2 style="font-size: 25px">You can login using:</h2>

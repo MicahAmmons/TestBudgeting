@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TestBudgeting")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0186163d4db7875706b950ee308c68ac6b2a7c4f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a938233e9e3a5f92f509bed11f03d45be9a781a6")]
 [assembly: System.Reflection.AssemblyProductAttribute("TestBudgeting")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TestBudgeting")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
